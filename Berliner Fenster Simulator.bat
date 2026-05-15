@@ -10,9 +10,17 @@ echo.
 echo.
 echo.
 
-REM Check if Python is installed
-python --version >nul 2>&1
-IF ERRORLEVEL 1 (
+set "PYTHON_CMD="
+where python >nul 2>&1 && set "PYTHON_CMD=python"
+if not defined PYTHON_CMD (
+    where python3 >nul 2>&1 && set "PYTHON_CMD=python3"
+)
+set "PYTHON_OK=0"
+if defined PYTHON_CMD (
+    %PYTHON_CMD% --version 2>&1 | findstr /i "Python 3" >nul && set "PYTHON_OK=1"
+)
+
+if %PYTHON_OK% NEQ 1 (
     echo HINWEIS:
     echo Python scheint nicht installiert zu sein, oder eine ältere Version von Python ist installiert.
     echo Um alle Funktionen dieses Projektes nutzen zu können, ist ein lokaler Server [und somit eine neuere Python-Version] notwendig.

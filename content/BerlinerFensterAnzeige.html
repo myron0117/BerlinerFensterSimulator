@@ -1326,7 +1326,7 @@ let anschlussDelayTimer = null;
 let anschlussDataCache = null;
 let preloadTimer = null;
 let anschlussActive = false;
-let currentLine = null;
+let refreshInterval = null;
 
 const anschlussOverlay = document.getElementById("LinienverlaufOverlay");
 
@@ -1338,29 +1338,24 @@ function getPagedConnections(all) {
 function getMinutesUntil(departureTime) {
   const now = Date.now();
   const dep = new Date(departureTime).getTime();
-
   const diffMs = dep - now;
-
   if (diffMs <= 60000) return 1;
-
   return Math.ceil(diffMs / 60000);
 }
 
 function normalizeLine(line) {
-  return (line || "")
-    .toUpperCase()
-    .replace(/\s+/g, "");
+  return (line || "").toUpperCase().replace(/\s+/g, "");
 }
 
 function cleanDirection(direction) {
   if (!direction) return "?";
-
   let result = direction;
-
   result = result.split(/\s+via\s+/i)[0];
   result = result.split(/\s+->\s+/i)[0];
   result = result.replace(/\(Berlin\)/gi, "");
+  result = result.replace(/\(b\. Bln\)/gi, "");
   result = result.replace(/^Potsdam,\s/, "");
+  result = result.replace(/^Köpenick,\s/, "");
   result = result.split(/\(TF\)/i)[0];
   result = result.split("[")[0];
   result = result.replace(/⟳/g, "").trim();
@@ -1369,7 +1364,6 @@ function cleanDirection(direction) {
   result = result.replace(/^Ersatzverkehr\s+/i, "");
   result = result.replace(/\s{2,}/g, " ").trim();
   result = trimToFit(result, 1200);
-
   return result;
 }
 
@@ -1380,43 +1374,33 @@ function trimToFit(text, maxWidth) {
   testEl.style.whiteSpace = "nowrap";
   testEl.style.fontFamily = "TransitPro";
   testEl.style.fontSize = "86px";
-
   document.body.appendChild(testEl);
-
   let result = text;
   testEl.textContent = result;
-
   if (testEl.offsetWidth <= maxWidth) {
     document.body.removeChild(testEl);
     return result;
   }
-
-  // --- too long: trim at last slash ---
   const slashIndex = result.lastIndexOf("/");
   const commaIndex = result.lastIndexOf(",");
-
   const cutIndex = Math.max(slashIndex, commaIndex);
-
   if (cutIndex !== -1) {
     result = result.substring(0, cutIndex).trim();
     testEl.textContent = result;
   }
-
   document.body.removeChild(testEl);
   return result;
 }
 
 function showAnschlussDelayed() {
-  // reset timer every time user navigates
   if (anschlussDelayTimer) clearTimeout(anschlussDelayTimer);
-
   anschlussDelayTimer = setTimeout(() => {
     activateAnschluss();
   }, 10000);
 }
 
 function activateAnschluss() {
-  
+  // placeholder – currently handled via restartAnschlussTimer
 }
 
 function hideAnschluss() {
@@ -1426,15 +1410,16 @@ function hideAnschluss() {
     clearTimeout(anschlussDelayTimer);
     anschlussDelayTimer = null;
   }
-
   if (pageInterval) {
     clearInterval(pageInterval);
     pageInterval = null;
   }
-
+  if (refreshInterval) {          // <-- NEW: clear the update loop
+    clearInterval(refreshInterval);
+    refreshInterval = null;
+  }
   const wrapper = document.querySelector(".anschlussAnzeige");
   if (wrapper) wrapper.style.display = "none";
-
   if (anschlussOverlay) {
     anschlussOverlay.style.visibility = "visible";
   }
@@ -1443,7 +1428,6 @@ function hideAnschluss() {
 function restartAnschlussTimer() {
   hideAnschluss();
 
-  // clear timers
   if (preloadTimer) clearTimeout(preloadTimer);
   if (anschlussDelayTimer) clearTimeout(anschlussDelayTimer);
   if (pageInterval) clearInterval(pageInterval);
@@ -1462,75 +1446,119 @@ function restartAnschlussTimer() {
 
 async function preloadAnschlussData() {
   if (!stations.length) return;
-
   const station = stations[currentIndex];
   const stopId = station.StationID;
   if (!stopId) return;
-
   try {
     const res = await fetch(
       `https://v6.bvg.transport.rest/stops/${stopId}/departures?express=false&ferry=false`
     );
     const json = await res.json();
-
     const departures = json.departures || [];
-
     const mapped = departures
       .map(dep => {
         if (!dep.when || !dep.line) return null;
-
         const line = dep.line.name;
+        const product = dep.line?.product || "unknown";
         const normalized = normalizeLine(line);
-
-        if (normalized === currentLine) return null;
-
+        if (normalized === currentLine && product === "subway") return null;
         const timestamp = new Date(dep.when).getTime();
         const minutes = Math.ceil((timestamp - Date.now()) / 60000);
-
         if (minutes < 1) return null;
-
         let icon = "bus.png";
         let displayLine = line || "";
-
-        const product = dep.line?.product || "unknown";
-
         if (product === "bus") icon = "bus.png";
         else if (product === "tram") icon = "tram.png";
         else if (product === "suburban" || product === "subway") {
           icon = `${line}.png`;
           displayLine = "";
-        }
-        else if (product === "regional" || product === "national") {
+        } else if (product === "regional" || product === "national") {
           icon = "bahn.png";
         }
-
         let direction = cleanDirection(dep.direction);
-
-        return {
-          displayLine,
-          direction,
-          minutes,
-          icon,
-          timestamp
-        };
+        return { displayLine, direction, minutes, icon, timestamp };
       })
       .filter(Boolean)
       .sort((a, b) => a.timestamp - b.timestamp)
       .slice(0, 8);
 
     anschlussDataCache = mapped;
-
     renderAnschluesse(anschlussDataCache);
-
-    channel.postMessage({
-      type: "setConnections",
-      data: departures
-    });
-
   } catch (err) {
     console.error("Preload error:", err);
   }
 }
+
+// ------- NEW: silent periodic refresh -------
+async function refreshAnschlussData() {
+  if (!anschlussActive || !stations.length) return;
+  const station = stations[currentIndex];
+  const stopId = station.StationID;
+  if (!stopId) return;
+  try {
+    const res = await fetch(
+      `https://v6.bvg.transport.rest/stops/${stopId}/departures?express=false&ferry=false`
+    );
+    const json = await res.json();
+    const departures = json.departures || [];
+    const mapped = departures
+      .map(dep => {
+        if (!dep.when || !dep.line) return null;
+        const line = dep.line.name;
+        const product = dep.line?.product || "unknown";
+        const normalized = normalizeLine(line);
+        if (normalized === currentLine && product === "subway") return null;
+        const timestamp = new Date(dep.when).getTime();
+        const minutes = Math.ceil((timestamp - Date.now()) / 60000);
+        if (minutes < 1) return null;
+        let icon = "bus.png";
+        let displayLine = line || "";
+        if (product === "bus") icon = "bus.png";
+        else if (product === "tram") icon = "tram.png";
+        else if (product === "suburban" || product === "subway") {
+          icon = `${line}.png`;
+          displayLine = "";
+        } else if (product === "regional" || product === "national") {
+          icon = "bahn.png";
+        }
+        let direction = cleanDirection(dep.direction);
+        return { displayLine, direction, minutes, icon, timestamp };
+      })
+      .filter(Boolean)
+      .sort((a, b) => a.timestamp - b.timestamp)
+      .slice(0, 8);
+
+    // remember previous page count
+    const prevPages = totalPagesGlobal;
+
+    // update cache and re-render current page (clamps if necessary)
+    anschlussDataCache = mapped;
+    renderAnschluesse(mapped);
+
+    // handle page count changes
+    adjustPageRotation(prevPages);
+  } catch (err) {
+    console.error("Refresh error:", err);
+  }
+}
+
+function adjustPageRotation(prevPages) {
+  if (totalPagesGlobal > 1) {
+    if (prevPages <= 1 || !pageInterval) {
+      // pages have increased – restart rotation from page 1
+      if (pageInterval) clearInterval(pageInterval);
+      currentPage = 0;
+      startPageRotation(() => anschlussDataCache);
+    }
+  } else {
+    // only one page – stop rotating
+    if (pageInterval) {
+      clearInterval(pageInterval);
+      pageInterval = null;
+    }
+  }
+}
+// -------------------------------------------------
 
 function showPreloadedAnschluss() {
   if (!anschlussDataCache || !anschlussDataCache.length) return;
@@ -1544,18 +1572,27 @@ function showPreloadedAnschluss() {
 
   anschlussActive = true;
 
-  startPageRotation(() => anschlussDataCache);
+  // start the page rotation (only if > 1 page)
+  if (totalPagesGlobal > 1) {
+    startPageRotation(() => anschlussDataCache);
+  } else {
+    // if only one page, just render it without interval
+    renderAnschluesse(anschlussDataCache);
+  }
+
+  // <-- NEW: start the 10‑second update loop
+  if (refreshInterval) clearInterval(refreshInterval);
+  refreshInterval = setInterval(refreshAnschlussData, 10000);
 }
 
 function renderAnschluesse(data) {
   const itemsPerPage = 4;
   const pages = [];
-
   for (let i = 0; i < data.length; i += itemsPerPage) {
     pages.push(data.slice(i, i + itemsPerPage));
   }
 
-  // clamp page index
+  // clamp page index if out of bounds
   if (currentPage >= pages.length) {
     currentPage = 0;
   }
@@ -1570,17 +1607,13 @@ function renderAnschluesse(data) {
     const icon = document.querySelector(`.anschluss${i}Icon`);
 
     const item = pageData[i - 1];
-
     if (item) {
       if (wrapper) wrapper.style.display = "block";
-
       if (icon) icon.src = `images/AnschlussIcons/${item.icon || "unknown.png"}`;
       if (linie) linie.textContent = item.displayLine;
       if (ziel) ziel.textContent = item.direction || "";
       if (zeit) zeit.textContent = item.minutes ?? "";
-
     } else {
-      // hide unused slots
       if (wrapper) wrapper.style.display = "none";
     }
   }
@@ -1592,14 +1625,11 @@ function renderAnschluesse(data) {
 function updatePageIndicator() {
   const indicator = document.querySelector(".anschlussSeiteZeichen");
   if (!indicator) return;
-
   const totalPages = Math.max(1, totalPagesGlobal);
-
   if (totalPages <= 1) {
     indicator.src = "images/AnschlussSeite_Solo.png";
     return;
   }
-
   indicator.src = currentPage === 0
     ? "images/AnschlussSeite_Dual_1.png"
     : "images/AnschlussSeite_Dual_2.png";
@@ -1607,18 +1637,13 @@ function updatePageIndicator() {
 
 function startPageRotation(getDataCallback) {
   if (pageInterval) clearInterval(pageInterval);
-
   pageInterval = setInterval(() => {
     currentPage++;
-
     const data = getDataCallback();
-
     const maxPages = Math.ceil((data?.length || 0) / 4);
-
     if (currentPage >= maxPages) {
       currentPage = 0;
     }
-
     renderAnschluesse(data);
     updatePageIndicator();
   }, 10000);
