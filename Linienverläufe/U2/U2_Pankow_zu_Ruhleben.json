@@ -1,0 +1,266 @@
+{
+  "Line": "U2",
+  "Stations": [
+    {
+      "NextStationName": "Pankow",
+      "FollowingStationName": "Pankow",
+      "StoppedAtStationName": "Pankow",
+      "IsNameDoubleLined": false,
+      "AdditionalName": "",
+      "BarrierFreeType": 2,
+      "StationID": "900130002"
+    },
+    {
+      "NextStationName": "Vinetastr.",
+      "FollowingStationName": "Vinetastr.",
+      "StoppedAtStationName": "Vinetastr.",
+      "IsNameDoubleLined": false,
+      "AdditionalName": "",
+      "BarrierFreeType": 2,
+      "StationID": "900130011"
+    },
+    {
+      "NextStationName": "Schönhauser Allee",
+      "FollowingStationName": "Schönhauser Allee",
+      "StoppedAtStationName": "Schönhauser Allee",
+      "IsNameDoubleLined": false,
+      "AdditionalName": "",
+      "BarrierFreeType": 2,
+      "StationID": "900110001"
+    },
+    {
+      "NextStationName": "Eberswalder Str.",
+      "FollowingStationName": "Eberswalder Str.",
+      "StoppedAtStationName": "Eberswalder Str.",
+      "IsNameDoubleLined": false,
+      "AdditionalName": "",
+      "BarrierFreeType": 2,
+      "StationID": "900110006"
+    },
+    {
+      "NextStationName": "Senefelderplatz",
+      "FollowingStationName": "Senefelderplatz",
+      "StoppedAtStationName": "Senefelderplatz",
+      "IsNameDoubleLined": false,
+      "AdditionalName": "",
+      "BarrierFreeType": 2,
+      "StationID": "900110005"
+    },
+    {
+      "NextStationName": "Rosa-Luxemburg-<br>Platz",
+      "FollowingStationName": "Rosa-Luxemburg-Platz",
+      "StoppedAtStationName": "Rosa-Luxemburg-<br>Platz",
+      "IsNameDoubleLined": true,
+      "AdditionalName": "",
+      "BarrierFreeType": 2,
+      "StationID": "900100016"
+    },
+    {
+      "NextStationName": "Alexanderplatz",
+      "FollowingStationName": "Alexanderplatz",
+      "StoppedAtStationName": "Alexanderplatz",
+      "IsNameDoubleLined": false,
+      "AdditionalName": "",
+      "BarrierFreeType": 2,
+      "StationID": "900100003"
+    },
+    {
+      "NextStationName": "Klosterstr.",
+      "FollowingStationName": "Klosterstr.",
+      "StoppedAtStationName": "Klosterstr.",
+      "IsNameDoubleLined": false,
+      "AdditionalName": "",
+      "BarrierFreeType": 2,
+      "StationID": "900100015"
+    },
+    {
+      "NextStationName": "Märkisches<br>Museum",
+      "FollowingStationName": "Märkisches Museum",
+      "StoppedAtStationName": "Märkisches<br>Museum",
+      "IsNameDoubleLined": true,
+      "AdditionalName": "",
+      "BarrierFreeType": 2,
+      "StationID": "900100014"
+    },
+    {
+      "NextStationName": "Spittelmarkt",
+      "FollowingStationName": "Spittelmarkt",
+      "StoppedAtStationName": "Spittelmarkt",
+      "IsNameDoubleLined": false,
+      "AdditionalName": "",
+      "BarrierFreeType": 2,
+      "StationID": "900100013"
+    },
+    {
+      "NextStationName": "Hausvogteiplatz",
+      "FollowingStationName": "Hausvogteiplatz",
+      "StoppedAtStationName": "Hausvogteiplatz",
+      "IsNameDoubleLined": false,
+      "AdditionalName": "",
+      "BarrierFreeType": 0,
+      "StationID": "900100012"
+    },
+    {
+      "NextStationName": "Stadtmitte",
+      "FollowingStationName": "Stadtmitte",
+      "StoppedAtStationName": "Stadtmitte",
+      "IsNameDoubleLined": false,
+      "AdditionalName": "",
+      "BarrierFreeType": 2,
+      "StationID": "900100011"
+    },
+    {
+      "NextStationName": "Anton-Wilhelm-<br>Amo-Str.",
+      "FollowingStationName": "Anton-Wilhelm-Amo-Str.",
+      "StoppedAtStationName": "Anton-Wilhelm-<br>Amo-Str.",
+      "IsNameDoubleLined": true,
+      "AdditionalName": "",
+      "BarrierFreeType": 2,
+      "StationID": "900100010"
+    },
+    {
+      "NextStationName": "Potsdamer Platz",
+      "FollowingStationName": "Potsdamer Platz",
+      "StoppedAtStationName": "Potsdamer Platz",
+      "IsNameDoubleLined": false,
+      "AdditionalName": "",
+      "BarrierFreeType": 2,
+      "StationID": "900100020"
+    },
+    {
+      "NextStationName": "Mendelssohn-<br>Bartholdy-Park",
+      "FollowingStationName": "Mendelssohn-Bartholdy-Park",
+      "StoppedAtStationName": "Mendelssohn-<br>Bartholdy-Park",
+      "IsNameDoubleLined": true,
+      "AdditionalName": "",
+      "BarrierFreeType": 2,
+      "StationID": "900005252"
+    },
+    {
+      "NextStationName": "Gleisdreieck",
+      "FollowingStationName": "Gleisdreieck",
+      "StoppedAtStationName": "Gleisdreieck",
+      "IsNameDoubleLined": false,
+      "AdditionalName": "",
+      "BarrierFreeType": 2,
+      "StationID": "900017103"
+    },
+    {
+      "NextStationName": "Bülowstr.",
+      "FollowingStationName": "Bülowstr.",
+      "StoppedAtStationName": "Bülowstr.",
+      "IsNameDoubleLined": false,
+      "AdditionalName": "",
+      "BarrierFreeType": 2,
+      "StationID": "900056104"
+    },
+    {
+      "NextStationName": "Nollendorfplatz",
+      "FollowingStationName": "Nollendorfplatz",
+      "StoppedAtStationName": "Nollendorfplatz",
+      "IsNameDoubleLined": false,
+      "AdditionalName": "",
+      "BarrierFreeType": 2,
+      "StationID": "900056102"
+    },
+    {
+      "NextStationName": "Wittenbergplatz",
+      "FollowingStationName": "Wittenbergplatz",
+      "StoppedAtStationName": "Wittenbergplatz",
+      "IsNameDoubleLined": false,
+      "AdditionalName": "",
+      "BarrierFreeType": 2,
+      "StationID": "900056101"
+    },
+    {
+      "NextStationName": "Zoologischer<br>Garten",
+      "FollowingStationName": "Zoologischer Garten",
+      "StoppedAtStationName": "Zoologischer<br>Garten",
+      "IsNameDoubleLined": true,
+      "AdditionalName": "",
+      "BarrierFreeType": 2,
+      "StationID": "900023201"
+    },
+    {
+      "NextStationName": "Ernst-Reuter-Platz",
+      "FollowingStationName": "Ernst-Reuter-Platz",
+      "StoppedAtStationName": "Ernst-Reuter-Platz",
+      "IsNameDoubleLined": false,
+      "AdditionalName": "",
+      "BarrierFreeType": 0,
+      "StationID": "900023101"
+    },
+    {
+      "NextStationName": "Deutsche Oper",
+      "FollowingStationName": "Deutsche Oper",
+      "StoppedAtStationName": "Deutsche Oper",
+      "IsNameDoubleLined": false,
+      "AdditionalName": "",
+      "BarrierFreeType": 0,
+      "StationID": "900022201"
+    },
+    {
+      "NextStationName": "Bismarckstr.",
+      "FollowingStationName": "Bismarckstr.",
+      "StoppedAtStationName": "Bismarckstr.",
+      "IsNameDoubleLined": false,
+      "AdditionalName": "",
+      "BarrierFreeType": 2,
+      "StationID": "900024201"
+    },
+    {
+      "NextStationName": "Sophie-Charlotte-<br>Platz",
+      "FollowingStationName": "Sophie-Charlotte-Platz",
+      "StoppedAtStationName": "Sophie-Charlotte-<br>Platz",
+      "IsNameDoubleLined": true,
+      "AdditionalName": "",
+      "BarrierFreeType": 2,
+      "StationID": "900022101"
+    },
+    {
+      "NextStationName": "Kaiserdamm",
+      "FollowingStationName": "Kaiserdamm",
+      "StoppedAtStationName": "Kaiserdamm",
+      "IsNameDoubleLined": false,
+      "AdditionalName": "",
+      "BarrierFreeType": 2,
+      "StationID": "900026202"
+    },
+    {
+      "NextStationName": "Theodor-Heuss-<br>Platz",
+      "FollowingStationName": "Theodor-Heuss-Platz",
+      "StoppedAtStationName": "Theodor-Heuss-<br>Platz",
+      "IsNameDoubleLined": true,
+      "AdditionalName": "",
+      "BarrierFreeType": 2,
+      "StationID": "900026201"
+    },
+    {
+      "NextStationName": "Neu-Westend",
+      "FollowingStationName": "Neu-Westend",
+      "StoppedAtStationName": "Neu-Westend",
+      "IsNameDoubleLined": false,
+      "AdditionalName": "",
+      "BarrierFreeType": 0,
+      "StationID": "900026101"
+    },
+    {
+      "NextStationName": "Olympia-Stadion",
+      "FollowingStationName": "Olympia-Stadion",
+      "StoppedAtStationName": "Olympia-Stadion",
+      "IsNameDoubleLined": false,
+      "AdditionalName": "",
+      "BarrierFreeType": 2,
+      "StationID": "900025203"
+    },
+    {
+      "NextStationName": "Ruhleben",
+      "FollowingStationName": "Ruhleben",
+      "StoppedAtStationName": "Ruhleben",
+      "IsNameDoubleLined": false,
+      "AdditionalName": "",
+      "BarrierFreeType": 2,
+      "StationID": "900025202"
+    }
+  ]
+}

@@ -1,0 +1,167 @@
+{
+  "Line": "U9",
+  "Stations": [
+    {
+      "NextStationName": "Rathaus Steglitz",
+      "FollowingStationName": "Rathaus Steglitz",
+      "StoppedAtStationName": "Rathaus Steglitz",
+      "IsNameDoubleLined": false,
+      "AdditionalName": "",
+      "BarrierFreeType": 2,
+      "StationID": "900062202"
+    },
+    {
+      "NextStationName": "Schloßstr.",
+      "FollowingStationName": "Schloßstr.",
+      "StoppedAtStationName": "Schloßstr.",
+      "IsNameDoubleLined": false,
+      "AdditionalName": "",
+      "BarrierFreeType": 0,
+      "StationID": "900062203"
+    },
+    {
+      "NextStationName": "Walther-<br>Schreiber-Platz",
+      "FollowingStationName": "Walther-Schreiber-Platz",
+      "StoppedAtStationName": "Walther-<br>Schreiber-Platz",
+      "IsNameDoubleLined": true,
+      "AdditionalName": "",
+      "BarrierFreeType": 2,
+      "StationID": "900061101"
+    },
+    {
+      "NextStationName": "Friedrich-<br>Wilhelm-Platz",
+      "FollowingStationName": "Friedrich-Wilhelm-Platz",
+      "StoppedAtStationName": "Friedrich-<br>Wilhelm-Platz",
+      "IsNameDoubleLined": true,
+      "AdditionalName": "",
+      "BarrierFreeType": 2,
+      "StationID": "900061102"
+    },
+    {
+      "NextStationName": "Bundesplatz",
+      "FollowingStationName": "Bundesplatz",
+      "StoppedAtStationName": "Bundesplatz",
+      "IsNameDoubleLined": false,
+      "AdditionalName": "",
+      "BarrierFreeType": 2,
+      "StationID": "900044202"
+    },
+    {
+      "NextStationName": "Berliner Str.",
+      "FollowingStationName": "Berliner Str.",
+      "StoppedAtStationName": "Berliner Str.",
+      "IsNameDoubleLined": false,
+      "AdditionalName": "",
+      "BarrierFreeType": 2,
+      "StationID": "900044201"
+    },
+    {
+      "NextStationName": "Güntzelstr.",
+      "FollowingStationName": "Güntzelstr.",
+      "StoppedAtStationName": "Güntzelstr.",
+      "IsNameDoubleLined": false,
+      "AdditionalName": "",
+      "BarrierFreeType": 0,
+      "StationID": "900043201"
+    },
+    {
+      "NextStationName": "Spichernstr.",
+      "FollowingStationName": "Spichernstr.",
+      "StoppedAtStationName": "Spichernstr.",
+      "IsNameDoubleLined": false,
+      "AdditionalName": "",
+      "BarrierFreeType": 2,
+      "StationID": "900042101"
+    },
+    {
+      "NextStationName": "Kurfürstendamm",
+      "FollowingStationName": "Kurfürstendamm",
+      "StoppedAtStationName": "Kurfürstendamm",
+      "IsNameDoubleLined": false,
+      "AdditionalName": "",
+      "BarrierFreeType": 2,
+      "StationID": "900023203"
+    },
+    {
+      "NextStationName": "Zoologischer<br>Garten",
+      "FollowingStationName": "Zoologischer Garten",
+      "StoppedAtStationName": "Zoologischer<br>Garten",
+      "IsNameDoubleLined": true,
+      "AdditionalName": "",
+      "BarrierFreeType": 2,
+      "StationID": "900023201"
+    },
+    {
+      "NextStationName": "Hansaplatz",
+      "FollowingStationName": "Hansaplatz",
+      "StoppedAtStationName": "Hansaplatz",
+      "IsNameDoubleLined": false,
+      "AdditionalName": "",
+      "BarrierFreeType": 2,
+      "StationID": "900003101"
+    },
+    {
+      "NextStationName": "Turmstr.",
+      "FollowingStationName": "Turmstr.",
+      "StoppedAtStationName": "Turmstr.",
+      "IsNameDoubleLined": false,
+      "AdditionalName": "",
+      "BarrierFreeType": 2,
+      "StationID": "900003104"
+    },
+    {
+      "NextStationName": "Birkenstr.",
+      "FollowingStationName": "Birkenstr.",
+      "StoppedAtStationName": "Birkenstr.",
+      "IsNameDoubleLined": false,
+      "AdditionalName": "",
+      "BarrierFreeType": 2,
+      "StationID": "900002201"
+    },
+    {
+      "NextStationName": "Westhafen",
+      "FollowingStationName": "Westhafen",
+      "StoppedAtStationName": "Westhafen",
+      "IsNameDoubleLined": false,
+      "AdditionalName": "",
+      "BarrierFreeType": 2,
+      "StationID": "900001201"
+    },
+    {
+      "NextStationName": "Amrumer Str.",
+      "FollowingStationName": "Amrumer Str.",
+      "StoppedAtStationName": "Amrumer Str.",
+      "IsNameDoubleLined": false,
+      "AdditionalName": "",
+      "BarrierFreeType": 2,
+      "StationID": "900009101"
+    },
+    {
+      "NextStationName": "Leopoldplatz",
+      "FollowingStationName": "Leopoldplatz",
+      "StoppedAtStationName": "Leopoldplatz",
+      "IsNameDoubleLined": false,
+      "AdditionalName": "",
+      "BarrierFreeType": 2,
+      "StationID": "900009102"
+    },
+    {
+      "NextStationName": "Nauener Platz",
+      "FollowingStationName": "Nauener Platz",
+      "StoppedAtStationName": "Nauener Platz",
+      "IsNameDoubleLined": false,
+      "AdditionalName": "",
+      "BarrierFreeType": 2,
+      "StationID": "900009201"
+    },
+    {
+      "NextStationName": "Osloer Str.",
+      "FollowingStationName": "Osloer Straße",
+      "StoppedAtStationName": "Osloer Str.",
+      "IsNameDoubleLined": false,
+      "AdditionalName": "",
+      "BarrierFreeType": 2,
+      "StationID": "900009202"
+    }
+  ]
+}

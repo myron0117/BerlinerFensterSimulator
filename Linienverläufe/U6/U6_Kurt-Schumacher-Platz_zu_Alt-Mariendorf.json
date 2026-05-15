@@ -1,0 +1,221 @@
+{
+  "Line": "U6",
+  "Stations": [
+    {
+      "NextStationName": "Kurt-Schumacher-<br>Platz",
+      "FollowingStationName": "Kurt-Schumacher-Platz",
+      "StoppedAtStationName": "Kurt-Schumacher-<br>Platz",
+      "IsNameDoubleLined": true,
+      "AdditionalName": "",
+      "BarrierFreeType": 2,
+      "StationID": "900086102"
+    },
+    {
+      "NextStationName": "Afrikanische Str.",
+      "FollowingStationName": "Afrikanische Str.",
+      "StoppedAtStationName": "Afrikanische Str.",
+      "IsNameDoubleLined": false,
+      "AdditionalName": "",
+      "BarrierFreeType": 2,
+      "StationID": "900011102"
+    },
+    {
+      "NextStationName": "Rehberge",
+      "FollowingStationName": "Rehberge",
+      "StoppedAtStationName": "Rehberge",
+      "IsNameDoubleLined": false,
+      "AdditionalName": "",
+      "BarrierFreeType": 2,
+      "StationID": "900011101"
+    },
+    {
+      "NextStationName": "Seestr.",
+      "FollowingStationName": "Seestr.",
+      "StoppedAtStationName": "Seestr.",
+      "IsNameDoubleLined": false,
+      "AdditionalName": "",
+      "BarrierFreeType": 2,
+      "StationID": "900009103"
+    },
+    {
+      "NextStationName": "Leopoldplatz",
+      "FollowingStationName": "Leopoldplatz",
+      "StoppedAtStationName": "Leopoldplatz",
+      "IsNameDoubleLined": false,
+      "AdditionalName": "",
+      "BarrierFreeType": 2,
+      "StationID": "900009102"
+    },
+    {
+      "NextStationName": "Wedding",
+      "FollowingStationName": "Wedding",
+      "StoppedAtStationName": "Wedding",
+      "IsNameDoubleLined": false,
+      "AdditionalName": "",
+      "BarrierFreeType": 2,
+      "StationID": "900009104"
+    },
+    {
+      "NextStationName": "Reinickendorfer<br>Str.",
+      "FollowingStationName": "Reinickendorfer Str.",
+      "StoppedAtStationName": "Reinickendorfer<br>Str.",
+      "IsNameDoubleLined": true,
+      "AdditionalName": "",
+      "BarrierFreeType": 0,
+      "StationID": "900008102"
+    },
+    {
+      "NextStationName": "Schwartzkopffstr.",
+      "FollowingStationName": "Schwartzkopffstr.",
+      "StoppedAtStationName": "Schwartzkopffstr.",
+      "IsNameDoubleLined": false,
+      "AdditionalName": "",
+      "BarrierFreeType": 2,
+      "StationID": "900100501"
+    },
+    {
+      "NextStationName": "<span style=\"font-size: 148px;\">Naturkundemuseum</span>",
+      "FollowingStationName": "Naturkundemuseum",
+      "StoppedAtStationName": "<span style=\"font-size: 172px;\">Naturkundemuseum</span>",
+      "IsNameDoubleLined": false,
+      "AdditionalName": "",
+      "BarrierFreeType": 2,
+      "StationID": "900100009"
+    },
+    {
+      "NextStationName": "Oranienburger Tor",
+      "FollowingStationName": "Oranienburger Tor",
+      "StoppedAtStationName": "Oranienburger Tor",
+      "IsNameDoubleLined": false,
+      "AdditionalName": "",
+      "BarrierFreeType": 2,
+      "StationID": "900100019"
+    },
+    {
+      "NextStationName": "Friedrichstr.",
+      "FollowingStationName": "Friedrichstr.",
+      "StoppedAtStationName": "Friedrichstr.",
+      "IsNameDoubleLined": false,
+      "AdditionalName": "",
+      "BarrierFreeType": 2,
+      "StationID": "900100001"
+    },
+    {
+      "NextStationName": "Unter den Linden",
+      "FollowingStationName": "Unter den Linden",
+      "StoppedAtStationName": "Unter den Linden",
+      "IsNameDoubleLined": false,
+      "AdditionalName": "",
+      "BarrierFreeType": 2,
+      "StationID": "900100513"
+    },
+    {
+      "NextStationName": "Stadtmitte",
+      "FollowingStationName": "Stadtmitte",
+      "StoppedAtStationName": "Stadtmitte",
+      "IsNameDoubleLined": false,
+      "AdditionalName": "",
+      "BarrierFreeType": 2,
+      "StationID": "900100011"
+    },
+    {
+      "NextStationName": "Kochstr.",
+      "FollowingStationName": "Kochstr.",
+      "StoppedAtStationName": "Kochstr.",
+      "IsNameDoubleLined": false,
+      "AdditionalName": "Checkpoint Charlie",
+      "BarrierFreeType": 2,
+      "StationID": "900012102"
+    },
+    {
+      "NextStationName": "Hallesches Tor",
+      "FollowingStationName": "Hallesches Tor",
+      "StoppedAtStationName": "Hallesches Tor",
+      "IsNameDoubleLined": false,
+      "AdditionalName": "",
+      "BarrierFreeType": 2,
+      "StationID": "900012103"
+    },
+    {
+      "NextStationName": "Mehringdamm",
+      "FollowingStationName": "Mehringdamm",
+      "StoppedAtStationName": "Mehringdamm",
+      "IsNameDoubleLined": false,
+      "AdditionalName": "",
+      "BarrierFreeType": 2,
+      "StationID": "900017101"
+    },
+    {
+      "NextStationName": "Platz der<br>Luftbrücke",
+      "FollowingStationName": "Platz der Luftbrücke",
+      "StoppedAtStationName": "Platz der<br>Luftbrücke",
+      "IsNameDoubleLined": true,
+      "AdditionalName": "",
+      "BarrierFreeType": 2,
+      "StationID": "900017102"
+    },
+    {
+      "NextStationName": "Paradestr.",
+      "FollowingStationName": "Paradestr.",
+      "StoppedAtStationName": "Paradestr.",
+      "IsNameDoubleLined": false,
+      "AdditionalName": "",
+      "BarrierFreeType": 2,
+      "StationID": "900068101"
+    },
+    {
+      "NextStationName": "Tempelhof",
+      "FollowingStationName": "Tempelhof",
+      "StoppedAtStationName": "Tempelhof",
+      "IsNameDoubleLined": false,
+      "AdditionalName": "",
+      "BarrierFreeType": 2,
+      "StationID": "900068201"
+    },
+    {
+      "NextStationName": "Alt-Tempelhof",
+      "FollowingStationName": "Alt-Tempelhof",
+      "StoppedAtStationName": "Alt-Tempelhof",
+      "IsNameDoubleLined": false,
+      "AdditionalName": "",
+      "BarrierFreeType": 0,
+      "StationID": "900068202"
+    },
+    {
+      "NextStationName": "Kaiserin-<br>Augusta-Str.",
+      "FollowingStationName": "Kaiserin-Augusta-Str.",
+      "StoppedAtStationName": "Kaiserin-<br>Augusta-Str.",
+      "IsNameDoubleLined": true,
+      "AdditionalName": "",
+      "BarrierFreeType": 2,
+      "StationID": "900068302"
+    },
+    {
+      "NextStationName": "Ullsteinstr.",
+      "FollowingStationName": "Ullsteinstr.",
+      "StoppedAtStationName": "Ullsteinstr.",
+      "IsNameDoubleLined": false,
+      "AdditionalName": "",
+      "BarrierFreeType": 2,
+      "StationID": "900069271"
+    },
+    {
+      "NextStationName": "Westphalweg",
+      "FollowingStationName": "Westphalweg",
+      "StoppedAtStationName": "Westphalweg",
+      "IsNameDoubleLined": false,
+      "AdditionalName": "",
+      "BarrierFreeType": 0,
+      "StationID": "900070101"
+    },
+    {
+      "NextStationName": "Alt-Mariendorf",
+      "FollowingStationName": "Alt-Mariendorf",
+      "StoppedAtStationName": "Alt-Mariendorf",
+      "IsNameDoubleLined": false,
+      "AdditionalName": "",
+      "BarrierFreeType": 2,
+      "StationID": "900070301"
+    }
+  ]
+}

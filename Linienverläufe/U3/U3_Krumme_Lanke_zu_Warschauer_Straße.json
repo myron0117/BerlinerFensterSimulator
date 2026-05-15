@@ -1,0 +1,221 @@
+{
+  "Line": "U3",
+  "Stations": [
+    {
+      "NextStationName": "Krumme Lanke",
+      "FollowingStationName": "Krumme Lanke",
+      "StoppedAtStationName": "Krumme Lanke",
+      "IsNameDoubleLined": false,
+      "AdditionalName": "",
+      "BarrierFreeType": 2,
+      "StationID": "900050201"
+    },
+    {
+      "NextStationName": "Onkel Toms Hütte",
+      "FollowingStationName": "Onkel Toms Hütte",
+      "StoppedAtStationName": "Onkel Toms Hütte",
+      "IsNameDoubleLined": false,
+      "AdditionalName": "",
+      "BarrierFreeType": 2,
+      "StationID": "900050282"
+    },
+    {
+      "NextStationName": "Oskar-Helene-<br>Heim",
+      "FollowingStationName": "Oskar-Helene-Heim",
+      "StoppedAtStationName": "Oskar-Helene-<br>Heim",
+      "IsNameDoubleLined": true,
+      "AdditionalName": "",
+      "BarrierFreeType": 2,
+      "StationID": "900051372"
+    },
+    {
+      "NextStationName": "Freie Universität",
+      "FollowingStationName": "Freie Universität",
+      "StoppedAtStationName": "Freie Universität",
+      "IsNameDoubleLined": false,
+      "AdditionalName": "Thielplatz",
+      "BarrierFreeType": 2,
+      "StationID": "900051201"
+    },
+    {
+      "NextStationName": "Dahlem-Dorf",
+      "FollowingStationName": "Dahlem-Dorf",
+      "StoppedAtStationName": "Dahlem-Dorf",
+      "IsNameDoubleLined": false,
+      "AdditionalName": "",
+      "BarrierFreeType": 2,
+      "StationID": "900051303"
+    },
+    {
+      "NextStationName": "Podbielskiallee",
+      "FollowingStationName": "Podbielskiallee",
+      "StoppedAtStationName": "Podbielskiallee",
+      "IsNameDoubleLined": false,
+      "AdditionalName": "",
+      "BarrierFreeType": 2,
+      "StationID": "900051302"
+    },
+    {
+      "NextStationName": "Breitenbachplatz",
+      "FollowingStationName": "Breitenbachplatz",
+      "StoppedAtStationName": "Breitenbachplatz",
+      "IsNameDoubleLined": false,
+      "AdditionalName": "",
+      "BarrierFreeType": 2,
+      "StationID": "900051202"
+    },
+    {
+      "NextStationName": "Rüdesheimer<br>Platz",
+      "FollowingStationName": "Rüdesheimer Platz",
+      "StoppedAtStationName": "Rüdesheimer<br>Platz",
+      "IsNameDoubleLined": true,
+      "AdditionalName": "",
+      "BarrierFreeType": 2,
+      "StationID": "900045101"
+    },
+    {
+      "NextStationName": "Heidelberger Platz",
+      "FollowingStationName": "Heidelberger Platz",
+      "StoppedAtStationName": "Heidelberger Platz",
+      "IsNameDoubleLined": false,
+      "AdditionalName": "",
+      "BarrierFreeType": 2,
+      "StationID": "900045102"
+    },
+    {
+      "NextStationName": "Fehrbelliner Platz",
+      "FollowingStationName": "Fehrbelliner Platz",
+      "StoppedAtStationName": "Fehrbelliner Platz",
+      "IsNameDoubleLined": false,
+      "AdditionalName": "",
+      "BarrierFreeType": 2,
+      "StationID": "900041101"
+    },
+    {
+      "NextStationName": "Hohenzollernplatz",
+      "FollowingStationName": "Hohenzollernplatz",
+      "StoppedAtStationName": "Hohenzollernplatz",
+      "IsNameDoubleLined": false,
+      "AdditionalName": "",
+      "BarrierFreeType": 2,
+      "StationID": "900043101"
+    },
+    {
+      "NextStationName": "Spichernstr.",
+      "FollowingStationName": "Spichernstr.",
+      "StoppedAtStationName": "Spichernstr.",
+      "IsNameDoubleLined": false,
+      "AdditionalName": "",
+      "BarrierFreeType": 2,
+      "StationID": "900042101"
+    },
+    {
+      "NextStationName": "Augsburger Str.",
+      "FollowingStationName": "Augsburger Str.",
+      "StoppedAtStationName": "Augsburger Str.",
+      "IsNameDoubleLined": false,
+      "AdditionalName": "",
+      "BarrierFreeType": 2,
+      "StationID": "900023202"
+    },
+    {
+      "NextStationName": "Wittenbergplatz",
+      "FollowingStationName": "Wittenbergplatz",
+      "StoppedAtStationName": "Wittenbergplatz",
+      "IsNameDoubleLined": false,
+      "AdditionalName": "",
+      "BarrierFreeType": 2,
+      "StationID": "900056101"
+    },
+    {
+      "NextStationName": "Nollendorfplatz",
+      "FollowingStationName": "Nollendorfplatz",
+      "StoppedAtStationName": "Nollendorfplatz",
+      "IsNameDoubleLined": false,
+      "AdditionalName": "",
+      "BarrierFreeType": 2,
+      "StationID": "900056102"
+    },
+    {
+      "NextStationName": "Kurfürstenstr.",
+      "FollowingStationName": "Kurfürstenstr.",
+      "StoppedAtStationName": "Kurfürstenstr.",
+      "IsNameDoubleLined": false,
+      "AdditionalName": "",
+      "BarrierFreeType": 2,
+      "StationID": "900005201"
+    },
+    {
+      "NextStationName": "Gleisdreieck",
+      "FollowingStationName": "Gleisdreieck",
+      "StoppedAtStationName": "Gleisdreieck",
+      "IsNameDoubleLined": false,
+      "AdditionalName": "",
+      "BarrierFreeType": 2,
+      "StationID": "900017103"
+    },
+    {
+      "NextStationName": "Möckernbrücke",
+      "FollowingStationName": "Möckernbrücke",
+      "StoppedAtStationName": "Möckernbrücke",
+      "IsNameDoubleLined": false,
+      "AdditionalName": "",
+      "BarrierFreeType": 0,
+      "StationID": "900017104"
+    },
+    {
+      "NextStationName": "Hallesches Tor",
+      "FollowingStationName": "Hallesches Tor",
+      "StoppedAtStationName": "Hallesches Tor",
+      "IsNameDoubleLined": false,
+      "AdditionalName": "",
+      "BarrierFreeType": 2,
+      "StationID": "900012103"
+    },
+    {
+      "NextStationName": "Prinzenstr.",
+      "FollowingStationName": "Prinzenstr.",
+      "StoppedAtStationName": "Prinzenstr.",
+      "IsNameDoubleLined": false,
+      "AdditionalName": "",
+      "BarrierFreeType": 0,
+      "StationID": "900013103"
+    },
+    {
+      "NextStationName": "Kottbusser Tor",
+      "FollowingStationName": "Kottbusser Tor",
+      "StoppedAtStationName": "Kottbusser Tor",
+      "IsNameDoubleLined": false,
+      "AdditionalName": "",
+      "BarrierFreeType": 2,
+      "StationID": "900013102"
+    },
+    {
+      "NextStationName": "Görlitzer Bahnhof",
+      "FollowingStationName": "Görlitzer Bahnhof",
+      "StoppedAtStationName": "Görlitzer Bahnhof",
+      "IsNameDoubleLined": false,
+      "AdditionalName": "",
+      "BarrierFreeType": 0,
+      "StationID": "900014101"
+    },
+    {
+      "NextStationName": "Schlesisches Tor",
+      "FollowingStationName": "Schlesisches Tor",
+      "StoppedAtStationName": "Schlesisches Tor",
+      "IsNameDoubleLined": false,
+      "AdditionalName": "",
+      "BarrierFreeType": 2,
+      "StationID": "900014102"
+    },
+    {
+      "NextStationName": "Warschauer Str.",
+      "FollowingStationName": "Warschauer Straße",
+      "StoppedAtStationName": "Warschauer Str.",
+      "IsNameDoubleLined": false,
+      "AdditionalName": "",
+      "BarrierFreeType": 2,
+      "StationID": "900130002"
+    }
+  ]
+}

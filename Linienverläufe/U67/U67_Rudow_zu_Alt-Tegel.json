@@ -1,0 +1,331 @@
+{
+  "Line": "U67",
+  "BeginningAt": "U7",
+  "Stations": [
+    {
+      "NextStationName": "Rudow",
+      "FollowingStationName": "Rudow",
+      "StoppedAtStationName": "Rudow",
+      "IsNameDoubleLined": false,
+      "AdditionalName": "",
+      "BarrierFreeType": 2,
+      "StationID": "900083201"
+    },
+    {
+      "NextStationName": "Zwickauer Damm",
+      "FollowingStationName": "Zwickauer Damm",
+      "StoppedAtStationName": "Zwickauer Damm",
+      "IsNameDoubleLined": false,
+      "AdditionalName": "",
+      "BarrierFreeType": 2,
+      "StationID": "900083101"
+    },
+    {
+      "NextStationName": "Wutzkyallee",
+      "FollowingStationName": "Wutzkyallee",
+      "StoppedAtStationName": "Wutzkyallee",
+      "IsNameDoubleLined": false,
+      "AdditionalName": "",
+      "BarrierFreeType": 2,
+      "StationID": "900083102"
+    },
+    {
+      "NextStationName": "Lipschitzallee",
+      "FollowingStationName": "Lipschitzallee",
+      "StoppedAtStationName": "Lipschitzallee",
+      "IsNameDoubleLined": false,
+      "AdditionalName": "",
+      "BarrierFreeType": 2,
+      "StationID": "900082201"
+    },
+    {
+      "NextStationName": "Johannisthaler<br>Chaussee",
+      "FollowingStationName": "Johannisthaler Chaussee",
+      "StoppedAtStationName": "Johannisthaler<br>Chaussee",
+      "IsNameDoubleLined": true,
+      "AdditionalName": "",
+      "BarrierFreeType": 2,
+      "StationID": "900082202"
+    },
+    {
+      "NextStationName": "Britz-Süd",
+      "FollowingStationName": "Britz-Süd",
+      "StoppedAtStationName": "Britz-Süd",
+      "IsNameDoubleLined": false,
+      "AdditionalName": "",
+      "BarrierFreeType": 2,
+      "StationID": "900080402"
+    },
+    {
+      "NextStationName": "Parchimer Allee",
+      "FollowingStationName": "Parchimer Allee",
+      "StoppedAtStationName": "Parchimer Allee",
+      "IsNameDoubleLined": false,
+      "AdditionalName": "",
+      "BarrierFreeType": 2,
+      "StationID": "900080401"
+    },
+    {
+      "NextStationName": "Blaschkoallee",
+      "FollowingStationName": "Blaschkoallee",
+      "StoppedAtStationName": "Blaschkoallee",
+      "IsNameDoubleLined": false,
+      "AdditionalName": "",
+      "BarrierFreeType": 2,
+      "StationID": "900080201"
+    },
+    {
+      "NextStationName": "Grenzallee",
+      "FollowingStationName": "Grenzallee",
+      "StoppedAtStationName": "Grenzallee",
+      "IsNameDoubleLined": false,
+      "AdditionalName": "",
+      "BarrierFreeType": 2,
+      "StationID": "900080202"
+    },
+    {
+      "NextStationName": "Neukölln",
+      "FollowingStationName": "Neukölln",
+      "StoppedAtStationName": "Neukölln",
+      "IsNameDoubleLined": false,
+      "AdditionalName": "",
+      "BarrierFreeType": 2,
+      "StationID": "900078201"
+    },
+    {
+      "NextStationName": "Karl-Marx-Str.",
+      "FollowingStationName": "Karl-Marx-Str.",
+      "StoppedAtStationName": "Karl-Marx-Str.",
+      "IsNameDoubleLined": false,
+      "AdditionalName": "",
+      "BarrierFreeType": 2,
+      "StationID": "900078103"
+    },
+    {
+      "NextStationName": "Rathaus Neukölln",
+      "FollowingStationName": "Rathaus Neukölln",
+      "StoppedAtStationName": "Rathaus Neukölln",
+      "IsNameDoubleLined": false,
+      "AdditionalName": "",
+      "BarrierFreeType": 2,
+      "StationID": "900078102"
+    },
+    {
+      "NextStationName": "Hermannplatz",
+      "FollowingStationName": "Hermannplatz",
+      "StoppedAtStationName": "Hermannplatz",
+      "IsNameDoubleLined": false,
+      "AdditionalName": "",
+      "BarrierFreeType": 2,
+      "StationID": "900078101"
+    },
+    {
+      "NextStationName": "Südstern",
+      "FollowingStationName": "Südstern",
+      "StoppedAtStationName": "Südstern",
+      "IsNameDoubleLined": false,
+      "AdditionalName": "",
+      "BarrierFreeType": 2,
+      "StationID": "900016202"
+    },
+    {
+      "NextStationName": "Gneisenaustr.",
+      "FollowingStationName": "Gneisenaustr.",
+      "StoppedAtStationName": "Gneisenaustr.",
+      "IsNameDoubleLined": false,
+      "AdditionalName": "",
+      "BarrierFreeType": 0,
+      "StationID": "900016101"
+    },
+    {
+      "NextStationName": "Mehringdamm",
+      "FollowingStationName": "Mehringdamm",
+      "StoppedAtStationName": "Mehringdamm",
+      "IsNameDoubleLined": false,
+      "AdditionalName": "",
+      "BarrierFreeType": 2,
+      "StationID": "900017101",
+      "IsChangeoverStation": true
+    },
+    {
+      "NextStationName": "Hallesches Tor",
+      "FollowingStationName": "Hallesches Tor",
+      "StoppedAtStationName": "Hallesches Tor",
+      "IsNameDoubleLined": false,
+      "AdditionalName": "",
+      "BarrierFreeType": 2,
+      "StationID": "900012103"
+    },
+    {
+      "NextStationName": "Kochstr.",
+      "FollowingStationName": "Kochstr.",
+      "StoppedAtStationName": "Kochstr.",
+      "IsNameDoubleLined": false,
+      "AdditionalName": "Checkpoint Charlie",
+      "BarrierFreeType": 2,
+      "StationID": "900012102"
+    },
+    {
+      "NextStationName": "Stadtmitte",
+      "FollowingStationName": "Stadtmitte",
+      "StoppedAtStationName": "Stadtmitte",
+      "IsNameDoubleLined": false,
+      "AdditionalName": "",
+      "BarrierFreeType": 2,
+      "StationID": "900100011"
+    },
+    {
+      "NextStationName": "Unter den Linden",
+      "FollowingStationName": "Unter den Linden",
+      "StoppedAtStationName": "Unter den Linden",
+      "IsNameDoubleLined": false,
+      "AdditionalName": "",
+      "BarrierFreeType": 2,
+      "StationID": "900100513"
+    },
+    {
+      "NextStationName": "Friedrichstr.",
+      "FollowingStationName": "Friedrichstr.",
+      "StoppedAtStationName": "Friedrichstr.",
+      "IsNameDoubleLined": false,
+      "AdditionalName": "",
+      "BarrierFreeType": 2,
+      "StationID": "900100001"
+    },
+    {
+      "NextStationName": "Oranienburger Tor",
+      "FollowingStationName": "Oranienburger Tor",
+      "StoppedAtStationName": "Oranienburger Tor",
+      "IsNameDoubleLined": false,
+      "AdditionalName": "",
+      "BarrierFreeType": 2,
+      "StationID": "900100019"
+    },
+    {
+      "NextStationName": "<span style=\"font-size: 148px;\">Naturkundemuseum</span>",
+      "FollowingStationName": "Naturkundemuseum",
+      "StoppedAtStationName": "<span style=\"font-size: 172px;\">Naturkundemuseum</span>",
+      "IsNameDoubleLined": false,
+      "AdditionalName": "",
+      "BarrierFreeType": 2,
+      "StationID": "900100009"
+    },
+    {
+      "NextStationName": "Schwartzkopffstr.",
+      "FollowingStationName": "Schwartzkopffstr.",
+      "StoppedAtStationName": "Schwartzkopffstr.",
+      "IsNameDoubleLined": false,
+      "AdditionalName": "",
+      "BarrierFreeType": 2,
+      "StationID": "900100501"
+    },
+    {
+      "NextStationName": "Reinickendorfer<br>Str.",
+      "FollowingStationName": "Reinickendorfer Str.",
+      "StoppedAtStationName": "Reinickendorfer<br>Str.",
+      "IsNameDoubleLined": true,
+      "AdditionalName": "",
+      "BarrierFreeType": 0,
+      "StationID": "900008102"
+    },
+    {
+      "NextStationName": "Wedding",
+      "FollowingStationName": "Wedding",
+      "StoppedAtStationName": "Wedding",
+      "IsNameDoubleLined": false,
+      "AdditionalName": "",
+      "BarrierFreeType": 2,
+      "StationID": "900009104"
+    },
+    {
+      "NextStationName": "Leopoldplatz",
+      "FollowingStationName": "Leopoldplatz",
+      "StoppedAtStationName": "Leopoldplatz",
+      "IsNameDoubleLined": false,
+      "AdditionalName": "",
+      "BarrierFreeType": 2,
+      "StationID": "900009102"
+    },
+    {
+      "NextStationName": "Seestr.",
+      "FollowingStationName": "Seestr.",
+      "StoppedAtStationName": "Seestr.",
+      "IsNameDoubleLined": false,
+      "AdditionalName": "",
+      "BarrierFreeType": 2,
+      "StationID": "900009103"
+    },
+    {
+      "NextStationName": "Rehberge",
+      "FollowingStationName": "Rehberge",
+      "StoppedAtStationName": "Rehberge",
+      "IsNameDoubleLined": false,
+      "AdditionalName": "",
+      "BarrierFreeType": 2,
+      "StationID": "900011101"
+    },
+    {
+      "NextStationName": "Afrikanische Str.",
+      "FollowingStationName": "Afrikanische Str.",
+      "StoppedAtStationName": "Afrikanische Str.",
+      "IsNameDoubleLined": false,
+      "AdditionalName": "",
+      "BarrierFreeType": 2,
+      "StationID": "900011102"
+    },
+    {
+      "NextStationName": "Kurt-Schumacher-<br>Platz",
+      "FollowingStationName": "Kurt-Schumacher-Platz",
+      "StoppedAtStationName": "Kurt-Schumacher-<br>Platz",
+      "IsNameDoubleLined": true,
+      "AdditionalName": "",
+      "BarrierFreeType": 2,
+      "StationID": "900086102"
+    },
+    {
+      "NextStationName": "Scharnweberstr.",
+      "FollowingStationName": "Scharnweberstr.",
+      "StoppedAtStationName": "Scharnweberstr.",
+      "IsNameDoubleLined": false,
+      "AdditionalName": "",
+      "BarrierFreeType": 2,
+      "StationID": "900087101"
+    },
+    {
+      "NextStationName": "Otisstr.",
+      "FollowingStationName": "Otisstr.",
+      "StoppedAtStationName": "Otisstr.",
+      "IsNameDoubleLined": false,
+      "AdditionalName": "",
+      "BarrierFreeType": 2,
+      "StationID": "900086161"
+    },
+    {
+      "NextStationName": "Holzhauser Str.",
+      "FollowingStationName": "Holzhauser Str.",
+      "StoppedAtStationName": "Holzhauser Str.",
+      "IsNameDoubleLined": false,
+      "AdditionalName": "",
+      "BarrierFreeType": 2,
+      "StationID": "900088201"
+    },
+    {
+      "NextStationName": "Borsigwerke",
+      "FollowingStationName": "Borsigwerke",
+      "StoppedAtStationName": "Borsigwerke",
+      "IsNameDoubleLined": false,
+      "AdditionalName": "",
+      "BarrierFreeType": 2,
+      "StationID": "900088202"
+    },
+    {
+      "NextStationName": "Alt-Tegel",
+      "FollowingStationName": "Alt-Tegel",
+      "StoppedAtStationName": "Alt-Tegel",
+      "IsNameDoubleLined": false,
+      "AdditionalName": "",
+      "BarrierFreeType": 2,
+      "StationID": "900089301"
+    }
+  ]
+}

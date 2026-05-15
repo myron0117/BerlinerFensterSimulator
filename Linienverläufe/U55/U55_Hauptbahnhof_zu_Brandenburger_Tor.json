@@ -1,0 +1,32 @@
+{
+  "Line": "U55",
+  "Stations": [
+    {
+      "NextStationName": "Hauptbahnhof",
+      "FollowingStationName": "Hauptbahnhof",
+      "StoppedAtStationName": "Hauptbahnhof",
+      "IsNameDoubleLined": false,
+      "AdditionalName": "Central Station",
+      "BarrierFreeType": 2,
+      "StationID": "900003201"
+    },
+    {
+      "NextStationName": "Bundestag",
+      "FollowingStationName": "Bundestag",
+      "StoppedAtStationName": "Bundestag",
+      "IsNameDoubleLined": false,
+      "AdditionalName": "",
+      "BarrierFreeType": 2,
+      "StationID": "900003254"
+    },
+    {
+      "NextStationName": "Brandenburger<br>Tor",
+      "FollowingStationName": "Brandenburger Tor",
+      "StoppedAtStationName": "Brandenburger<br>Tor",
+      "IsNameDoubleLined": true,
+      "AdditionalName": "",
+      "BarrierFreeType": 2,
+      "StationID": "900100025"
+    }
+  ]
+}

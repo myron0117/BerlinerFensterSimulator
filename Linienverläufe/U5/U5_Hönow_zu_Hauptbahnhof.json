@@ -1,0 +1,239 @@
+{
+  "Line": "U5",
+  "Stations": [
+    {
+      "NextStationName": "Hönow",
+      "FollowingStationName": "Hönow",
+      "StoppedAtStationName": "Hönow",
+      "IsNameDoubleLined": false,
+      "AdditionalName": "",
+      "BarrierFreeType": 1,
+      "StationID": "900175010"
+    },
+    {
+      "NextStationName": "Louis-Lewin-Str.",
+      "FollowingStationName": "Louis-Lewin-Str.",
+      "StoppedAtStationName": "Louis-Lewin-Str.",
+      "IsNameDoubleLined": false,
+      "AdditionalName": "",
+      "BarrierFreeType": 1,
+      "StationID": "900175015"
+    },
+    {
+      "NextStationName": "Hellersdorf",
+      "FollowingStationName": "Hellersdorf",
+      "StoppedAtStationName": "Hellersdorf",
+      "IsNameDoubleLined": false,
+      "AdditionalName": "",
+      "BarrierFreeType": 1,
+      "StationID": "900175007"
+    },
+    {
+      "NextStationName": "Cottbusser Platz",
+      "FollowingStationName": "Cottbusser Platz",
+      "StoppedAtStationName": "Cottbusser Platz",
+      "IsNameDoubleLined": false,
+      "AdditionalName": "",
+      "BarrierFreeType": 1,
+      "StationID": "900175006"
+    },
+    {
+      "NextStationName": "Kienberg",
+      "FollowingStationName": "Kienberg",
+      "StoppedAtStationName": "Kienberg",
+      "IsNameDoubleLined": false,
+      "AdditionalName": "Gärten der Welt",
+      "BarrierFreeType": 2,
+      "StationID": "900175005"
+    },
+    {
+      "NextStationName": "Kaulsdorf-Nord",
+      "FollowingStationName": "Kaulsdorf-Nord",
+      "StoppedAtStationName": "Kaulsdorf-Nord",
+      "IsNameDoubleLined": false,
+      "AdditionalName": "",
+      "BarrierFreeType": 1,
+      "StationID": "900175004"
+    },
+    {
+      "NextStationName": "Wuhletal",
+      "FollowingStationName": "Wuhletal",
+      "StoppedAtStationName": "Wuhletal",
+      "IsNameDoubleLined": false,
+      "AdditionalName": "",
+      "BarrierFreeType": 1,
+      "StationID": "900175001"
+    },
+    {
+      "NextStationName": "Elsterwerdaer<br>Platz",
+      "FollowingStationName": "Elsterwerdaer Platz",
+      "StoppedAtStationName": "Elsterwerdaer<br>Platz",
+      "IsNameDoubleLined": true,
+      "AdditionalName": "",
+      "BarrierFreeType": 1,
+      "StationID": "900171006"
+    },
+    {
+      "NextStationName": "Biesdorf-Süd",
+      "FollowingStationName": "Biesdorf-Süd",
+      "StoppedAtStationName": "Biesdorf-Süd",
+      "IsNameDoubleLined": false,
+      "AdditionalName": "",
+      "BarrierFreeType": 1,
+      "StationID": "900171005"
+    },
+    {
+      "NextStationName": "Tierpark",
+      "FollowingStationName": "Tierpark",
+      "StoppedAtStationName": "Tierpark",
+      "IsNameDoubleLined": false,
+      "AdditionalName": "",
+      "BarrierFreeType": 2,
+      "StationID": "900161002"
+    },
+    {
+      "NextStationName": "Friedrichsfelde",
+      "FollowingStationName": "Friedrichsfelde",
+      "StoppedAtStationName": "Friedrichsfelde",
+      "IsNameDoubleLined": false,
+      "AdditionalName": "",
+      "BarrierFreeType": 2,
+      "StationID": "900161512"
+    },
+    {
+      "NextStationName": "Lichtenberg",
+      "FollowingStationName": "Lichtenberg",
+      "StoppedAtStationName": "Lichtenberg",
+      "IsNameDoubleLined": false,
+      "AdditionalName": "",
+      "BarrierFreeType": 2,
+      "StationID": "900160004"
+    },
+    {
+      "NextStationName": "Magdalenenstr.",
+      "FollowingStationName": "Magdalenenstr.",
+      "StoppedAtStationName": "Magdalenenstr.",
+      "IsNameDoubleLined": false,
+      "AdditionalName": "",
+      "BarrierFreeType": 2,
+      "StationID": "900160005"
+    },
+    {
+      "NextStationName": "Frankfurter Allee",
+      "FollowingStationName": "Frankfurter Allee",
+      "StoppedAtStationName": "Frankfurter Allee",
+      "IsNameDoubleLined": false,
+      "AdditionalName": "",
+      "BarrierFreeType": 2,
+      "StationID": "900120001"
+    },
+    {
+      "NextStationName": "Samariterstr.",
+      "FollowingStationName": "Samariterstr.",
+      "StoppedAtStationName": "Samariterstr.",
+      "IsNameDoubleLined": false,
+      "AdditionalName": "",
+      "BarrierFreeType": 2,
+      "StationID": "900120009"
+    },
+    {
+      "NextStationName": "Frankfurter Tor",
+      "FollowingStationName": "Frankfurter Tor",
+      "StoppedAtStationName": "Frankfurter Tor",
+      "IsNameDoubleLined": false,
+      "AdditionalName": "",
+      "BarrierFreeType": 2,
+      "StationID": "900120008"
+    },
+    {
+      "NextStationName": "Weberwiese",
+      "FollowingStationName": "Weberwiese",
+      "StoppedAtStationName": "Weberwiese",
+      "IsNameDoubleLined": false,
+      "AdditionalName": "",
+      "BarrierFreeType": 2,
+      "StationID": "900120025"
+    },
+    {
+      "NextStationName": "Strausberger Platz",
+      "FollowingStationName": "Strausberger Platz",
+      "StoppedAtStationName": "Strausberger Platz",
+      "IsNameDoubleLined": false,
+      "AdditionalName": "",
+      "BarrierFreeType": 2,
+      "StationID": "900120006"
+    },
+    {
+      "NextStationName": "Schillingstr.",
+      "FollowingStationName": "Schillingstr.",
+      "StoppedAtStationName": "Schillingstr.",
+      "IsNameDoubleLined": false,
+      "AdditionalName": "",
+      "BarrierFreeType": 2,
+      "StationID": "900100017"
+    },
+    {
+      "NextStationName": "Alexanderplatz",
+      "FollowingStationName": "Alexanderplatz",
+      "StoppedAtStationName": "Alexanderplatz",
+      "IsNameDoubleLined": false,
+      "AdditionalName": "",
+      "BarrierFreeType": 2,
+      "StationID": "900100003"
+    },
+    {
+      "NextStationName": "Rotes Rathaus",
+      "FollowingStationName": "Rotes Rathaus",
+      "StoppedAtStationName": "Rotes Rathaus",
+      "IsNameDoubleLined": false,
+      "AdditionalName": "",
+      "BarrierFreeType": 2,
+      "StationID": "900100045"
+    },
+    {
+      "NextStationName": "Museumsinsel",
+      "FollowingStationName": "Museumsinsel",
+      "StoppedAtStationName": "Museumsinsel",
+      "IsNameDoubleLined": false,
+      "AdditionalName": "",
+      "BarrierFreeType": 2,
+      "StationID": "900100537"
+    },
+    {
+      "NextStationName": "Unter den Linden",
+      "FollowingStationName": "Unter den Linden",
+      "StoppedAtStationName": "Unter den Linden",
+      "IsNameDoubleLined": false,
+      "AdditionalName": "",
+      "BarrierFreeType": 2,
+      "StationID": "900100513"
+    },
+    {
+      "NextStationName": "Brandenburger<br>Tor",
+      "FollowingStationName": "Brandenburger Tor",
+      "StoppedAtStationName": "Brandenburger<br>Tor",
+      "IsNameDoubleLined": true,
+      "AdditionalName": "",
+      "BarrierFreeType": 2,
+      "StationID": "900100025"
+    },
+    {
+      "NextStationName": "Bundestag",
+      "FollowingStationName": "Bundestag",
+      "StoppedAtStationName": "Bundestag",
+      "IsNameDoubleLined": false,
+      "AdditionalName": "",
+      "BarrierFreeType": 2,
+      "StationID": "900003254"
+    },
+    {
+      "NextStationName": "Hauptbahnhof",
+      "FollowingStationName": "Hauptbahnhof",
+      "StoppedAtStationName": "Hauptbahnhof",
+      "IsNameDoubleLined": false,
+      "AdditionalName": "Central Station",
+      "BarrierFreeType": 2,
+      "StationID": "900003201"
+    }
+  ]
+}

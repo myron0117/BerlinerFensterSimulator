@@ -1,0 +1,365 @@
+{
+  "Line": "U7",
+  "Stations": [
+    {
+      "NextStationName": "Rudow",
+      "FollowingStationName": "Rudow",
+      "StoppedAtStationName": "Rudow",
+      "IsNameDoubleLined": false,
+      "AdditionalName": "",
+      "BarrierFreeType": 2,
+      "StationID": "900083201"
+    },
+    {
+      "NextStationName": "Zwickauer Damm",
+      "FollowingStationName": "Zwickauer Damm",
+      "StoppedAtStationName": "Zwickauer Damm",
+      "IsNameDoubleLined": false,
+      "AdditionalName": "",
+      "BarrierFreeType": 2,
+      "StationID": "900083101"
+    },
+    {
+      "NextStationName": "Wutzkyallee",
+      "FollowingStationName": "Wutzkyallee",
+      "StoppedAtStationName": "Wutzkyallee",
+      "IsNameDoubleLined": false,
+      "AdditionalName": "",
+      "BarrierFreeType": 2,
+      "StationID": "900083102"
+    },
+    {
+      "NextStationName": "Lipschitzallee",
+      "FollowingStationName": "Lipschitzallee",
+      "StoppedAtStationName": "Lipschitzallee",
+      "IsNameDoubleLined": false,
+      "AdditionalName": "",
+      "BarrierFreeType": 2,
+      "StationID": "900082201"
+    },
+    {
+      "NextStationName": "Johannisthaler<br>Chaussee",
+      "FollowingStationName": "Johannisthaler Chaussee",
+      "StoppedAtStationName": "Johannisthaler<br>Chaussee",
+      "IsNameDoubleLined": true,
+      "AdditionalName": "",
+      "BarrierFreeType": 2,
+      "StationID": "900082202"
+    },
+    {
+      "NextStationName": "Britz-Süd",
+      "FollowingStationName": "Britz-Süd",
+      "StoppedAtStationName": "Britz-Süd",
+      "IsNameDoubleLined": false,
+      "AdditionalName": "",
+      "BarrierFreeType": 2,
+      "StationID": "900080402"
+    },
+    {
+      "NextStationName": "Parchimer Allee",
+      "FollowingStationName": "Parchimer Allee",
+      "StoppedAtStationName": "Parchimer Allee",
+      "IsNameDoubleLined": false,
+      "AdditionalName": "",
+      "BarrierFreeType": 2,
+      "StationID": "900080401"
+    },
+    {
+      "NextStationName": "Blaschkoallee",
+      "FollowingStationName": "Blaschkoallee",
+      "StoppedAtStationName": "Blaschkoallee",
+      "IsNameDoubleLined": false,
+      "AdditionalName": "",
+      "BarrierFreeType": 2,
+      "StationID": "900080201"
+    },
+    {
+      "NextStationName": "Grenzallee",
+      "FollowingStationName": "Grenzallee",
+      "StoppedAtStationName": "Grenzallee",
+      "IsNameDoubleLined": false,
+      "AdditionalName": "",
+      "BarrierFreeType": 2,
+      "StationID": "900080202"
+    },
+    {
+      "NextStationName": "Neukölln",
+      "FollowingStationName": "Neukölln",
+      "StoppedAtStationName": "Neukölln",
+      "IsNameDoubleLined": false,
+      "AdditionalName": "",
+      "BarrierFreeType": 2,
+      "StationID": "900078201"
+    },
+    {
+      "NextStationName": "Karl-Marx-Str.",
+      "FollowingStationName": "Karl-Marx-Str.",
+      "StoppedAtStationName": "Karl-Marx-Str.",
+      "IsNameDoubleLined": false,
+      "AdditionalName": "",
+      "BarrierFreeType": 2,
+      "StationID": "900078103"
+    },
+    {
+      "NextStationName": "Rathaus Neukölln",
+      "FollowingStationName": "Rathaus Neukölln",
+      "StoppedAtStationName": "Rathaus Neukölln",
+      "IsNameDoubleLined": false,
+      "AdditionalName": "",
+      "BarrierFreeType": 2,
+      "StationID": "900078102"
+    },
+    {
+      "NextStationName": "Hermannplatz",
+      "FollowingStationName": "Hermannplatz",
+      "StoppedAtStationName": "Hermannplatz",
+      "IsNameDoubleLined": false,
+      "AdditionalName": "",
+      "BarrierFreeType": 2,
+      "StationID": "900078101"
+    },
+    {
+      "NextStationName": "Südstern",
+      "FollowingStationName": "Südstern",
+      "StoppedAtStationName": "Südstern",
+      "IsNameDoubleLined": false,
+      "AdditionalName": "",
+      "BarrierFreeType": 2,
+      "StationID": "900016202"
+    },
+    {
+      "NextStationName": "Gneisenaustr.",
+      "FollowingStationName": "Gneisenaustr.",
+      "StoppedAtStationName": "Gneisenaustr.",
+      "IsNameDoubleLined": false,
+      "AdditionalName": "",
+      "BarrierFreeType": 0,
+      "StationID": "900016101"
+    },
+    {
+      "NextStationName": "Mehringdamm",
+      "FollowingStationName": "Mehringdamm",
+      "StoppedAtStationName": "Mehringdamm",
+      "IsNameDoubleLined": false,
+      "AdditionalName": "",
+      "BarrierFreeType": 2,
+      "StationID": "900017101"
+    },
+    {
+      "NextStationName": "Möckernbrücke",
+      "FollowingStationName": "Möckernbrücke",
+      "StoppedAtStationName": "Möckernbrücke",
+      "IsNameDoubleLined": false,
+      "AdditionalName": "",
+      "BarrierFreeType": 0,
+      "StationID": "900017104"
+    },
+    {
+      "NextStationName": "Yorckstr.",
+      "FollowingStationName": "Yorckstr.",
+      "StoppedAtStationName": "Yorckstr.",
+      "IsNameDoubleLined": false,
+      "AdditionalName": "",
+      "BarrierFreeType": 2,
+      "StationID": "900058103"
+    },
+    {
+      "NextStationName": "Kleistpark",
+      "FollowingStationName": "Kleistpark",
+      "StoppedAtStationName": "Kleistpark",
+      "IsNameDoubleLined": false,
+      "AdditionalName": "",
+      "BarrierFreeType": 2,
+      "StationID": "900054102"
+    },
+    {
+      "NextStationName": "Eisenacher Str.",
+      "FollowingStationName": "Eisenacher Str.",
+      "StoppedAtStationName": "Eisenacher Str.",
+      "IsNameDoubleLined": false,
+      "AdditionalName": "",
+      "BarrierFreeType": 2,
+      "StationID": "900054103"
+    },
+    {
+      "NextStationName": "Bayerischer Platz",
+      "FollowingStationName": "Bayerischer Platz",
+      "StoppedAtStationName": "Bayerischer Platz",
+      "IsNameDoubleLined": false,
+      "AdditionalName": "",
+      "BarrierFreeType": 2,
+      "StationID": "900055102"
+    },
+    {
+      "NextStationName": "Berliner Str.",
+      "FollowingStationName": "Berliner Str.",
+      "StoppedAtStationName": "Berliner Str.",
+      "IsNameDoubleLined": false,
+      "AdditionalName": "",
+      "BarrierFreeType": 2,
+      "StationID": "900044201"
+    },
+    {
+      "NextStationName": "Blissestr.",
+      "FollowingStationName": "Blissestr.",
+      "StoppedAtStationName": "Blissestr.",
+      "IsNameDoubleLined": false,
+      "AdditionalName": "",
+      "BarrierFreeType": 2,
+      "StationID": "900041102"
+    },
+    {
+      "NextStationName": "Fehrbelliner Platz",
+      "FollowingStationName": "Fehrbelliner Platz",
+      "StoppedAtStationName": "Fehrbelliner Platz",
+      "IsNameDoubleLined": false,
+      "AdditionalName": "",
+      "BarrierFreeType": 2,
+      "StationID": "900041101"
+    },
+    {
+      "NextStationName": "Konstanzer Str.",
+      "FollowingStationName": "Konstanzer Str.",
+      "StoppedAtStationName": "Konstanzer Str.",
+      "IsNameDoubleLined": false,
+      "AdditionalName": "",
+      "BarrierFreeType": 2,
+      "StationID": "900041201"
+    },
+    {
+      "NextStationName": "Adenauerplatz",
+      "FollowingStationName": "Adenauerplatz",
+      "StoppedAtStationName": "Adenauerplatz",
+      "IsNameDoubleLined": false,
+      "AdditionalName": "",
+      "BarrierFreeType": 2,
+      "StationID": "900023302"
+    },
+    {
+      "NextStationName": "Wilmersdorfer Str.",
+      "FollowingStationName": "Wilmersdorfer Str.",
+      "StoppedAtStationName": "Wilmersdorfer Str.",
+      "IsNameDoubleLined": false,
+      "AdditionalName": "",
+      "BarrierFreeType": 2,
+      "StationID": "900024202"
+    },
+    {
+      "NextStationName": "Bismarckstr.",
+      "FollowingStationName": "Bismarckstr.",
+      "StoppedAtStationName": "Bismarckstr.",
+      "IsNameDoubleLined": false,
+      "AdditionalName": "",
+      "BarrierFreeType": 2,
+      "StationID": "900024201"
+    },
+    {
+      "NextStationName": "Richard-Wagner-<br>Platz",
+      "FollowingStationName": "Richard-Wagner-Platz",
+      "StoppedAtStationName": "Richard-Wagner-<br>Platz",
+      "IsNameDoubleLined": true,
+      "AdditionalName": "",
+      "BarrierFreeType": 2,
+      "StationID": "900022202"
+    },
+    {
+      "NextStationName": "Mierendorffplatz",
+      "FollowingStationName": "Mierendorffplatz",
+      "StoppedAtStationName": "Mierendorffplatz",
+      "IsNameDoubleLined": false,
+      "AdditionalName": "",
+      "BarrierFreeType": 0,
+      "StationID": "900019204"
+    },
+    {
+      "NextStationName": "Jungfernheide",
+      "FollowingStationName": "Jungfernheide",
+      "StoppedAtStationName": "Jungfernheide",
+      "IsNameDoubleLined": false,
+      "AdditionalName": "",
+      "BarrierFreeType": 2,
+      "StationID": "900020201"
+    },
+    {
+      "NextStationName": "Jakob-Kaiser-Platz",
+      "FollowingStationName": "Jakob-Kaiser-Platz",
+      "StoppedAtStationName": "Jakob-Kaiser-Platz",
+      "IsNameDoubleLined": false,
+      "AdditionalName": "",
+      "BarrierFreeType": 2,
+      "StationID": "900018101"
+    },
+    {
+      "NextStationName": "Halemweg",
+      "FollowingStationName": "Halemweg",
+      "StoppedAtStationName": "Halemweg",
+      "IsNameDoubleLined": false,
+      "AdditionalName": "",
+      "BarrierFreeType": 2,
+      "StationID": "900018102"
+    },
+    {
+      "NextStationName": "Siemensdamm",
+      "FollowingStationName": "Siemensdamm",
+      "StoppedAtStationName": "Siemensdamm",
+      "IsNameDoubleLined": false,
+      "AdditionalName": "",
+      "BarrierFreeType": 2,
+      "StationID": "900035101"
+    },
+    {
+      "NextStationName": "Rohrdamm",
+      "FollowingStationName": "Rohrdamm",
+      "StoppedAtStationName": "Rohrdamm",
+      "IsNameDoubleLined": false,
+      "AdditionalName": "",
+      "BarrierFreeType": 0,
+      "StationID": "900036101"
+    },
+    {
+      "NextStationName": "Paulsternstr.",
+      "FollowingStationName": "Paulsternstr.",
+      "StoppedAtStationName": "Paulsternstr.",
+      "IsNameDoubleLined": false,
+      "AdditionalName": "",
+      "BarrierFreeType": 0,
+      "StationID": "900034101"
+    },
+    {
+      "NextStationName": "Haselhorst",
+      "FollowingStationName": "Haselhorst",
+      "StoppedAtStationName": "Haselhorst",
+      "IsNameDoubleLined": false,
+      "AdditionalName": "",
+      "BarrierFreeType": 2,
+      "StationID": "900034102"
+    },
+    {
+      "NextStationName": "Zitadelle",
+      "FollowingStationName": "Zitadelle",
+      "StoppedAtStationName": "Zitadelle",
+      "IsNameDoubleLined": false,
+      "AdditionalName": "",
+      "BarrierFreeType": 2,
+      "StationID": "900033101"
+    },
+    {
+      "NextStationName": "Altstadt Spandau",
+      "FollowingStationName": "Altstadt Spandau",
+      "StoppedAtStationName": "Altstadt Spandau",
+      "IsNameDoubleLined": false,
+      "AdditionalName": "",
+      "BarrierFreeType": 2,
+      "StationID": "900029301"
+    },
+    {
+      "NextStationName": "Rathaus Spandau",
+      "FollowingStationName": "Rathaus Spandau",
+      "StoppedAtStationName": "Rathaus Spandau",
+      "IsNameDoubleLined": false,
+      "AdditionalName": "",
+      "BarrierFreeType": 2,
+      "StationID": "900029302"
+    }
+  ]
+}

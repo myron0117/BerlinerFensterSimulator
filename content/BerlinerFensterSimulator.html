@@ -1,0 +1,2373 @@
+<!DOCTYPE html>
+
+<html lang="de">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Berliner Fenster Simulator</title>
+    <link rel="icon" href="berlinerfenster.ico"/>
+    <style>
+        @font-face
+        {
+            font-family: "TransitPro"; src: url('http://127.0.0.1:5001/TransitPro.woff2');
+        }
+        @font-face
+        {
+            font-family: "TransitPro-Bold"; src: url('http://127.0.0.1:5001/TransitPro-Bold.woff2');
+        }
+        @font-face
+        {
+            font-family: "TransitPro-Italic"; src: url('http://127.0.0.1:5001/TransitPro-Italic.woff2');
+        }
+        @font-face
+        {
+            font-family: "TransitPro-BoldItalic"; src: url('http://127.0.0.1:5001/TransitPro-BoldItalic.woff2');
+        }
+        ::selection {
+          background: #f0d722;
+          color: #252424;
+        }
+        ::-moz-selection {
+          background: #f0d722;
+          color: #252424;
+        }
+    </style>
+</head>
+
+<body style="background-color:#252424;">
+
+
+
+<style>
+  .container
+  {
+    position: relative;
+    display: inline-block;
+    transform-origin: top left;
+    margin: -16px;
+    zoom: 0.5;
+    visibility: visible;
+  }
+
+  .container img
+  {
+    display: block;
+  }
+
+  .grundbild {
+    position: absolute;
+    top: 0px;
+    right: 0px;
+    z-index: 100;
+  }
+
+  .uhrzeit {
+    position: absolute;
+    top: 20px;
+    right: 0px;
+    width: 202px;
+    z-index: 200;
+    text-align: center;
+    color: #252424;
+    font-family: TransitPro-Bold;
+    font-size: 72px;
+    cursor: default;
+  }
+
+
+
+  .nextHalt {
+    position: absolute;
+    top: 228px;
+    left: 290px;
+    color: #252424;
+    font-family: TransitPro-Bold;
+    font-size: 160px;
+    display: flex;
+    align-items: center;
+    height: 184px;
+    z-index: 50;
+    cursor: default;
+  }
+
+  .nextHaltNamenszusatz {
+    position: absolute;
+    top: 386px;
+    left: 290px;
+    color: #252424;
+    font-family: TransitPro;
+    font-size: 88px;
+    z-index: 50;
+    cursor: default;
+  }
+
+  .nextHaltBarrierefreiheitAufzug {
+    position: absolute;
+    top: 265px;
+    left: 50px;
+    z-index: 50;
+    visibility: visible;
+  }
+
+  .nextHaltBarrierefreiheitRampe {
+    position: absolute;
+    top: 265px;
+    left: 50px;
+    z-index: 50;
+    visibility: hidden;
+  }
+
+
+
+  .folgeHalt1 {
+    position: absolute;
+    top: 516px;
+    left: 290px;
+    color: #252424;
+    font-family: TransitPro-Bold;
+    font-size: 102px;
+    cursor: default;
+  }
+
+  .folgeHalt1Namenszusatz {
+    position: absolute;
+    top: 620px;
+    left: 290px;
+    color: #252424;
+    font-family: TransitPro;
+    font-size: 56px;
+    cursor: default;
+  }
+
+  .folgeHalt1BarrierefreiheitAufzug {
+    position: absolute;
+    top: 525px;
+    left: 50px;
+    visibility: visible;
+  }
+
+  .folgeHalt1BarrierefreiheitRampe {
+    position: absolute;
+    top: 525px;
+    left: 50px;
+    visibility: hidden;
+  }
+
+
+
+  .folgeHalt2 {
+    position: absolute;
+    top: 706px;
+    left: 290px;
+    color: #252424;
+    font-family: TransitPro-Bold;
+    font-size: 102px;
+    cursor: default;
+  }
+
+  .folgeHalt2Namenszusatz {
+    position: absolute;
+    top: 810px;
+    left: 290px;
+    color: #252424;
+    font-family: TransitPro;
+    font-size: 56px;
+    cursor: default;
+  }
+
+  .folgeHalt2BarrierefreiheitAufzug {
+    position: absolute;
+    top: 715px;
+    left: 50px;
+    visibility: visible;
+  }
+
+  .folgeHalt2BarrierefreiheitRampe {
+    position: absolute;
+    top: 715px;
+    left: 50px;
+    visibility: hidden;
+  }
+
+
+
+  .folgeHalt3 {
+    position: absolute;
+    top: 1036px;
+    left: 290px;
+    color: #252424;
+    font-family: TransitPro-Bold;
+    font-size: 102px;
+    cursor: default;
+  }
+
+  .folgeHalt3BarrierefreiheitAufzug {
+    position: absolute;
+    top: 1045px;
+    left: 50px;
+    visibility: visible;
+  }
+
+  .folgeHalt3BarrierefreiheitRampe {
+    position: absolute;
+    top: 1045px;
+    left: 50px;
+    visibility: hidden;
+  }
+
+
+
+
+
+
+
+
+  .anschlussAnzeige {
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    width: 1600px;
+    height: 1200px;
+    display: none;
+  }
+
+  .anschlussAnzeigeOverlay {
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    z-index: 20;
+  }
+
+  .anschlussAnzeigeTitel {
+    position: absolute;
+    top: 544px;
+    left: 340px;
+    color: #252424;
+    font-family: TransitPro-Bold;
+    font-size: 64px;
+    z-index: 50;
+    cursor: default;
+  }
+
+  .anschlussAnzeigeTitelZeit {
+    position: absolute;
+    top: 544px;
+    right: 50px;
+    color: #252424;
+    font-family: TransitPro-Bold;
+    font-size: 64px;
+    z-index: 50;
+    cursor: default;
+  }
+
+  .anschluss1 {
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    width: 1600px;
+    height: 1200px;
+    display: block;
+  }
+
+  .anschluss2 {
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    width: 1600px;
+    height: 1200px;
+    display: block;
+  }
+
+  .anschluss3 {
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    width: 1600px;
+    height: 1200px;
+    display: block;
+  }
+
+  .anschluss4 {
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    width: 1600px;
+    height: 1200px;
+    display: block;
+  }
+
+  .anschluss5 {
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    width: 1600px;
+    height: 1200px;
+    display: none;
+  }
+
+  .anschluss6 {
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    width: 1600px;
+    height: 1200px;
+    display: none;
+  }
+
+  .anschluss7 {
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    width: 1600px;
+    height: 1200px;
+    display: none;
+  }
+
+  .anschluss8 {
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    width: 1600px;
+    height: 1200px;
+    display: none;
+  }
+
+
+
+  .anschluss1Icon {
+    position: absolute;
+    transform: translateY(-100%);
+    top: 718px;
+    left: 36px;
+    z-index: 50;
+  }
+
+  .anschluss1Linie {
+    position: absolute;
+    transform: translateY(-100%);
+    top: 730px;
+    left: 150px;
+    color: #252424;
+    font-family: TransitPro-Bold;
+    font-size: 86px;
+    z-index: 50;
+    cursor: default;
+  }
+
+  .anschluss1Ziel {
+    position: absolute;
+    transform: translateY(-100%);
+    top: 730px;
+    left: 340px;
+    color: #252424;
+    font-family: TransitPro;
+    font-size: 86px;
+    z-index: 50;
+    cursor: default;
+  }
+
+  .anschluss1Zeit {
+    position: absolute;
+    transform: translateY(-100%);
+    top: 730px;
+    right: 50px;
+    color: #252424;
+    font-family: TransitPro-Bold;
+    font-size: 86px;
+    z-index: 50;
+    cursor: default;
+  }
+
+  .anschluss1Trennstrich {
+    position: absolute;
+    top: 730px;
+    z-index: 50;
+  }
+
+  .anschluss2Icon {
+    position: absolute;
+    transform: translateY(-100%);
+    top: 848px;
+    left: 36px;
+    z-index: 50;
+  }
+
+  .anschluss2Linie {
+    position: absolute;
+    transform: translateY(-100%);
+    top: 860px;
+    left: 150px;
+    color: #252424;
+    font-family: TransitPro-Bold;
+    font-size: 86px;
+    z-index: 50;
+    cursor: default;
+  }
+
+  .anschluss2Ziel {
+    position: absolute;
+    transform: translateY(-100%);
+    top: 860px;
+    left: 340px;
+    color: #252424;
+    font-family: TransitPro;
+    font-size: 86px;
+    z-index: 50;
+    cursor: default;
+  }
+
+  .anschluss2Zeit {
+    position: absolute;
+    transform: translateY(-100%);
+    top: 860px;
+    right: 50px;
+    color: #252424;
+    font-family: TransitPro-Bold;
+    font-size: 86px;
+    z-index: 50;
+    cursor: default;
+  }
+
+  .anschluss2Trennstrich {
+    position: absolute;
+    top: 860px;
+    z-index: 50;
+  }
+
+  .anschluss3Icon {
+    position: absolute;
+    transform: translateY(-100%);
+    top: 978px;
+    left: 36px;
+    z-index: 50;
+  }
+
+  .anschluss3Linie {
+    position: absolute;
+    transform: translateY(-100%);
+    top: 990px;
+    left: 150px;
+    color: #252424;
+    font-family: TransitPro-Bold;
+    font-size: 86px;
+    z-index: 50;
+    cursor: default;
+  }
+
+  .anschluss3Ziel {
+    position: absolute;
+    transform: translateY(-100%);
+    top: 990px;
+    left: 340px;
+    color: #252424;
+    font-family: TransitPro;
+    font-size: 86px;
+    z-index: 50;
+    cursor: default;
+  }
+
+  .anschluss3Zeit {
+    position: absolute;
+    transform: translateY(-100%);
+    top: 990px;
+    right: 50px;
+    color: #252424;
+    font-family: TransitPro-Bold;
+    font-size: 86px;
+    z-index: 50;
+    cursor: default;
+  }
+
+  .anschluss3Trennstrich {
+    position: absolute;
+    top: 990px;
+    z-index: 50;
+  }
+
+  .anschluss4Icon {
+    position: absolute;
+    transform: translateY(-100%);
+    top: 1108px;
+    left: 36px;
+    z-index: 50;
+  }
+
+  .anschluss4Linie {
+    position: absolute;
+    transform: translateY(-100%);
+    top: 1120px;
+    left: 150px;
+    color: #252424;
+    font-family: TransitPro-Bold;
+    font-size: 86px;
+    z-index: 50;
+    cursor: default;
+  }
+
+  .anschluss4Ziel {
+    position: absolute;
+    transform: translateY(-100%);
+    top: 1120px;
+    left: 340px;
+    color: #252424;
+    font-family: TransitPro;
+    font-size: 86px;
+    z-index: 50;
+    cursor: default;
+  }
+
+  .anschluss4Zeit {
+    position: absolute;
+    transform: translateY(-100%);
+    top: 1120px;
+    right: 50px;
+    color: #252424;
+    font-family: TransitPro-Bold;
+    font-size: 86px;
+    z-index: 50;
+    cursor: default;
+  }
+
+  .anschluss4Trennstrich {
+    position: absolute;
+    top: 1120px;
+    z-index: 50;
+  }
+
+
+
+  .anschlussSeiteZeichen {
+    position: absolute;
+    bottom: 12px;
+    right: 50px;
+    z-index: 50;
+  }
+
+
+
+
+
+
+
+
+
+
+  .container {
+    position: relative;
+    display: inline-block;
+    background-image: url("images/LinieHintergrund/U6.png");
+    background-size: cover;
+  }
+
+  .container .overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    object-fit: cover;
+    z-index: 0;
+}
+</style>
+
+<div class="container">
+  <img id="LinienverlaufOverlay" src="images/LinienverlaufOverlays/BeiFahrt_1Zeiler_5Stationen.png">
+
+  <img class="grundbild" src="images/BVG.png">
+
+  <div class="uhrzeit">99:99</div>
+
+  <div class="nextHalt">Kochstr.</div>
+  <div class="nextHaltNamenszusatz">Checkpoint Charlie</div>
+  <img class="nextHaltBarrierefreiheitAufzug" src="images/Aufzug_90px.png">
+  <img class="nextHaltBarrierefreiheitRampe" src="images/Rampe_90px.png">
+
+  <div class="folgeHalt1">Hallesches Tor</div>
+  <div class="folgeHalt1Namenszusatz">Namenszusatz</div>
+  <img class="folgeHalt1BarrierefreiheitAufzug" src="images/Aufzug_90px.png">
+  <img class="folgeHalt1BarrierefreiheitRampe" src="images/Rampe_90px.png">
+
+  <div class="folgeHalt2">Mehringdamm</div>
+  <div class="folgeHalt2Namenszusatz">Namenszusatz</div>
+  <img class="folgeHalt2BarrierefreiheitAufzug" src="images/Aufzug_90px.png">
+  <img class="folgeHalt2BarrierefreiheitRampe" src="images/Rampe_90px.png">
+
+  <div class="folgeHalt3">Alt-Mariendorf</div>
+  <img class="folgeHalt3BarrierefreiheitAufzug" src="images/Aufzug_90px.png">
+  <img class="folgeHalt3BarrierefreiheitRampe" src="images/Rampe_90px.png">
+
+
+
+
+
+  <!-- Anschluss-Ebene -->
+  <div class="anschlussAnzeige">
+    <img class="anschlussAnzeigeOverlay" src="images/LinienverlaufOverlays/KurzVorHalt_Anschlüsse.png">
+    <div class="anschlussAnzeigeTitel">nächste Anschlüsse <span style="font-family: TransitPro-Italic; font-style: normal;">&nbsp;next connections</span></div>
+    <div class="anschlussAnzeigeTitelZeit">min</div>
+
+    <div class="anschluss1">
+      <img class="anschluss1Icon" src="images/AnschlussIcons/bus.png">
+      <div class="anschluss1Linie">100</div>
+      <div class="anschluss1Ziel">Bielefeld</div>
+      <div class="anschluss1Zeit">5</div>
+      <img class="anschluss1Trennstrich" src="images/Trennstrich_LightMode.png">
+    </div>
+
+    <div class="anschluss2">
+      <img class="anschluss2Icon" src="images/AnschlussIcons/bus.png">
+      <div class="anschluss2Linie">200</div>
+      <div class="anschluss2Ziel">Bielefeld</div>
+      <div class="anschluss2Zeit">10</div>
+      <img class="anschluss2Trennstrich" src="images/Trennstrich_LightMode.png">
+    </div>
+
+    <div class="anschluss3">
+      <img class="anschluss3Icon" src="images/AnschlussIcons/bus.png">
+      <div class="anschluss3Linie">300</div>
+      <div class="anschluss3Ziel">Bielefeld</div>
+      <div class="anschluss3Zeit">15</div>
+      <img class="anschluss3Trennstrich" src="images/Trennstrich_LightMode.png">
+    </div>
+
+    <div class="anschluss4">
+      <img class="anschluss4Icon" src="images/AnschlussIcons/bus.png">
+      <div class="anschluss4Linie">400</div>
+      <div class="anschluss4Ziel">Bielefeld</div>
+      <div class="anschluss4Zeit">20</div>
+      <img class="anschluss4Trennstrich" src="images/Trennstrich_LightMode.png">
+    </div>
+
+    <img class="anschlussSeiteZeichen" src="images/AnschlussSeite_Dual_1.png">
+  </div>
+
+
+
+
+
+  <!-- BEI HALT LAYER -->
+  <div id="beiHaltLayer" style="
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: none;
+    z-index: 80;
+  ">
+  <img id="beiHaltOverlay" src="">
+
+  <div id="beiHaltText" style="
+    position: absolute;
+    left: 52px;
+    top: 462px;
+    color: #252424;
+    font-family: TransitPro-Bold;
+    font-size: 192px;
+    display: flex;
+    align-items: center;
+    height: 184px;
+    cursor: default;
+  "></div>
+  <div id="beiHaltZusatz" style="
+    position: absolute;
+    left: 52px;
+    top: 596px;
+    color: #252424;
+    font-family: TransitPro;
+    font-size: 102px;
+    cursor: default;
+  "></div>
+</div>
+</div>
+
+
+
+<label
+  id="SimulatorIcon"
+  style="
+    position: absolute;
+    top: 50px;
+    left: 850px;
+  "><img src="images/BerlinerFensterIcon_48px.png"></label>
+
+<label
+  id="SimulatorTitel"
+  style="
+    position: absolute;
+    top: 50px;
+    left: 914px;
+    color: #ffffff;
+    font-size: 48px;
+    font-family: TransitPro-BoldItalic;
+    cursor: default;
+  ">Berliner Fenster Simulator</label>
+
+
+
+<label
+  style="
+    position: absolute;
+    top: 150px;
+    left: 850px;
+    color: #ffffff;
+    font-size: 32px;
+    font-family: TransitPro-Bold;
+    cursor: default;
+  ">Linienverlauf</label>
+
+<label id="skriptInputButton"
+       style="
+         position: absolute;
+         top: 200px;
+         left: 850px;
+         width: 684px;
+         height: 64px;
+         display: flex;
+         align-items: center;
+         justify-content: center;
+         background-color: #FFFFFF;
+         color: #252424;
+         font-size: 24px;
+         font-family: TransitPro-Bold;
+         text-align: center;
+         overflow: hidden;
+         box-sizing: border-box;
+         border: 4px solid #D2D2D2;
+         border-radius: 40px;
+         cursor: pointer;
+         transition: all 0.1s ease;
+       "
+       onmouseover="this.style.backgroundColor='#D2D2D2'; this.style.color='#252424';"
+       onmouseout="this.style.backgroundColor='#FFFFFF'; this.style.color='#252424';"
+       onmousedown="this.style.backgroundColor='#252424'; this.style.color='#FFFFFF'; this.style.border='4px solid #FFFFFF'; this.style.transform='scale(1)';"
+       onmouseup="this.style.backgroundColor='#D2D2D2'; this.style.color='#252424'; this.style.border='4px solid #D2D2D2'; this.style.transform='scale(1)';"
+>
+  <span id="skriptInputText">Linienverlauf wählen...</span>
+  <input type="file" id="skriptInput" accept=".json" style="display: none;" />
+</label>
+<script>
+const skriptInput = document.getElementById('skriptInput');
+const skriptInputText = document.getElementById('skriptInputText');
+
+skriptInput.addEventListener('change', () => {
+  if (skriptInput.files.length > 0) {
+    skriptInputText.textContent = skriptInput.files[0].name;
+  } else {
+    skriptInputText.textContent = 'Linienverlauf wählen...';
+  }
+});
+</script>
+
+<button
+  id="removeScriptButton"
+  onclick="send('removeScript')"
+  style="
+    position: absolute;
+    top: 200px;
+    left: 1550px;
+    width: 280px;
+    height: 64px;
+    background-color: #FFFFFF;
+    color: #252424;
+    font-size: 24px;
+    font-family: TransitPro-Bold;
+    border: 4px solid #D2D2D2;
+    border-radius: 40px;
+    cursor: pointer;
+    transition: all 0.1s ease;
+  "
+  onmouseover="this.style.backgroundColor='#D2D2D2'; this.style.color='#252424';"
+  onmouseout="this.style.backgroundColor='#FFFFFF'; this.style.color='#252424';"
+  onmousedown="this.style.backgroundColor='#252424'; this.style.color='#FFFFFF'; this.style.border='4px solid #FFFFFF'; this.style.transform='scale(1)';"
+  onmouseup="this.style.backgroundColor='#D2D2D2'; this.style.color='#252424'; this.style.border='4px solid #D2D2D2'; this.style.transform='scale(1)';"
+>Linienverlauf entfernen</button>
+
+
+
+<button
+  id="forwardButton"
+  onclick="send('forward')"
+  style="
+    position: absolute;
+    top: 280px;
+    left: 850px;
+    width: 64px;
+    height: 64px;
+    background-color: #FFFFFF;
+    color: #252424;
+    font-size: 32px;
+    font-family: TransitPro-Bold;
+    padding-top: 5px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 4px solid #D2D2D2;
+    border-radius: 40px;
+    cursor: pointer;
+    transition: all 0.1s ease;
+  "
+  onmouseover="this.style.backgroundColor='#D2D2D2'; this.style.color='#252424';"
+  onmouseout="this.style.backgroundColor='#FFFFFF'; this.style.color='#252424';"
+  onmousedown="this.style.backgroundColor='#252424'; this.style.color='#FFFFFF'; this.style.border='4px solid #FFFFFF'; this.style.transform='scale(1)';"
+  onmouseup="this.style.backgroundColor='#D2D2D2'; this.style.color='#252424'; this.style.border='4px solid #D2D2D2'; this.style.transform='scale(1)';"
+>↓</button>
+
+<button
+  id="backwardButton"
+  onclick="send('backward')"
+  style="
+    position: absolute;
+    top: 280px;
+    left: 930px;
+    width: 64px;
+    height: 64px;
+    background-color: #FFFFFF;
+    color: #252424;
+    font-size: 32px;
+    font-family: TransitPro-Bold;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 4px solid #D2D2D2;
+    border-radius: 40px;
+    cursor: pointer;
+    transition: all 0.1s ease;
+  "
+  onmouseover="this.style.backgroundColor='#D2D2D2'; this.style.color='#252424';"
+  onmouseout="this.style.backgroundColor='#FFFFFF'; this.style.color='#252424';"
+  onmousedown="this.style.backgroundColor='#252424'; this.style.color='#FFFFFF'; this.style.border='4px solid #FFFFFF'; this.style.transform='scale(1)';"
+  onmouseup="this.style.backgroundColor='#D2D2D2'; this.style.color='#252424'; this.style.border='4px solid #D2D2D2'; this.style.transform='scale(1)';"
+>↑</button>
+
+<button
+  id="showStoppedAtStationScreenButton"
+  onclick="send('showBeiHalt')"
+  style="
+    position: absolute;
+    top: 280px;
+    left: 1010px;
+    width: 524px;
+    height: 64px;
+    background-color: #FFFFFF;
+    color: #252424;
+    font-size: 24px;
+    font-family: TransitPro-Bold;
+    border: 4px solid #D2D2D2;
+    border-radius: 40px;
+    cursor: pointer;
+    transition: all 0.1s ease;
+  "
+  onmouseover="this.style.backgroundColor='#D2D2D2'; this.style.color='#252424';"
+  onmouseout="this.style.backgroundColor='#FFFFFF'; this.style.color='#252424';"
+  onmousedown="this.style.backgroundColor='#252424'; this.style.color='#FFFFFF'; this.style.border='4px solid #FFFFFF'; this.style.transform='scale(1)';"
+  onmouseup="this.style.backgroundColor='#D2D2D2'; this.style.color='#252424'; this.style.border='4px solid #D2D2D2'; this.style.transform='scale(1)';"
+>zeige "Bei Halt" Bildschirm</button>
+
+<label
+  id="BeiHaltErklärung"
+  style="
+    position: absolute;
+    top: 350px;
+    left: 1010px;
+    width: 520px;
+    color: #ffffff;
+    font-size: 16px;
+    font-family: TransitPro;
+    text-align: center;
+    cursor: default;
+  ">"Bei Halt" Bildschirm wird für 10 Sekunden angezeigt.</label>
+
+<button
+  id="automaticLineProgression"
+  onclick="automaticLineProgression()"
+  style="
+    position: absolute;
+    top: 420px;
+    left: 850px;
+    width: 684px;
+    height: 64px;
+    background-color: #FFFFFF;
+    color: #252424;
+    font-size: 24px;
+    font-family: TransitPro-Bold;
+    border: 4px solid #D2D2D2;
+    border-radius: 40px;
+    cursor: pointer;
+    transition: all 0.1s ease;
+  "
+  onmouseover="this.style.backgroundColor='#D2D2D2'; this.style.color='#252424';"
+  onmouseout="this.style.backgroundColor='#FFFFFF'; this.style.color='#252424';"
+  onmousedown="this.style.backgroundColor='#252424'; this.style.color='#FFFFFF'; this.style.border='4px solid #FFFFFF'; this.style.transform='scale(1)';"
+  onmouseup="this.style.backgroundColor='#D2D2D2'; this.style.color='#252424'; this.style.border='4px solid #D2D2D2'; this.style.transform='scale(1)';"
+>automatischen Linienverlauf starten</button>
+
+
+
+<label
+  style="
+    position: absolute;
+    top: 650px;
+    left: 850px;
+    color: #ffffff;
+    font-size: 32px;
+    font-family: TransitPro-Bold;
+    cursor: default;
+  ">Erscheinungsbild & Sound</label>
+
+<button
+  id="darkModeBtn"
+  onclick="toggleDarkMode()"
+  style="
+    position: absolute;
+    top: 700px;
+    left: 850px;
+    width: 684px;
+    height: 64px;
+    background-color: #FFFFFF;
+    color: #252424;
+    font-size: 24px;
+    font-family: TransitPro-Bold;
+    border: 4px solid #D2D2D2;
+    border-radius: 40px;
+    cursor: pointer;
+    transition: all 0.1s ease;
+  "
+  onmouseover="this.style.backgroundColor='#D2D2D2'; this.style.color='#252424';"
+  onmouseout="this.style.backgroundColor='#FFFFFF'; this.style.color='#252424';"
+  onmousedown="this.style.backgroundColor='#252424'; this.style.color='#FFFFFF'; this.style.border='4px solid #FFFFFF'; this.style.transform='scale(1)';"
+  onmouseup="this.style.backgroundColor='#D2D2D2'; this.style.color='#252424'; this.style.border='4px solid #D2D2D2'; this.style.transform='scale(1)';"
+>zum Dark Mode wechseln</button>
+
+<button
+  id="grundbildBtn"
+  onclick="toggleGrundbild()"
+  style="
+    position: absolute;
+    top: 780px;
+    left: 850px;
+    width: 684px;
+    height: 64px;
+    background-color: #FFFFFF;
+    color: #252424;
+    font-size: 24px;
+    font-family: TransitPro-Bold;
+    border: 4px solid #D2D2D2;
+    border-radius: 40px;
+    cursor: pointer;
+    transition: all 0.1s ease;
+  "
+  onmouseover="this.style.backgroundColor='#D2D2D2'; this.style.color='#252424';"
+  onmouseout="this.style.backgroundColor='#FFFFFF'; this.style.color='#252424';"
+  onmousedown="this.style.backgroundColor='#252424'; this.style.color='#FFFFFF'; this.style.border='4px solid #FFFFFF'; this.style.transform='scale(1)';"
+  onmouseup="this.style.backgroundColor='#D2D2D2'; this.style.color='#252424'; this.style.border='4px solid #D2D2D2'; this.style.transform='scale(1)';"
+>Rückfallebene zum alten Design wechseln</button>
+
+<button
+  id="deafenBtn"
+  onclick="toggleDeafen()"
+  style="
+    position: absolute;
+    top: 860px;
+    left: 850px;
+    width: 684px;
+    height: 64px;
+    background-color: #FFFFFF;
+    color: #252424;
+    font-size: 24px;
+    font-family: TransitPro-Bold;
+    border: 4px solid #D2D2D2;
+    border-radius: 40px;
+    cursor: pointer;
+    transition: all 0.1s ease;
+  "
+  onmouseover="this.style.backgroundColor='#D2D2D2'; this.style.color='#252424';"
+  onmouseout="this.style.backgroundColor='#FFFFFF'; this.style.color='#252424';"
+  onmousedown="this.style.backgroundColor='#252424'; this.style.color='#FFFFFF'; this.style.border='4px solid #FFFFFF'; this.style.transform='scale(1)';"
+  onmouseup="this.style.backgroundColor='#D2D2D2'; this.style.color='#252424'; this.style.border='4px solid #D2D2D2'; this.style.transform='scale(1)';"
+>Gong-Sounds stummschalten</button>
+
+
+
+
+
+<label
+  style="
+    position: absolute;
+    top: 650px;
+    left: 50px;
+    color: #ffffff;
+    font-size: 32px;
+    font-family: TransitPro-Bold;
+    cursor: default;
+  ">Separate Anzeige</label>
+
+<button
+  onclick="window.open('BerlinerFensterAnzeige.html', '_blank', 'noopener,noreferrer')"
+  style="
+    position: absolute;
+    top: 700px;
+    left: 50px;
+    width: 700px;
+    height: 64px;
+    background-color: #FFFFFF;
+    color: #252424;
+    font-size: 24px;
+    font-family: TransitPro-Bold;
+    border: 4px solid #D2D2D2;
+    border-radius: 40px;
+    cursor: pointer;
+    transition: all 0.1s ease;
+  "
+  onmouseover="this.style.backgroundColor='#D2D2D2'; this.style.color='#252424';"
+  onmouseout="this.style.backgroundColor='#FFFFFF'; this.style.color='#252424';"
+  onmousedown="this.style.backgroundColor='#252424'; this.style.color='#FFFFFF'; this.style.border='4px solid #FFFFFF'; this.style.transform='scale(1)';"
+  onmouseup="this.style.backgroundColor='#D2D2D2'; this.style.color='#252424'; this.style.border='4px solid #D2D2D2'; this.style.transform='scale(1)';"
+>Anzeige im neuen Tab öffnen</button>
+
+<button
+  id="zoomToggleBtn"
+  onclick="toggleZoom()"
+  style="
+    position: absolute;
+    top: 780px;
+    left: 50px;
+    width: 700px;
+    height: 64px;
+    background-color: #FFFFFF;
+    color: #252424;
+    font-size: 24px;
+    font-family: TransitPro-Bold;
+    border: 4px solid #D2D2D2;
+    border-radius: 40px;
+    cursor: pointer;
+    transition: all 0.1s ease;
+  "
+  onmouseover="this.style.backgroundColor='#D2D2D2'; this.style.color='#252424';"
+  onmouseout="this.style.backgroundColor='#FFFFFF'; this.style.color='#252424';"
+  onmousedown="this.style.backgroundColor='#252424'; this.style.color='#FFFFFF'; this.style.border='4px solid #FFFFFF'; this.style.transform='scale(1)';"
+  onmouseup="this.style.backgroundColor='#D2D2D2'; this.style.color='#252424'; this.style.border='4px solid #D2D2D2'; this.style.transform='scale(1)';"
+>Anzeige in doppelter Größe anzeigen (1600x1200 Pixel)</button>
+
+<button
+  onclick="channel.postMessage({ type: 'takeScreenshot' })"
+  style="
+    position: absolute;
+    top: 860px;
+    left: 50px;
+    width: 700px;
+    height: 64px;
+    background-color: #FFFFFF;
+    color: #252424;
+    font-size: 24px;
+    font-family: TransitPro-Bold;
+    border: 4px solid #D2D2D2;
+    border-radius: 40px;
+    cursor: pointer;
+    transition: all 0.1s ease;
+  "
+  onmouseover="this.style.backgroundColor='#D2D2D2'; this.style.color='#252424';"
+  onmouseout="this.style.backgroundColor='#FFFFFF'; this.style.color='#252424';"
+  onmousedown="this.style.backgroundColor='#252424'; this.style.color='#FFFFFF'; this.style.border='4px solid #FFFFFF'; this.style.transform='scale(1)';"
+  onmouseup="this.style.backgroundColor='#D2D2D2'; this.style.color='#252424'; this.style.border='4px solid #D2D2D2'; this.style.transform='scale(1)';"
+>Schnappschuss von aktueller Anzeige speichern</button>
+
+<label
+  id="SchnappschussErklärung"
+  style="
+    position: absolute;
+    top: 930px;
+    left: 0px;
+    width: 800px;
+    color: #ffffff;
+    font-size: 16px;
+    font-family: TransitPro;
+    text-align: center;
+    cursor: default;
+  ">Schnappschuss wird als 1600x1200 Pixel .png-Datei gespeichert. Dateinamenlogik ist auf Informationsseite erläutert.</label>
+
+
+
+
+
+<script>
+function updateClock() {
+  const now = new Date();
+  const timeString = now.toLocaleTimeString
+  ('de-DE',
+    {
+      hour: '2-digit',
+      minute: '2-digit'
+    }
+  );
+  document.querySelector('.uhrzeit').textContent = timeString;
+}
+
+setInterval(updateClock, 1000);
+updateClock();
+</script>
+
+<button onclick="document.location='index.html'"
+  style="
+    position: absolute;
+    top: 50px;
+    left: 1550px;
+    width: 280px;
+    height: 64px;
+    background-color: #FFFFFF;
+    color: #252424;
+    font-size: 24px;
+    font-family: TransitPro-Bold;
+    border: 4px solid #D2D2D2;
+    border-radius: 40px;
+    cursor: pointer;
+    transition: all 0.1s ease;
+  "
+  onmouseover="this.style.backgroundColor='#D2D2D2'; this.style.color='#252424';"
+  onmouseout="this.style.backgroundColor='#FFFFFF'; this.style.color='#252424';"
+  onmousedown="this.style.backgroundColor='#252424'; this.style.color='#FFFFFF'; this.style.border='4px solid #FFFFFF'; this.style.transform='scale(1)';"
+  onmouseup="this.style.backgroundColor='#D2D2D2'; this.style.color='#252424'; this.style.border='4px solid #D2D2D2'; this.style.transform='scale(1)';"
+>zurück zur Homepage</button>
+
+</body>
+
+
+
+
+
+<script>
+let config = {
+  grundbild: "new",
+  darkMode: "light",
+  deafen: false
+};
+
+function playSound(type) {
+  if (config.deafen) return;
+
+  const audio = new Audio(
+    type === "terminus"
+      ? "audio/BVG_Gong_Endstation.wav"
+      : "audio/BVG_Gong_Standard.wav"
+  );
+
+  audio.play().catch(() => {});
+}
+
+// Load config from JSON if possible
+async function loadConfig() {
+  try {
+    const res = await fetch("config/config.json?cacheversion=" + Date.now())
+    const data = await res.json();
+    config = data;
+  } catch (e) {
+    console.warn("Config not found or parameter missing, using defaults");
+  }
+  applyConfig();
+}
+
+// Apply the settings to the page
+function applyConfig() {
+  // --- GRUNDBILD ---
+  const grundbildSrc = config.grundbild === "old"
+    ? "images/FahrinfoApp.png"
+    : "images/BVG.png";
+  grundbild.src = grundbildSrc;
+
+  // --- DARK MODE OVERLAY ---
+  const overlayFolder = config.darkMode === "dark"
+    ? "images/LinienverlaufOverlays/DarkMode/"
+    : "images/LinienverlaufOverlays/";
+
+  // Assuming overlay image filenames remain unchanged
+  const overlayFilename = overlay.src.split('/').pop(); // get current overlay filename
+  overlay.src = overlayFolder + overlayFilename;
+
+  // --- ANSCHLUSS OVERLAY ---
+  const anschlussOverlayImg = document.querySelector(".anschlussAnzeigeOverlay");
+
+  if (anschlussOverlayImg) {
+    const basePath = config.darkMode === "dark"
+      ? "images/LinienverlaufOverlays/DarkMode/"
+      : "images/LinienverlaufOverlays/";
+
+    anschlussOverlayImg.src = basePath + "KurzVorHalt_Anschlüsse.png";
+  }
+
+  // --- ANSCHLUSS TRENNSTRICHE ---
+  const trennstrichSrc = config.darkMode === "dark"
+    ? "images/Trennstrich_DarkMode.png"
+    : "images/Trennstrich_LightMode.png";
+
+  for (let i = 1; i <= 8; i++) {
+    const trenn = document.querySelector(`.anschluss${i}Trennstrich`);
+    if (trenn) trenn.src = trennstrichSrc;
+  }
+
+  // --- TEXT COLOR ---
+  const textElements = [
+    nextHalt, nextHaltZusatz,
+    folge1, folge1Zusatz,
+    folge2, folge2Zusatz,
+    folge3,
+    anschlussTitel, anschlussTitelZeit,
+    beiHaltText, beiHaltZusatz
+  ];
+
+  textElements.forEach(el => {
+    el.style.color = (config.darkMode === "dark") ? "#ffffff" : "#252424";
+  });
+
+  // --- ANSCHLUSS TEXT COLOR ---
+  for (let i = 1; i <= 8; i++) {
+    const linie = document.querySelector(`.anschluss${i}Linie`);
+    const ziel = document.querySelector(`.anschluss${i}Ziel`);
+    const zeit = document.querySelector(`.anschluss${i}Zeit`);
+
+    const color = (config.darkMode === "dark") ? "#ffffff" : "#252424";
+
+    if (linie) linie.style.color = color;
+    if (ziel) ziel.style.color = color;
+    if (zeit) zeit.style.color = color;
+  }
+
+  // --- UPDATE BUTTON TEXT ---
+  const automaticLineProgression = document.getElementById("automaticLineProgression");
+  if (automaticLineProgression) {
+    automaticLineProgression.textContent = (config.lineProgression === "on")
+      ? "automatischen Linienverlauf anhalten"
+      : "automatischen Linienverlauf starten";
+  }
+
+
+
+  const darkModeBtn = document.getElementById("darkModeBtn");
+  if (darkModeBtn) {
+    darkModeBtn.textContent = (config.darkMode === "dark")
+      ? "zum Light Mode wechseln"
+      : "zum Dark Mode wechseln";
+  }
+
+  const grundbildBtn = document.getElementById("grundbildBtn");
+  if (grundbildBtn) {
+    grundbildBtn.textContent = (config.grundbild === "old")
+      ? "Rückfallebene zum neuen Design wechseln"
+      : "Rückfallebene zum alten Design wechseln";
+  }
+
+  const deafenBtn = document.getElementById("deafenBtn");
+  if (deafenBtn) {
+    deafenBtn.textContent = (config.deafen === true)
+      ? "Gong-Sounds entstummen"
+      : "Gong-Sounds stummschalten";
+  }
+
+  if (beiHaltLayer.style.display === "block") {
+  const station = stations[currentIndex];
+  const hasZusatz = station.AdditionalName && station.AdditionalName.trim() !== "";
+  const isDouble = station.IsNameDoubleLined;
+  const type = station.BarrierFreeType;
+
+  let overlayFilename = "";
+  if (type === 0) {
+    overlayFilename = "BeiHalt.png";
+  } else {
+    const access = type === 1 ? "Rampe" : "Aufzug";
+    if (hasZusatz) overlayFilename = `BeiHalt_${access}_Zusatztext.png`;
+    else if (isDouble) overlayFilename = `BeiHalt_${access}_2Zeiler.png`;
+    else overlayFilename = `BeiHalt_${access}_1Zeiler.png`;
+  }
+
+  const overlayFolder = config.darkMode === "dark"
+    ? "images/LinienverlaufOverlays/DarkMode/"
+    : "images/LinienverlaufOverlays/";
+
+  beiHaltOverlay.src = overlayFolder + overlayFilename;
+}
+}
+
+// Save config back to JSON (only works with local server)
+async function saveConfig() {
+  try {
+    await fetch("saveConfig", {   // server endpoint, see note below
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(config)
+    });
+  } catch (e) {
+    console.warn("Cannot save config: not running on local server");
+  }
+}
+
+function automaticLineProgression() {
+  config.lineProgression = config.lineProgression === "on" ? "off" : "on";
+  applyConfig();
+  saveConfig();
+}
+
+
+// Toggle dark/light mode
+function toggleDarkMode() {
+  config.darkMode = config.darkMode === "dark" ? "light" : "dark";
+  applyConfig();
+  saveConfig();
+  channel.postMessage({ type: "darkModeChanged", value: config.darkMode });
+}
+
+// Toggle grundbild
+function toggleGrundbild() {
+  config.grundbild = config.grundbild === "old" ? "new" : "old";
+  applyConfig();
+  saveConfig();
+  channel.postMessage({ type: "grundbildChanged", value: config.grundbild });
+}
+
+function toggleDeafen() {
+  config.deafen = config.deafen === true ? false : true;
+  applyConfig();
+  saveConfig();
+}
+
+function getOverlayPath(filename) {
+  const base = config.darkMode === "dark"
+    ? "images/LinienverlaufOverlays/DarkMode/"
+    : "images/LinienverlaufOverlays/";
+
+  return base + filename;
+}
+
+// Initialize
+window.addEventListener("DOMContentLoaded", loadConfig);
+
+
+
+
+
+
+
+
+
+
+// --- DATA & ELEMENTS ---
+let stations = [];
+let currentIndex = 0;
+let currentLine = "";
+let currentFileName = "";
+let autoProgressionTimer = null;
+let autoProgressionRunning = false;
+let currentFilePathBase = "";
+
+const grundbild = document.querySelector('.grundbild');
+const overlay = document.getElementById('LinienverlaufOverlay');
+const container = document.querySelector('.container');
+
+// TEXT ELEMENTS
+const nextHalt = document.querySelector('.nextHalt');
+const nextHaltZusatz = document.querySelector('.nextHaltNamenszusatz');
+const folge1 = document.querySelector('.folgeHalt1');
+const folge1Zusatz = document.querySelector('.folgeHalt1Namenszusatz');
+const folge2 = document.querySelector('.folgeHalt2');
+const folge2Zusatz = document.querySelector('.folgeHalt2Namenszusatz');
+const folge3 = document.querySelector('.folgeHalt3');
+
+const anschlussTitel = document.querySelector('.anschlussAnzeigeTitel');
+const anschlussTitelZeit = document.querySelector('.anschlussAnzeigeTitelZeit');
+
+// BARRIER FREE ICONS
+function setBarrierIcons(prefix, type) {
+  const aufzug = document.querySelector(`.${prefix}BarrierefreiheitAufzug`);
+  const rampe = document.querySelector(`.${prefix}BarrierefreiheitRampe`);
+
+  aufzug.style.visibility = "hidden";
+  rampe.style.visibility = "hidden";
+
+  if (type === 1) rampe.style.visibility = "visible";
+  if (type === 2) aufzug.style.visibility = "visible";
+}
+
+function clearBarrierIcons(prefix) {
+  const aufzug = document.querySelector(`.${prefix}BarrierefreiheitAufzug`);
+  const rampe = document.querySelector(`.${prefix}BarrierefreiheitRampe`);
+  aufzug.style.visibility = "hidden";
+  rampe.style.visibility = "hidden";
+}
+
+// --- BEI HALT ELEMENTS ---
+const beiHaltLayer = document.getElementById('beiHaltLayer');
+const beiHaltOverlay = document.getElementById('beiHaltOverlay');
+const beiHaltText = document.getElementById('beiHaltText');
+const beiHaltZusatz = document.getElementById('beiHaltZusatz');
+let beiHaltTimeout = null;
+
+// --- OFFSET FOR DOUBLE-LINED STATIONS ---
+function applyOffset(isDoubleLine) {
+  const offset = isDoubleLine ? 60 : 0;
+  const elements = [
+    '.folgeHalt1', '.folgeHalt1Namenszusatz',
+    '.folgeHalt2', '.folgeHalt2Namenszusatz',
+    '.folgeHalt1BarrierefreiheitAufzug', '.folgeHalt1BarrierefreiheitRampe',
+    '.folgeHalt2BarrierefreiheitAufzug', '.folgeHalt2BarrierefreiheitRampe'
+  ];
+
+  elements.forEach(selector => {
+    const el = document.querySelector(selector);
+    if (!el) return;
+    if (!el.dataset.baseTop) el.dataset.baseTop = parseInt(window.getComputedStyle(el).top);
+    el.style.top = (parseInt(el.dataset.baseTop) + offset) + "px";
+  });
+}
+
+// --- OVERLAY SELECTION ---
+function updateOverlay(count, isDoubleLine) {
+  const remaining = stations.length - currentIndex;
+
+  if (remaining === 1) {
+    overlay.src = getOverlayPath("BeiFahrt_1Station.png");
+    return;
+  }
+
+  const zeiler = isDoubleLine ? "2Zeiler" : "1Zeiler";
+
+  overlay.src = remaining > 4
+    ? getOverlayPath(`BeiFahrt_${zeiler}_5Stationen.png`)
+    : getOverlayPath(`BeiFahrt_${zeiler}_${remaining}Stationen.png`);
+}
+
+// --- VISIBLE STATIONS ---
+function getVisibleStations() {
+  const remaining = stations.length - currentIndex;
+  if (remaining <= 4) return stations.slice(currentIndex);
+
+  const result = stations.slice(currentIndex, currentIndex+3);
+  const lastStation = stations[stations.length-1];
+  if (!result.includes(lastStation)) result.push(lastStation);
+  return result;
+}
+
+// --- CLEAR UNUSED SLOTS ---
+function clearSlot(slot) {
+  if (slot === 1) { folge1.innerHTML = ""; folge1Zusatz.textContent = ""; clearBarrierIcons("folgeHalt1"); }
+  if (slot === 2) { folge2.innerHTML = ""; folge2Zusatz.textContent = ""; clearBarrierIcons("folgeHalt2"); }
+  if (slot === 3) { folge3.innerHTML = ""; clearBarrierIcons("folgeHalt3"); }
+}
+
+// --- RENDER FUNCTION ---
+function render() {
+  if (!stations.length) return;
+  const visible = getVisibleStations();
+  const count = visible.length;
+  const isDouble = visible[0].IsNameDoubleLined;
+
+  updateOverlay(count, isDouble);
+  applyOffset(isDouble);
+  updateLineBackground();
+
+  // NEXT
+  const s0 = visible[0];
+  nextHalt.innerHTML = s0.NextStationName;
+  nextHaltZusatz.textContent = s0.AdditionalName;
+  setBarrierIcons("nextHalt", s0.BarrierFreeType);
+
+  // FOLLOWING SLOTS
+  if (visible[1]) { folge1.innerHTML = visible[1].FollowingStationName; folge1Zusatz.textContent = visible[1].AdditionalName; setBarrierIcons("folgeHalt1", visible[1].BarrierFreeType); } else clearSlot(1);
+  if (visible[2]) { folge2.innerHTML = visible[2].FollowingStationName; folge2Zusatz.textContent = visible[2].AdditionalName; setBarrierIcons("folgeHalt2", visible[2].BarrierFreeType); } else clearSlot(2);
+  if (visible[3]) { folge3.innerHTML = visible[3].FollowingStationName; setBarrierIcons("folgeHalt3", visible[3].BarrierFreeType); } else clearSlot(3);
+}
+
+// --- FILE LOAD WITH ERROR HANDLING ---
+skriptInput.addEventListener('change', () => {
+  const file = skriptInput.files[0];
+  currentFileName = file.name;
+  if (!file) return;
+
+  const filePath = file.webkitRelativePath || file.name;
+
+  // extract folder if available
+  const lastSlash = filePath.lastIndexOf("/");
+  currentFilePathBase =
+    lastSlash !== -1 ? filePath.substring(0, lastSlash + 1) : "";
+
+  const reader = new FileReader();
+  reader.onload = function(e) {
+    try {
+      hideAnschluss();
+      
+      const data = JSON.parse(e.target.result);
+
+      // --- BASIC DATA ---
+      stations = data.Stations || [];
+      currentIndex = 0;
+
+      currentFileName = file.name;
+
+      if (!data.Line) {
+        throw new Error("Missing Line");
+      }
+
+      currentLine = normalizeLine(data.Line);
+
+      
+        // --- EXTRACT DIGITS FIRST ---
+const digits = currentLine.substring(1).split("");
+
+const hasBeginningAt =
+  data.BeginningAt &&
+  typeof data.BeginningAt === "string" &&
+  data.BeginningAt.trim() !== "";
+
+const isDualLine = hasBeginningAt && digits.length === 2;
+
+window.dualConfig = { active: false };
+
+if (isDualLine) {
+  // --- EXTRACT DIGITS FIRST ---
+const digits = currentLine.substring(1).split("");
+
+const hasBeginningAt =
+  data.BeginningAt &&
+  typeof data.BeginningAt === "string" &&
+  data.BeginningAt.trim() !== "";
+
+const isDualLine = hasBeginningAt && digits.length === 2;
+
+window.dualConfig = { active: false };
+
+if (isDualLine) {
+  const parts = digits.map(d => "U" + d);
+  const beginning = normalizeLine(data.BeginningAt);
+
+  // ✅ correct validation
+  if (!beginning || !parts.includes(beginning)) {
+    throw new Error("Invalid BeginningAt");
+  }
+
+  // validate changeover exists
+  const hasChangeover = stations.some(
+    s => s.IsChangeoverStation === true
+  );
+
+  if (!hasChangeover) {
+    throw new Error("Missing changeover station");
+  }
+
+  const otherLine = parts.find(p => p !== beginning);
+
+  window.dualConfig = {
+    active: true,
+    line: currentLine,
+    from: beginning,
+    to: otherLine
+  };
+}
+      }
+
+      // --- HIDE DEFAULT IMAGE ---
+      grundbild.style.display = "none";
+
+      // --- RENDER (this will also set background later) ---
+      render();
+
+      // --- BROADCAST ---
+      channel.postMessage({
+        type: "loadScript",
+        data: data,
+        fileName: file.name
+      });
+
+      // --- UI TEXT ---
+      skriptInputText.textContent = file.name;
+
+    } catch (err) {
+      console.error(err);
+
+      skriptInputText.textContent = "Ungültige Datei!";
+      setTimeout(() => {
+        skriptInputText.textContent = "Linienverlauf wählen...";
+      }, 2000);
+    }
+  };
+
+  reader.readAsText(file);
+});
+
+// --- NAVIGATION BUTTONS ---
+document.getElementById('forwardButton').onclick = () => {
+  if (currentIndex < stations.length - 1) {
+    currentIndex++;
+    render();
+
+    const nextIsChangeover =
+      stations[currentIndex]?.IsChangeoverStation === true;
+
+    const willBeLast =
+      (currentIndex + 1 === stations.length);
+
+    if (willBeLast || nextIsChangeover) {
+      playSound("terminus");
+    } else {
+      playSound("standard");
+    }
+
+    channel.postMessage({ type: "forward" });
+    restartAnschlussTimer();
+  }
+  else {
+  // reached end
+  if (config.lineTurnaround === "on") {
+    triggerAutoTurnaround();
+  }
+}
+};
+
+document.getElementById('backwardButton').onclick = () => {
+  if (currentIndex > 0) {
+    currentIndex--;
+    render();
+    channel.postMessage({ type: "backward" });
+    restartAnschlussTimer();
+  }
+};
+
+// --- REMOVE BUTTON ---
+document.getElementById('removeScriptButton').onclick = () => {
+  // --- reset local state ---
+  stations = [];
+  currentIndex = 0;
+  hideAnschluss();
+  grundbild.style.display = "block";
+
+  // hide Bei Halt immediately
+  beiHaltLayer.style.display = "none";
+
+  // clear any running timeout
+  if (beiHaltTimeout) {
+      clearTimeout(beiHaltTimeout);
+      beiHaltTimeout = null;
+  }
+
+  skriptInput.value = "";
+  skriptInputText.textContent = "Linienverlauf wählen...";
+
+  // --- broadcast the reset so remote page updates too ---
+  channel.postMessage({ type: "removeScript" });
+};
+
+// --- BEI HALT FUNCTION ---
+function showBeiHalt() {
+  hideAnschluss();
+
+  if (!stations.length) return;
+  const station = stations[currentIndex];
+  const hasZusatz = station.AdditionalName && station.AdditionalName.trim() !== "";
+  const isDouble = station.IsNameDoubleLined;
+  const type = station.BarrierFreeType;
+
+  beiHaltText.innerHTML = station.StoppedAtStationName;
+  beiHaltZusatz.textContent = station.AdditionalName;
+
+  if (hasZusatz) {
+    beiHaltText.style.top = "414px";
+    beiHaltZusatz.style.display = "block";
+  } else {
+    beiHaltText.style.top = "462px";
+    beiHaltZusatz.style.display = "none";
+  }
+
+ // new code for dark mode support
+const overlayFolder = config.darkMode === "dark"
+  ? "images/LinienverlaufOverlays/DarkMode/"
+  : "images/LinienverlaufOverlays/";
+
+let overlayFilename = "";
+
+if (type === 0) {
+  overlayFilename = "BeiHalt.png";
+} else {
+  const access = type === 1 ? "Rampe" : "Aufzug";
+  if (hasZusatz) overlayFilename = `BeiHalt_${access}_Zusatztext.png`;
+  else if (isDouble) overlayFilename = `BeiHalt_${access}_2Zeiler.png`;
+  else overlayFilename = `BeiHalt_${access}_1Zeiler.png`;
+}
+
+beiHaltOverlay.src = overlayFolder + overlayFilename;
+  beiHaltLayer.style.display = "block";
+
+  if (beiHaltTimeout) clearTimeout(beiHaltTimeout);
+  beiHaltTimeout = setTimeout(() => { beiHaltLayer.style.display = "none"; }, 10000);
+}
+
+// --- CONNECT BUTTON ---
+document.getElementById('showStoppedAtStationScreenButton').onclick = () => {
+  showBeiHalt();
+  channel.postMessage({ type: "showBeiHalt" });
+};
+
+function updateLineBackground() {
+  if (!stations.length) return;
+
+  // --- SINGLE LINE ---
+  if (!dualConfig.active) {
+    container.style.backgroundImage =
+      `url("images/LinieHintergrund/${currentLine}.png")`;
+    return;
+  }
+
+  const visible = getVisibleStations();
+  const nextStation = visible[0];
+  const isDouble = nextStation.IsNameDoubleLined;
+
+  const changeIndex = stations.findIndex(s => s.IsChangeoverStation);
+  const relativeIndex = changeIndex - currentIndex;
+
+  const from = dualConfig.from;
+  const to = dualConfig.to;
+
+  let filename = "";
+
+
+
+  // --- CASE 1: BEFORE CHANGEOVER ---
+  if (relativeIndex > 3) {
+    filename = `${currentLine}_${from}.png`;
+  }
+
+  // --- CASE 2: CHANGEOVER VISIBLE ---
+  else if (relativeIndex >= 0 && relativeIndex <= 3) {
+
+    const zeiler = isDouble ? "2Zeiler" : "1Zeiler";
+
+    if (relativeIndex === 2) {
+      filename = `${currentLine}_${from}zu${to}_${zeiler}_3Stationen.png`;
+    }
+    else if (relativeIndex === 1) {
+      filename = `${currentLine}_${from}zu${to}_${zeiler}_2Stationen.png`;
+    }
+    else if (relativeIndex === 0) {
+      filename = `${currentLine}_${from}zu${to}_1Station.png`;
+    }
+    else if (relativeIndex < 0) {
+      filename = `${currentLine}_${to}.png`;
+    }
+  }
+
+  // --- CASE 3: AFTER CHANGEOVER ---
+  else {
+    filename = `${currentLine}_${to}.png`;
+  }
+
+  if (!filename) {
+  console.warn("Missing background filename, fallback used");
+  filename = `${currentLine}_${from}.png`;
+}
+
+container.style.backgroundImage =
+  `url("images/LinieHintergrund/${currentLine}/${filename}")`;
+}
+
+let autoTimerNext = null;
+let autoTimerBeiHalt = null;
+let autoTimerRestart = null;
+
+function automaticLineProgression() {
+  if (autoProgressionRunning) {
+    stopAutoProgression();
+  } else {
+    startAutoProgression();
+  }
+
+  config.lineProgression = autoProgressionRunning ? "on" : "off";
+  applyConfig();
+  saveConfig();
+}
+
+function startAutoProgression() {
+  if (!stations.length) return;
+
+  autoProgressionRunning = true;
+  runAutoCycle();
+}
+
+function stopAutoProgression() {
+  autoProgressionRunning = false;
+
+  clearTimeout(autoTimerNext);
+  clearTimeout(autoTimerBeiHalt);
+  clearTimeout(autoTimerRestart);
+
+  autoTimerNext = null;
+  autoTimerBeiHalt = null;
+  autoTimerRestart = null;
+
+  hideAnschluss();
+}
+
+function runAutoCycle() {
+  if (!autoProgressionRunning || !stations.length) return;
+
+  // 🛑 HARD GUARD: already at last station
+  if (currentIndex >= stations.length - 1) {
+    stopAutoProgression();
+
+    if (config.lineTurnaround === "on") {
+      setTimeout(() => {
+        triggerAutoTurnaround();
+        startAutoProgression();
+      }, 2000);
+    }
+
+    return;
+  }
+
+  // --- 00:40 → NEXT STATION
+  autoTimerNext = setTimeout(() => {
+    if (!autoProgressionRunning) return;
+
+    document.getElementById('forwardButton').click();
+
+  }, 40000);
+
+  // --- 01:25 → BEI HALT
+  autoTimerBeiHalt = setTimeout(() => {
+    if (!autoProgressionRunning) return;
+
+    showBeiHalt();
+    channel.postMessage({ type: "showBeiHalt" });
+
+    const isLast = currentIndex >= stations.length - 1;
+
+    // 🛑 LAST STATION REACHED DURING CYCLE
+    if (isLast) {
+      stopAutoProgression();
+      return;
+    }
+
+    // 🔁 NORMAL LOOP
+    autoTimerRestart = setTimeout(runAutoCycle, 0);
+
+  }, 95000); // 95s equals to 1min 35s. That's the time for one full loop.
+}
+
+
+
+
+
+
+
+
+
+
+// --- BROADCAST CONNECTION FOR EXTERNAL DISPLAY SITE ---
+const channel = new BroadcastChannel('berliner-fenster');
+
+skriptInput.addEventListener('change', () => {
+  if (skriptInput.files.length > 0) {
+    const file = skriptInput.files[0];
+
+    const reader = new FileReader();
+    reader.onload = function(e) {
+      try {
+        const data = JSON.parse(e.target.result);
+
+        channel.postMessage({
+          type: "loadScript",
+          data: data,
+          fileName: file.name
+        });
+
+      } catch {
+        skriptInputText.textContent = "Ungültige Datei!";
+        setTimeout(() => {
+          skriptInputText.textContent = "Linienverlauf wählen...";
+        }, 2000);
+      }
+    };
+    reader.readAsText(file);
+  }
+});
+
+function send(type) {
+    if (type === 'removeScript') {
+        skriptInputText.textContent = "Linienverlauf wählen...";
+        skriptInput.value = "";
+    }
+    channel.postMessage({ type });
+}
+
+
+
+let zoomState = 0.5;
+
+function toggleZoom() {
+  // toggle value
+  zoomState = (zoomState === 0.5) ? 1 : 0.5;
+
+  // update button text
+  document.getElementById("zoomToggleBtn").innerText =
+    zoomState === 1 ? "Anzeige in originaler Größe anzeigen (800x600 Pixel)" : "Anzeige in doppelter Größe anzeigen (1600x1200 Pixel)";
+
+  // send to display page
+  channel.postMessage({
+    type: "setZoom",
+    value: zoomState
+  });
+}
+</script>
+
+
+
+
+
+
+
+
+<!-- ANSCHLUSS DISPLAY LOGIC -->
+
+<script>
+let currentPage = 0;
+let pageInterval = null;
+let totalPagesGlobal = 1;
+let anschlussDelayTimer = null;
+let anschlussDataCache = null;
+let preloadTimer = null;
+let anschlussActive = false;
+const anschlussOverlay = document.getElementById("LinienverlaufOverlay");
+
+function getPagedConnections(all) {
+  const start = currentPage * 4;
+  return all.slice(start, start + 4);
+}
+
+function getMinutesUntil(departureTime) {
+  const now = Date.now();
+  const dep = new Date(departureTime).getTime();
+
+  const diffMs = dep - now;
+
+  if (diffMs <= 60000) return 1;
+
+  return Math.ceil(diffMs / 60000);
+}
+
+function normalizeLine(line) {
+  return (line || "")
+    .toUpperCase()
+    .replace(/\s+/g, "");
+}
+
+function cleanDirection(direction) {
+  if (!direction) return "?";
+
+  let result = direction;
+
+  result = result.split(/\s+via\s+/i)[0];
+  result = result.split(/\s+->\s+/i)[0];
+  result = result.replace(/\(Berlin\)/gi, "");
+  result = result.replace(/^Potsdam,\s/, "");
+  result = result.split(/\(TF\)/i)[0];
+  result = result.split("[")[0];
+  result = result.replace(/⟳/g, "").trim();
+  result = result.replace(/⟲/g, "").trim();
+  result = result.replace(/\b, Bahnhof\b/gi, "").trim();
+  result = result.replace(/^Ersatzverkehr\s+/i, "");
+  result = result.replace(/\s{2,}/g, " ").trim();
+  result = trimToFit(result, 1200);
+
+  return result;
+}
+
+function trimToFit(text, maxWidth) {
+  const testEl = document.createElement("span");
+  testEl.style.visibility = "hidden";
+  testEl.style.position = "absolute";
+  testEl.style.whiteSpace = "nowrap";
+  testEl.style.fontFamily = "TransitPro";
+  testEl.style.fontSize = "86px";
+
+  document.body.appendChild(testEl);
+
+  let result = text;
+  testEl.textContent = result;
+
+  if (testEl.offsetWidth <= maxWidth) {
+    document.body.removeChild(testEl);
+    return result;
+  }
+
+  // --- too long: trim at last slash ---
+  const slashIndex = result.lastIndexOf("/");
+  const commaIndex = result.lastIndexOf(",");
+
+  const cutIndex = Math.max(slashIndex, commaIndex);
+
+  if (cutIndex !== -1) {
+    result = result.substring(0, cutIndex).trim();
+    testEl.textContent = result;
+  }
+
+  document.body.removeChild(testEl);
+  return result;
+}
+
+function showAnschlussDelayed() {
+  // reset timer every time user navigates
+  if (anschlussDelayTimer) clearTimeout(anschlussDelayTimer);
+
+  anschlussDelayTimer = setTimeout(() => {
+    activateAnschluss();
+  }, 10000);
+}
+
+function activateAnschluss() {
+
+}
+
+function hideAnschluss() {
+  anschlussActive = false;
+
+  if (anschlussDelayTimer) {
+    clearTimeout(anschlussDelayTimer);
+    anschlussDelayTimer = null;
+  }
+
+  if (pageInterval) {
+    clearInterval(pageInterval);
+    pageInterval = null;
+  }
+
+  const wrapper = document.querySelector(".anschlussAnzeige");
+  if (wrapper) wrapper.style.display = "none";
+
+  if (anschlussOverlay) {
+    anschlussOverlay.style.visibility = "visible";
+  }
+}
+
+function restartAnschlussTimer() {
+  hideAnschluss();
+
+  // clear timers
+  if (preloadTimer) clearTimeout(preloadTimer);
+  if (anschlussDelayTimer) clearTimeout(anschlussDelayTimer);
+  if (pageInterval) clearInterval(pageInterval);
+
+  currentPage = 0;
+  anschlussDataCache = null;
+
+  preloadTimer = setTimeout(() => {
+    preloadAnschlussData();
+  }, 9500);
+
+  anschlussDelayTimer = setTimeout(() => {
+    showPreloadedAnschluss();
+  }, 10000);
+}
+
+async function preloadAnschlussData() {
+  if (!stations.length) return;
+
+  const station = stations[currentIndex];
+  const stopId = station.StationID;
+  if (!stopId) return;
+
+  try {
+    const res = await fetch(
+      `https://v6.bvg.transport.rest/stops/${stopId}/departures?express=false&ferry=false`
+    );
+    const json = await res.json();
+
+    const departures = json.departures || [];
+
+    const mapped = departures
+      .map(dep => {
+        if (!dep.when || !dep.line) return null;
+
+        const line = dep.line.name;
+        const product = dep.line?.product || "unknown";
+        const normalized = normalizeLine(line);
+
+        if (normalized === currentLine && product === "subway") return null;
+
+        const timestamp = new Date(dep.when).getTime();
+        const minutes = Math.ceil((timestamp - Date.now()) / 60000);
+
+        if (minutes < 1) return null;
+
+        let icon = "bus.png";
+        let displayLine = line || "";
+
+        if (product === "bus") icon = "bus.png";
+        else if (product === "tram") icon = "tram.png";
+        else if (product === "suburban" || product === "subway") {
+          icon = `${line}.png`;
+          displayLine = "";
+        }
+        else if (product === "regional" || product === "national") {
+          icon = "bahn.png";
+        }
+
+        let direction = cleanDirection(dep.direction);
+
+        return {
+          displayLine,
+          direction,
+          minutes,
+          icon,
+          timestamp
+        };
+      })
+      .filter(Boolean)
+      .sort((a, b) => a.timestamp - b.timestamp)
+      .slice(0, 8);
+
+    anschlussDataCache = mapped;
+
+    renderAnschluesse(anschlussDataCache);
+
+  } catch (err) {
+    console.error("Preload error:", err);
+  }
+}
+
+function showPreloadedAnschluss() {
+  if (!anschlussDataCache || !anschlussDataCache.length) return;
+
+  const wrapper = document.querySelector(".anschlussAnzeige");
+  if (wrapper) wrapper.style.display = "block";
+
+  if (anschlussOverlay) {
+    anschlussOverlay.style.visibility = "hidden";
+  }
+
+  anschlussActive = true;
+
+  startPageRotation(() => anschlussDataCache);
+}
+
+function renderAnschluesse(data) {
+  const itemsPerPage = 4;
+  const pages = [];
+
+  for (let i = 0; i < data.length; i += itemsPerPage) {
+    pages.push(data.slice(i, i + itemsPerPage));
+  }
+
+  // clamp page index
+  if (currentPage >= pages.length) {
+    currentPage = 0;
+  }
+
+  const pageData = pages[currentPage] || [];
+
+  for (let i = 1; i <= 8; i++) {
+    const wrapper = document.querySelector(`.anschluss${i}`);
+    const linie = document.querySelector(`.anschluss${i}Linie`);
+    const ziel = document.querySelector(`.anschluss${i}Ziel`);
+    const zeit = document.querySelector(`.anschluss${i}Zeit`);
+    const icon = document.querySelector(`.anschluss${i}Icon`);
+
+    const item = pageData[i - 1];
+
+    if (item) {
+      if (wrapper) wrapper.style.display = "block";
+
+      if (icon) icon.src = `images/AnschlussIcons/${item.icon || "unknown.png"}`;
+      if (linie) linie.textContent = item.displayLine;
+      if (ziel) ziel.textContent = item.direction || "";
+      if (zeit) zeit.textContent = item.minutes ?? "";
+
+    } else {
+      // hide unused slots
+      if (wrapper) wrapper.style.display = "none";
+    }
+  }
+
+  totalPagesGlobal = pages.length;
+  updatePageIndicator();
+}
+
+function updatePageIndicator() {
+  const indicator = document.querySelector(".anschlussSeiteZeichen");
+  if (!indicator) return;
+
+  const totalPages = Math.max(1, totalPagesGlobal);
+
+  if (totalPages <= 1) {
+    indicator.src = "images/AnschlussSeite_Solo.png";
+    return;
+  }
+
+  indicator.src = currentPage === 0
+    ? "images/AnschlussSeite_Dual_1.png"
+    : "images/AnschlussSeite_Dual_2.png";
+}
+
+function startPageRotation(getDataCallback) {
+  if (pageInterval) clearInterval(pageInterval);
+
+  pageInterval = setInterval(() => {
+    currentPage++;
+
+    const data = getDataCallback();
+
+    const maxPages = Math.ceil((data?.length || 0) / 4);
+
+    if (currentPage >= maxPages) {
+      currentPage = 0;
+    }
+
+    renderAnschluesse(data);
+    updatePageIndicator();
+  }, 10000);
+}
+</script>
+
+
+
+
+
+<div id="preload" style="position:absolute; width:0; height:0; overflow:hidden;"></div>
+
+<script>
+const images = [
+
+  // miscellaneous images
+
+  "images/AnschlussSeite_Dual_1.png",
+  "images/AnschlussSeite_Dual_2.png",
+  "images/AnschlussSeite_Solo.png",
+  "images/Aufzug_90px.png",
+  "images/BerlinerFensterIcon_48px.png",
+  "images/BVG.png",
+  "images/FahrinfoApp.png",
+  "images/Rampe_90px.png",
+  "images/Trennstrich_DarkMode.png",
+  "images/Trennstrich_LightMode.png",
+
+
+
+  // icons for connection services
+
+  "images/AnschlussIcons/bus.png",
+  "images/AnschlussIcons/tram.png",
+  "images/AnschlussIcons/bahn.png",
+  "images/AnschlussIcons/U1.png",
+  "images/AnschlussIcons/U2.png",
+  "images/AnschlussIcons/U3.png",
+  "images/AnschlussIcons/U4.png",
+  "images/AnschlussIcons/U5.png",
+  "images/AnschlussIcons/U6.png",
+  "images/AnschlussIcons/U7.png",
+  "images/AnschlussIcons/U8.png",
+  "images/AnschlussIcons/U9.png",
+  "images/AnschlussIcons/S1.png",
+  "images/AnschlussIcons/S2.png",
+  "images/AnschlussIcons/S3.png",
+  "images/AnschlussIcons/S5.png",
+  "images/AnschlussIcons/S7.png",
+  "images/AnschlussIcons/S8.png",
+  "images/AnschlussIcons/S9.png",
+  "images/AnschlussIcons/S15.png",
+  "images/AnschlussIcons/S25.png",
+  "images/AnschlussIcons/S26.png",
+  "images/AnschlussIcons/S41.png",
+  "images/AnschlussIcons/S42.png",
+  "images/AnschlussIcons/S45.png",
+  "images/AnschlussIcons/S46.png",
+  "images/AnschlussIcons/S47.png",
+  "images/AnschlussIcons/S75.png",
+  "images/AnschlussIcons/S85.png",
+
+
+
+  // line rundown overlay images
+
+  "images/LinienverlaufOverlays/BeiFahrt_1Station.png",
+  "images/LinienverlaufOverlays/BeiFahrt_1Zeiler_2Stationen.png",
+  "images/LinienverlaufOverlays/BeiFahrt_1Zeiler_3Stationen.png",
+  "images/LinienverlaufOverlays/BeiFahrt_1Zeiler_4Stationen.png",
+  "images/LinienverlaufOverlays/BeiFahrt_1Zeiler_5Stationen.png",
+  "images/LinienverlaufOverlays/BeiFahrt_2Zeiler_2Stationen.png",
+  "images/LinienverlaufOverlays/BeiFahrt_2Zeiler_3Stationen.png",
+  "images/LinienverlaufOverlays/BeiFahrt_2Zeiler_4Stationen.png",
+  "images/LinienverlaufOverlays/BeiFahrt_2Zeiler_5Stationen.png",
+  "images/LinienverlaufOverlays/BeiHalt.png",
+  "images/LinienverlaufOverlays/BeiHalt_Aufzug_1Zeiler.png",
+  "images/LinienverlaufOverlays/BeiHalt_Aufzug_2Zeiler.png",
+  "images/LinienverlaufOverlays/BeiHalt_Aufzug_Zusatztext.png",
+  "images/LinienverlaufOverlays/BeiHalt_Rampe_1Zeiler.png",
+  "images/LinienverlaufOverlays/BeiHalt_Rampe_2Zeiler.png",
+  "images/LinienverlaufOverlays/BeiHalt_Rampe_Zusatztext.png",
+  "images/LinienverlaufOverlays/KurzVorHalt_Anschlüsse.png",
+  "images/LinienverlaufOverlays/DarkMode/BeiFahrt_1Station.png",
+  "images/LinienverlaufOverlays/DarkMode/BeiFahrt_1Zeiler_2Stationen.png",
+  "images/LinienverlaufOverlays/DarkMode/BeiFahrt_1Zeiler_3Stationen.png",
+  "images/LinienverlaufOverlays/DarkMode/BeiFahrt_1Zeiler_4Stationen.png",
+  "images/LinienverlaufOverlays/DarkMode/BeiFahrt_1Zeiler_5Stationen.png",
+  "images/LinienverlaufOverlays/DarkMode/BeiFahrt_2Zeiler_2Stationen.png",
+  "images/LinienverlaufOverlays/DarkMode/BeiFahrt_2Zeiler_3Stationen.png",
+  "images/LinienverlaufOverlays/DarkMode/BeiFahrt_2Zeiler_4Stationen.png",
+  "images/LinienverlaufOverlays/DarkMode/BeiFahrt_2Zeiler_5Stationen.png",
+  "images/LinienverlaufOverlays/DarkMode/BeiHalt.png",
+  "images/LinienverlaufOverlays/DarkMode/BeiHalt_Aufzug_1Zeiler.png",
+  "images/LinienverlaufOverlays/DarkMode/BeiHalt_Aufzug_2Zeiler.png",
+  "images/LinienverlaufOverlays/DarkMode/BeiHalt_Aufzug_Zusatztext.png",
+  "images/LinienverlaufOverlays/DarkMode/BeiHalt_Rampe_1Zeiler.png",
+  "images/LinienverlaufOverlays/DarkMode/BeiHalt_Rampe_2Zeiler.png",
+  "images/LinienverlaufOverlays/DarkMode/BeiHalt_Rampe_Zusatztext.png",
+  "images/LinienverlaufOverlays/DarkMode/KurzVorHalt_Anschlüsse.png",
+
+
+
+  // line background icon/color images
+
+  "images/LinieHintergrund/U1.png",
+  "images/LinieHintergrund/U2.png",
+  "images/LinieHintergrund/U3.png",
+  "images/LinieHintergrund/U4.png",
+  "images/LinieHintergrund/U5.png",
+  "images/LinieHintergrund/U6.png",
+  "images/LinieHintergrund/U7.png",
+  "images/LinieHintergrund/U8.png",
+  "images/LinieHintergrund/U9.png",
+  "images/LinieHintergrund/U55.png",
+  "images/LinieHintergrund/U12/U12_U1.png",
+  "images/LinieHintergrund/U12/U12_U1zuU2_1Station.png",
+  "images/LinieHintergrund/U12/U12_U1zuU2_1Zeiler_2Stationen.png",
+  "images/LinieHintergrund/U12/U12_U1zuU2_1Zeiler_3Stationen.png",
+  "images/LinieHintergrund/U12/U12_U1zuU2_2Zeiler_2Stationen.png",
+  "images/LinieHintergrund/U12/U12_U1zuU2_2Zeiler_3Stationen.png",
+  "images/LinieHintergrund/U12/U12_U2.png",
+  "images/LinieHintergrund/U12/U12_U2zuU1_1Station.png",
+  "images/LinieHintergrund/U12/U12_U2zuU1_1Zeiler_2Stationen.png",
+  "images/LinieHintergrund/U12/U12_U2zuU1_1Zeiler_3Stationen.png",
+  "images/LinieHintergrund/U12/U12_U2zuU1_2Zeiler_2Stationen.png",
+  "images/LinieHintergrund/U12/U12_U2zuU1_2Zeiler_3Stationen.png",
+  "images/LinieHintergrund/U67/U67_U6.png",
+  "images/LinieHintergrund/U67/U67_U6zuU7_1Station.png",
+  "images/LinieHintergrund/U67/U67_U6zuU7_1Zeiler_2Stationen.png",
+  "images/LinieHintergrund/U67/U67_U6zuU7_1Zeiler_3Stationen.png",
+  "images/LinieHintergrund/U67/U67_U6zuU7_2Zeiler_2Stationen.png",
+  "images/LinieHintergrund/U67/U67_U6zuU7_2Zeiler_3Stationen.png",
+  "images/LinieHintergrund/U67/U67_U7.png",
+  "images/LinieHintergrund/U67/U67_U7zuU6_1Station.png",
+  "images/LinieHintergrund/U67/U67_U7zuU6_1Zeiler_2Stationen.png",
+  "images/LinieHintergrund/U67/U67_U7zuU6_1Zeiler_3Stationen.png",
+  "images/LinieHintergrund/U67/U67_U7zuU6_2Zeiler_2Stationen.png",
+  "images/LinieHintergrund/U67/U67_U7zuU6_2Zeiler_3Stationen.png"
+];
+
+const preloadImages = async () => {
+  const preloadContainer = document.getElementById("preload");
+
+  const promises = images.map(src => {
+    const img = new Image();
+    img.src = src;
+    preloadContainer.appendChild(img);
+    return img.decode().catch(() => {});
+  });
+
+  await Promise.all(promises);
+};
+
+preloadImages();
+</script>
+
+</html>

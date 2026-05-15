@@ -1,0 +1,987 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Linienbearbeitung</title>
+    <link rel="icon" href="berlinerfenster.ico"/>
+    <style>
+        @font-face { font-family: "TransitPro"; src: url('http://127.0.0.1:5001/TransitPro.woff2'); }
+        @font-face { font-family: "TransitPro-Bold"; src: url('http://127.0.0.1:5001/TransitPro-Bold.woff2'); }
+        @font-face { font-family: "TransitPro-Italic"; src: url('http://127.0.0.1:5001/TransitPro-Italic.woff2'); }
+        @font-face { font-family: "TransitPro-BoldItalic"; src: url('http://127.0.0.1:5001/TransitPro-BoldItalic.woff2'); }
+        ::selection { background: #f0d722; color: #252424; }
+        ::-moz-selection { background: #f0d722; color: #252424; }
+        html { scroll-behavior: smooth; }
+        body { background-color: #252424; margin: 0; min-height: 100vh; }
+        
+        .berlinerFensterPreview {
+            position: fixed;
+            transform-origin: top left;
+            top: 300px;
+            left: 1508px;
+            z-index: 50;
+        }
+        .screen, .screen2 {
+            zoom: 0.5;
+            margin: -8px;
+            transform-origin: top left;
+        }
+        .container, .container2 {
+            position: relative;
+            display: inline-block;
+            transform-origin: top left;
+            margin: -16px;
+            zoom: 0.5;
+            visibility: visible;
+            background-size: cover;
+        }
+        .container img, .container2 img { display: block; }
+        
+        .uhrzeit, .uhrzeit2 {
+            position: absolute;
+            top: 20px; right: 0px;
+            width: 202px; z-index: 200;
+            text-align: center;
+            color: #252424;
+            font-family: TransitPro-Bold;
+            font-size: 72px;
+            cursor: default;
+        }
+        
+        .nextHalt {
+            position: absolute; top: 228px; left: 290px;
+            color: #252424; font-family: TransitPro-Bold;
+            font-size: 160px; display: flex; align-items: center;
+            height: 184px; z-index: 50; cursor: default;
+        }
+        .nextHaltNamenszusatz {
+            position: absolute; top: 386px; left: 290px;
+            color: #252424; font-family: TransitPro;
+            font-size: 88px; z-index: 50; cursor: default;
+        }
+        .nextHaltBarrierefreiheitAufzug, .nextHaltBarrierefreiheitRampe {
+            position: absolute; top: 265px; left: 50px; z-index: 50;
+        }
+        .nextHaltBarrierefreiheitRampe { visibility: hidden; }
+        .nextHaltBarrierefreiheitAufzug { visibility: hidden; }
+        
+        .folgeHalt1, .folgeHalt2, .folgeHalt3 {
+            position: absolute; left: 290px;
+            color: #252424; font-family: TransitPro-Bold;
+            font-size: 102px; cursor: default;
+        }
+        .folgeHalt1 { top: 516px; } .folgeHalt2 { top: 706px; } .folgeHalt3 { top: 1036px; }
+        .folgeHalt1Namenszusatz, .folgeHalt2Namenszusatz {
+            position: absolute; left: 290px;
+            color: #252424; font-family: TransitPro;
+            font-size: 56px; cursor: default;
+        }
+        .folgeHalt1Namenszusatz { top: 620px; } .folgeHalt2Namenszusatz { top: 810px; }
+        
+        .folgeHalt1BarrierefreiheitAufzug, .folgeHalt1BarrierefreiheitRampe,
+        .folgeHalt2BarrierefreiheitAufzug, .folgeHalt2BarrierefreiheitRampe,
+        .folgeHalt3BarrierefreiheitAufzug, .folgeHalt3BarrierefreiheitRampe {
+            position: absolute; left: 50px; visibility: hidden;
+        }
+        .folgeHalt1BarrierefreiheitAufzug, .folgeHalt1BarrierefreiheitRampe { top: 525px; }
+        .folgeHalt2BarrierefreiheitAufzug, .folgeHalt2BarrierefreiheitRampe { top: 715px; }
+        .folgeHalt3BarrierefreiheitAufzug, .folgeHalt3BarrierefreiheitRampe { top: 1045px; }
+        
+        #beiHaltLayer { position: absolute; top: 0; left: 0; width: 100%; height: 100%; display: block; z-index: 80; }
+        #beiHaltText, #beiHaltTextZusatz {
+            position: absolute; left: 52px; color: #252424;
+            font-family: TransitPro-Bold; font-size: 192px;
+            display: flex; align-items: center; height: 184px; cursor: default;
+        }
+        #beiHaltText { top: 462px; } #beiHaltTextZusatz { top: 412px; }
+        #beiHaltZusatz {
+            position: absolute; left: 52px; top: 596px;
+            color: #252424; font-family: TransitPro; font-size: 102px; cursor: default;
+        }
+        .container2 { top: 240px; }
+        
+        #goToTop { transition: all 0.1s ease; z-index: 100; }
+        
+        #stationListContainer {
+            position: relative;
+            margin: 0;
+            padding: 0;
+        }
+        .station-entry {
+            position: absolute;
+            left: 50px;
+            width: 1100px;
+        }
+        .toggle-btn {
+            transition: color 0.1s ease, border 0.1s ease, background-color 0.1s ease !important;
+        }
+        .barrierArrow {
+            transition: all 0.1s ease-out !important;
+        }
+        /* Prefix label transition */
+        #inputLinePrefix, #inputBeginningAtPrefix {
+            transition: color 0.1s ease !important;
+        }
+        /* Center button text better */
+        .station-entry button {
+            display: flex !important;
+            align-items: center !important;
+            justify-content: center !important;
+            line-height: 1 !important;
+            padding: 0 !important;
+        }
+        .station-entry .removeBtn {
+            font-size: 32px !important;
+            font-weight: 900 !important;
+        }
+        .station-entry .doubleTrue, .station-entry .doubleFalse,
+        .station-entry .changeoverTrue, .station-entry .changeoverFalse {
+            font-size: 32px !important;
+        }
+    </style>
+</head>
+<body>
+
+<!-- FIXED SIDEBAR & HEADER -->
+<label style="position: absolute; top: 50px; left: 150px;"><img src="images/BerlinerFensterIcon_48px.png" alt=""></label>
+<label style="position: absolute; top: 50px; left: 214px; color: #fff; font-size: 48px; font-family: TransitPro-BoldItalic; cursor: default;">Berliner Fenster Simulator</label>
+<label style="position: absolute; top: 100px; left: 214px; color: #fff; font-size: 32px; font-family: TransitPro-BoldItalic; cursor: default;">Linienverlaufbearbeitungsseite</label>
+
+<button id="goToTop"
+  style="position: fixed; top: 50px; left: 1200px; width: 48px; height: 48px; background-color: #FFFFFF; color: #252424; font-size: 24px; font-family: TransitPro-Bold; padding-top: 4px; padding-left: 5px; border: 4px solid #D2D2D2; border-radius: 40px; cursor: pointer; pointer-events: none; opacity: 0; transition: all 0.1s ease; z-index: 100;"
+  onmouseover="this.style.backgroundColor='#D2D2D2'; this.style.color='#252424';"
+  onmouseout="this.style.backgroundColor='#FFFFFF'; this.style.color='#252424';"
+  onmousedown="this.style.backgroundColor='#252424'; this.style.color='#FFFFFF'; this.style.border='4px solid #FFFFFF';"
+  onmouseup="this.style.backgroundColor='#D2D2D2'; this.style.color='#252424'; this.style.border='4px solid #D2D2D2';"
+>↑</button>
+
+<button id="homeButton"
+  style="position: fixed; top: 50px; left: 1620px; width: 280px; height: 48px; background-color: #FFFFFF; color: #252424; font-size: 24px; font-family: TransitPro-Bold; border: 4px solid #D2D2D2; border-radius: 40px; cursor: pointer; transition: all 0.1s ease;"
+  onmouseover="this.style.backgroundColor='#D2D2D2'; this.style.color='#252424';"
+  onmouseout="this.style.backgroundColor='#FFFFFF'; this.style.color='#252424';"
+  onmousedown="this.style.backgroundColor='#252424'; this.style.color='#FFFFFF'; this.style.border='4px solid #FFFFFF';"
+  onmouseup="this.style.backgroundColor='#D2D2D2'; this.style.color='#252424'; this.style.border='4px solid #D2D2D2';"
+>zurück zur Homepage</button>
+
+<!-- File import - fixed double popup -->
+<div id="skriptInputButton"
+  style="position: fixed; top: 140px; left: 1200px; width: 700px; height: 48px; display: flex; align-items: center; justify-content: center; background-color: #FFFFFF; color: #252424; font-size: 24px; font-family: TransitPro-Bold; text-align: center; overflow: hidden; box-sizing: border-box; border: 4px solid #D2D2D2; border-radius: 40px; cursor: pointer; transition: all 0.1s ease;"
+  onmouseover="this.style.backgroundColor='#D2D2D2'; this.style.color='#252424';"
+  onmouseout="this.style.backgroundColor='#FFFFFF'; this.style.color='#252424';"
+  onmousedown="this.style.backgroundColor='#252424'; this.style.color='#FFFFFF'; this.style.border='4px solid #FFFFFF';"
+  onmouseup="this.style.backgroundColor='#D2D2D2'; this.style.color='#252424'; this.style.border='4px solid #D2D2D2';"
+>
+  <span id="skriptInputText">.json zum Bearbeiten wählen...</span>
+</div>
+<input type="file" id="skriptInput" accept=".json" style="display: none;" />
+
+<button id="removeScriptButton"
+  style="position: fixed; top: 200px; left: 1500px; width: 400px; height: 48px; background-color: #FFFFFF; color: #252424; font-size: 24px; font-family: TransitPro-Bold; border: 4px solid #D2D2D2; border-radius: 40px; cursor: pointer; transition: all 0.1s ease;"
+  onmouseover="this.style.backgroundColor='#D2D2D2'; this.style.color='#252424';"
+  onmouseout="this.style.backgroundColor='#FFFFFF'; this.style.color='#252424';"
+  onmousedown="this.style.backgroundColor='#252424'; this.style.color='#FFFFFF'; this.style.border='4px solid #FFFFFF';"
+  onmouseup="this.style.backgroundColor='#D2D2D2'; this.style.color='#252424'; this.style.border='4px solid #D2D2D2';"
+>.json entfernen & zurücksetzen</button>
+
+<!-- Confirm Modals -->
+<div id="confirmOverlayBackground" style="position: fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.8); display:none; z-index:1000;"></div>
+<div id="confirmOverlayBox" style="position:fixed; display:none; top:330px; left:600px; height:360px; width:720px; background:#252424; border-radius:20px; text-align:center; z-index:2000;">
+  <label style="position:fixed; top:400px; left:0; width:1920px; color:#fff; font-size:32px; font-family:TransitPro-Bold; z-index:5000;">Achtung</label>
+  <label id="confirmMessage" style="position:fixed; top:450px; left:0; width:1920px; color:#fff; font-size:24px; font-family:TransitPro; z-index:5000;">Bist du dir sicher, dass du den Linienverlauf zurücksetzen möchtest?<br>Nicht gespeicherte Änderungen gehen verloren!</label>
+  <button id="confirmPositive" style="position:fixed; top:550px; left:680px; width:240px; height:48px; background:#fff; color:#252424; font-size:24px; font-family:TransitPro-Bold; border:4px solid #D2D2D2; border-radius:40px; cursor:pointer; z-index:5000; transition:0.1s;"
+    onmouseover="this.style.backgroundColor='#D2D2D2'; this.style.color='#252424';"
+    onmouseout="this.style.backgroundColor='#FFFFFF'; this.style.color='#252424';"
+    onmousedown="this.style.backgroundColor='#252424'; this.style.color='#FFFFFF'; this.style.border='4px solid #FFFFFF';"
+    onmouseup="this.style.backgroundColor='#D2D2D2'; this.style.color='#252424'; this.style.border='4px solid #D2D2D2';">ja, zurücksetzen</button>
+  <button id="confirmNegative" style="position:fixed; top:550px; left:1000px; width:240px; height:48px; background:#fff; color:#252424; font-size:24px; font-family:TransitPro-Bold; border:4px solid #D2D2D2; border-radius:40px; cursor:pointer; z-index:5000; transition:0.1s;"
+    onmouseover="this.style.backgroundColor='#D2D2D2'; this.style.color='#252424';"
+    onmouseout="this.style.backgroundColor='#FFFFFF'; this.style.color='#252424';"
+    onmousedown="this.style.backgroundColor='#252424'; this.style.color='#FFFFFF'; this.style.border='4px solid #FFFFFF';"
+    onmouseup="this.style.backgroundColor='#D2D2D2'; this.style.color='#252424'; this.style.border='4px solid #D2D2D2';">nein, beibehalten</button>
+</div>
+
+<div id="homeConfirmOverlayBackground" style="position: fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.8); display:none; z-index:1000;"></div>
+<div id="homeConfirmOverlayBox" style="position:fixed; display:none; top:330px; left:600px; height:360px; width:720px; background:#252424; border-radius:20px; text-align:center; z-index:2000;">
+  <label style="position:fixed; top:400px; left:0; width:1920px; color:#fff; font-size:32px; font-family:TransitPro-Bold; z-index:5000;">Achtung</label>
+  <label style="position:fixed; top:450px; left:0; width:1920px; color:#fff; font-size:24px; font-family:TransitPro; z-index:5000;">Bist du dir sicher, dass du zur Homepage zurückkehren möchtest?<br>Nicht gespeicherte Änderungen gehen verloren!</label>
+  <button id="homeConfirmPositive" style="position:fixed; top:550px; left:680px; width:240px; height:48px; background:#fff; color:#252424; font-size:24px; font-family:TransitPro-Bold; border:4px solid #D2D2D2; border-radius:40px; cursor:pointer; z-index:5000; transition:0.1s;"
+    onmouseover="this.style.backgroundColor='#D2D2D2'; this.style.color='#252424';"
+    onmouseout="this.style.backgroundColor='#FFFFFF'; this.style.color='#252424';"
+    onmousedown="this.style.backgroundColor='#252424'; this.style.color='#FFFFFF'; this.style.border='4px solid #FFFFFF';"
+    onmouseup="this.style.backgroundColor='#D2D2D2'; this.style.color='#252424'; this.style.border='4px solid #D2D2D2';">ja, zurück</button>
+  <button id="homeConfirmNegative" style="position:fixed; top:550px; left:1000px; width:240px; height:48px; background:#fff; color:#252424; font-size:24px; font-family:TransitPro-Bold; border:4px solid #D2D2D2; border-radius:40px; cursor:pointer; z-index:5000; transition:0.1s;"
+    onmouseover="this.style.backgroundColor='#D2D2D2'; this.style.color='#252424';"
+    onmouseout="this.style.backgroundColor='#FFFFFF'; this.style.color='#252424';"
+    onmousedown="this.style.backgroundColor='#252424'; this.style.color='#FFFFFF'; this.style.border='4px solid #FFFFFF';"
+    onmouseup="this.style.backgroundColor='#D2D2D2'; this.style.color='#252424'; this.style.border='4px solid #D2D2D2';">nein, bleiben</button>
+</div>
+
+<!-- Sidebar settings -->
+<label style="position: fixed; top: 280px; left: 1200px; color: #fff; font-size: 24px; font-family: TransitPro-Bold;">Linienbezeichnung</label>
+<label id="inputLinePrefix" style="position: fixed; top: 320px; left: 1214px; color: #252424; font-size: 24px; font-family: TransitPro-Bold; z-index: 5; pointer-events: none;">U</label>
+<input id="inputLine" placeholder="Linie eingeben..." maxlength="2" pattern="[0-9]*" oninput="this.value=this.value.replace(/\D/g,'')"
+  style="position: fixed; top: 310px; left: 1200px; width: 235px; height: 38px; outline: none; background-color: #FFFFFF; color: #252424; font-size: 24px; font-family: TransitPro-Bold; padding-left: 25px; border: 4px solid #D2D2D2; border-radius: 40px; transition: all 0.1s ease;"
+  onmouseover="if(document.activeElement !== this){this.style.backgroundColor='#D2D2D2';}"
+  onmouseout="if(document.activeElement !== this){this.style.backgroundColor='#FFFFFF';}"
+  onmousedown="this.style.backgroundColor='#252424'; this.style.color='#FFFFFF'; this.style.border='4px solid #FFFFFF'; document.getElementById('inputLinePrefix').style.color='#FFFFFF';"
+  onmouseup="this.style.backgroundColor='#252424'; this.style.color='#FFFFFF'; this.style.border='4px solid #FFFFFF'; document.getElementById('inputLinePrefix').style.color='#FFFFFF';"
+  onfocus="this.style.backgroundColor='#252424'; this.style.color='#FFFFFF'; this.style.border='4px solid #FFFFFF'; document.getElementById('inputLinePrefix').style.color='#FFFFFF';"
+  onblur="this.style.backgroundColor='#FFFFFF'; this.style.color='#252424'; this.style.border='4px solid #D2D2D2'; document.getElementById('inputLinePrefix').style.color='#252424';"
+>
+
+<label id="configDualLineTitle" style="position: fixed; top: 380px; left: 1200px; color: #fff; font-size: 24px; font-family: TransitPro-Bold;">Ist Doppellinie?</label>
+<button id="configDualLineTrue" class="toggle-btn"
+  style="position: fixed; top: 410px; left: 1200px; width: 48px; height: 48px; background-color: #FFFFFF; color: #252424; font-size: 32px; font-family: TransitPro-Bold; display: flex; align-items: center; justify-content: center; border: 4px solid #D2D2D2; border-radius: 40px; cursor: pointer; transition: all 0.1s ease; font-weight: 900;"
+  onmouseover="if(this.style.pointerEvents!=='none'){this.style.backgroundColor='#D2D2D2';}"
+  onmouseout="if(this.style.pointerEvents!=='none'){this.style.backgroundColor='#FFFFFF';}"
+  onmousedown="if(this.style.pointerEvents!=='none'){this.style.backgroundColor='#252424'; this.style.color='#FFFFFF'; this.style.border='4px solid #FFFFFF';}"
+  onmouseup="if(this.style.pointerEvents!=='none'){this.style.backgroundColor='#D2D2D2';}"
+>✓</button>
+<button id="configDualLineFalse" class="toggle-btn"
+  style="position: fixed; top: 410px; left: 1260px; width: 48px; height: 48px; background-color: #FFFFFF; color: #252424; font-size: 32px; font-family: TransitPro-Bold; display: flex; align-items: center; justify-content: center; border: 4px solid #D2D2D2; border-radius: 40px; cursor: pointer; transition: all 0.1s ease; font-weight: 900;"
+  onmouseover="if(this.style.pointerEvents!=='none'){this.style.backgroundColor='#D2D2D2';}"
+  onmouseout="if(this.style.pointerEvents!=='none'){this.style.backgroundColor='#FFFFFF';}"
+  onmousedown="if(this.style.pointerEvents!=='none'){this.style.backgroundColor='#252424'; this.style.color='#FFFFFF'; this.style.border='4px solid #FFFFFF';}"
+  onmouseup="if(this.style.pointerEvents!=='none'){this.style.backgroundColor='#D2D2D2';}"
+><span style="display:inline-block; padding-bottom:2px;">✕</span></button>
+
+<label id="inputBeginningAtTitle" style="position: fixed; top: 480px; left: 1200px; color: #fff; font-size: 24px; font-family: TransitPro-Bold;">Startlinie</label>
+<label id="inputBeginningAtPrefix" style="position: fixed; top: 520px; left: 1214px; color: #252424; font-size: 24px; font-family: TransitPro-Bold; z-index: 5; pointer-events: none;">U</label>
+<input id="inputBeginningAt" placeholder="Linie eingeben..." maxlength="1" pattern="[0-9]*" oninput="this.value=this.value.replace(/\D/g,'')"
+  style="position: fixed; top: 510px; left: 1200px; width: 235px; height: 38px; outline: none; background-color: #FFFFFF; color: #252424; font-size: 24px; font-family: TransitPro-Bold; padding-left: 25px; border: 4px solid #D2D2D2; border-radius: 40px; transition: all 0.1s ease;"
+  onmouseover="if(document.activeElement !== this){this.style.backgroundColor='#D2D2D2';}"
+  onmouseout="if(document.activeElement !== this){this.style.backgroundColor='#FFFFFF';}"
+  onmousedown="this.style.backgroundColor='#252424'; this.style.color='#FFFFFF'; this.style.border='4px solid #FFFFFF'; document.getElementById('inputBeginningAtPrefix').style.color='#FFFFFF';"
+  onmouseup="this.style.backgroundColor='#252424'; this.style.color='#FFFFFF'; this.style.border='4px solid #FFFFFF'; document.getElementById('inputBeginningAtPrefix').style.color='#FFFFFF';"
+  onfocus="this.style.backgroundColor='#252424'; this.style.color='#FFFFFF'; this.style.border='4px solid #FFFFFF'; document.getElementById('inputBeginningAtPrefix').style.color='#FFFFFF';"
+  onblur="this.style.backgroundColor='#FFFFFF'; this.style.color='#252424'; this.style.border='4px solid #D2D2D2'; document.getElementById('inputBeginningAtPrefix').style.color='#252424';"
+>
+
+<label style="position: fixed; top: 580px; left: 1200px; color: #fff; font-size: 24px; font-family: TransitPro-Bold;">Linienmanagement</label>
+<button id="lineAddStation"
+  style="position: fixed; top: 610px; left: 1200px; width: 270px; height: 48px; background-color: #FFFFFF; color: #252424; font-size: 24px; font-family: TransitPro-Bold; display: flex; align-items: center; justify-content: center; border: 4px solid #D2D2D2; border-radius: 40px; cursor: pointer; transition: all 0.1s ease;"
+  onmouseover="this.style.backgroundColor='#D2D2D2'; this.style.color='#252424';"
+  onmouseout="this.style.backgroundColor='#FFFFFF'; this.style.color='#252424';"
+  onmousedown="this.style.backgroundColor='#252424'; this.style.color='#FFFFFF'; this.style.border='4px solid #FFFFFF';"
+  onmouseup="this.style.backgroundColor='#D2D2D2'; this.style.color='#252424'; this.style.border='4px solid #D2D2D2';"
+><span style="font-size: 48px; font-family: TransitPro; padding-top: 3px;">+</span>&nbsp;&nbsp;Station hinzufügen</button>
+<button id="lineChangeDirection"
+  style="position: fixed; top: 670px; left: 1200px; width: 270px; height: 48px; background-color: #FFFFFF; color: #252424; font-size: 24px; font-family: TransitPro-Bold; display: flex; align-items: center; justify-content: center; border: 4px solid #D2D2D2; border-radius: 40px; cursor: pointer; transition: all 0.1s ease;"
+  onmouseover="this.style.backgroundColor='#D2D2D2'; this.style.color='#252424';"
+  onmouseout="this.style.backgroundColor='#FFFFFF'; this.style.color='#252424';"
+  onmousedown="this.style.backgroundColor='#252424'; this.style.color='#FFFFFF'; this.style.border='4px solid #FFFFFF';"
+  onmouseup="this.style.backgroundColor='#D2D2D2'; this.style.color='#252424'; this.style.border='4px solid #D2D2D2';"
+>Verlauf umkehren</button>
+
+<label style="position: fixed; top: 740px; left: 1200px; color: #fff; font-size: 24px; font-family: TransitPro-Bold;">Datei</label>
+<button id="lineExportJson"
+  style="position: fixed; top: 770px; left: 1200px; width: 270px; height: 48px; background-color: #FFFFFF; color: #252424; font-size: 24px; font-family: TransitPro-Bold; display: flex; align-items: center; justify-content: center; border: 4px solid #D2D2D2; border-radius: 40px; cursor: pointer; transition: all 0.1s ease;"
+  onmouseover="this.style.backgroundColor='#D2D2D2'; this.style.color='#252424';"
+  onmouseout="this.style.backgroundColor='#FFFFFF'; this.style.color='#252424';"
+  onmousedown="this.style.backgroundColor='#252424'; this.style.color='#FFFFFF'; this.style.border='4px solid #FFFFFF';"
+  onmouseup="this.style.backgroundColor='#D2D2D2'; this.style.color='#252424'; this.style.border='4px solid #D2D2D2';"
+>als .json exportieren</button>
+
+<!-- Preview labels -->
+<label style="position: fixed; top: 266px; left: 1500px; color: #fff; font-size: 24px; font-family: TransitPro-Bold;">Vorschau Linienverlauf</label>
+<label style="position: fixed; top: 616px; left: 1500px; color: #fff; font-size: 24px; font-family: TransitPro-Bold;">Vorschau "Bei Halt" Bildschirm</label>
+
+<!-- PREVIEW DISPLAYS -->
+<div class="berlinerFensterPreview">
+  <div class="screen">
+    <div class="container" id="previewContainer">
+      <img id="LinienverlaufOverlay" src="images/LinienverlaufOverlays/BeiFahrt_1Zeiler_5Stationen.png">
+      <div class="uhrzeit">99:99</div>
+      <div class="nextHalt" id="previewNextHalt">Nächste Station</div>
+      <div class="nextHaltNamenszusatz" id="previewNextZusatz"></div>
+      <img class="nextHaltBarrierefreiheitAufzug" id="previewNextAufzug" src="images/Aufzug_90px.png">
+      <img class="nextHaltBarrierefreiheitRampe" id="previewNextRampe" src="images/Rampe_90px.png">
+      <div class="folgeHalt1" id="previewFolge1">Folgende Station 1</div>
+      <div class="folgeHalt1Namenszusatz" id="previewFolge1Zusatz"></div>
+      <img class="folgeHalt1BarrierefreiheitAufzug" id="previewFolge1Aufzug" src="images/Aufzug_90px.png">
+      <img class="folgeHalt1BarrierefreiheitRampe" id="previewFolge1Rampe" src="images/Rampe_90px.png">
+      <div class="folgeHalt2" id="previewFolge2">Folgende Station 2</div>
+      <div class="folgeHalt2Namenszusatz" id="previewFolge2Zusatz"></div>
+      <img class="folgeHalt2BarrierefreiheitAufzug" id="previewFolge2Aufzug" src="images/Aufzug_90px.png">
+      <img class="folgeHalt2BarrierefreiheitRampe" id="previewFolge2Rampe" src="images/Rampe_90px.png">
+      <div class="folgeHalt3" id="previewFolge3">Folgende Endstation</div>
+      <img class="folgeHalt3BarrierefreiheitAufzug" id="previewFolge3Aufzug" src="images/Aufzug_90px.png">
+      <img class="folgeHalt3BarrierefreiheitRampe" id="previewFolge3Rampe" src="images/Rampe_90px.png">
+    </div>
+  </div>
+  <div class="screen2">
+    <div class="container2" id="previewContainer2">
+      <img id="LinienverlaufOverlay2" src="images/LinienverlaufOverlays/BeiFahrt_1Zeiler_5Stationen.png">
+      <div class="uhrzeit2">99:99</div>
+      <div id="beiHaltLayer">
+        <img id="beiHaltOverlay" src="images/LinienverlaufOverlays/BeiHalt.png">
+        <div id="beiHaltText"></div>
+        <div id="beiHaltTextZusatz">Aktuelle Station</div>
+        <div id="beiHaltZusatz"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- DYNAMIC STATION LIST CONTAINER -->
+<div id="stationListContainer"></div>
+
+<script>
+  (function(){
+    "use strict";
+
+    const GREEN = "#0ED145";
+    const RED = "#EC1C24";
+    const DEFAULT_BORDER = "#D2D2D2";
+    const DEFAULT_TEXT = "#252424";
+    
+    const VALID_LINES = ["U0","U1","U2","U3","U4","U5","U6","U7","U8","U9","U10","U11","U12","U15","U35","U55","U67"];
+    
+    let stations = [];
+    let selectedStationIndex = 0;
+    let dualLineActive = false;
+    
+    const container = document.getElementById('stationListContainer');
+    const inputLine = document.getElementById('inputLine');
+    const inputBeginningAt = document.getElementById('inputBeginningAt');
+    const dualTrue = document.getElementById('configDualLineTrue');
+    const dualFalse = document.getElementById('configDualLineFalse');
+    const dualTitle = document.getElementById('configDualLineTitle');
+    const beginningTitle = document.getElementById('inputBeginningAtTitle');
+    const beginningInput = document.getElementById('inputBeginningAt');
+    const addBtn = document.getElementById('lineAddStation');
+    const exportBtn = document.getElementById('lineExportJson');
+    const changeDirBtn = document.getElementById('lineChangeDirection');
+    const removeScriptBtn = document.getElementById('removeScriptButton');
+    const skriptInput = document.getElementById('skriptInput');
+    const skriptInputText = document.getElementById('skriptInputText');
+    
+    const previewNextHalt = document.getElementById('previewNextHalt');
+    const previewNextZusatz = document.getElementById('previewNextZusatz');
+    const previewFolge1 = document.getElementById('previewFolge1');
+    const previewFolge1Zusatz = document.getElementById('previewFolge1Zusatz');
+    const previewFolge2 = document.getElementById('previewFolge2');
+    const previewFolge2Zusatz = document.getElementById('previewFolge2Zusatz');
+    const previewFolge3 = document.getElementById('previewFolge3');
+    const beiHaltText = document.getElementById('beiHaltText');
+    const beiHaltTextZusatz = document.getElementById('beiHaltTextZusatz');
+    const beiHaltZusatz = document.getElementById('beiHaltZusatz');
+    const beiHaltOverlay = document.getElementById('beiHaltOverlay');
+    const linienverlaufOverlay = document.getElementById('LinienverlaufOverlay');
+    const linienverlaufOverlay2 = document.getElementById('LinienverlaufOverlay2');
+    
+    const barrierIcons = {
+        nextAufzug: document.getElementById('previewNextAufzug'),
+        nextRampe: document.getElementById('previewNextRampe'),
+        folge1Aufzug: document.getElementById('previewFolge1Aufzug'),
+        folge1Rampe: document.getElementById('previewFolge1Rampe'),
+        folge2Aufzug: document.getElementById('previewFolge2Aufzug'),
+        folge2Rampe: document.getElementById('previewFolge2Rampe'),
+        folge3Aufzug: document.getElementById('previewFolge3Aufzug'),
+        folge3Rampe: document.getElementById('previewFolge3Rampe')
+    };
+    
+    function updateClock() {
+        const now = new Date();
+        const time = now.toLocaleTimeString('de-DE', { hour:'2-digit', minute:'2-digit' });
+        document.querySelector('.uhrzeit').textContent = time;
+        document.querySelector('.uhrzeit2').textContent = time;
+    }
+    setInterval(updateClock, 1000);
+    updateClock();
+    
+    const scrollBtn = document.getElementById('goToTop');
+    window.addEventListener('scroll', () => {
+        scrollBtn.style.opacity = window.scrollY > 200 ? '1' : '0';
+        scrollBtn.style.pointerEvents = window.scrollY > 200 ? 'unset' : 'none';
+    });
+    scrollBtn.addEventListener('click', () => window.scrollTo({ top:0, behavior:'smooth' }));
+    
+    function createDefaultStation() {
+        return {
+            nextName: "",
+            followingName: "",
+            beiHaltName: "",
+            isDoubleLined: false,
+            additionalName: "",
+            barrierFree: 0,
+            stationID: "",
+            isChangeover: false
+        };
+    }
+    
+    stations = [createDefaultStation()];
+    
+    function escapeHtml(text) {
+        return String(text).replace(/[&<>"]/g, function(c) {
+            if (c === '&') return '&amp;';
+            if (c === '<') return '&lt;';
+            if (c === '>') return '&gt;';
+            if (c === '"') return '&quot;';
+            return c;
+        });
+    }
+    
+    function formatNameForPreview(text) {
+        return text.replace(/<br\s*\/?>/gi, '<br>');
+    }
+    
+    function updatePreviewFromStation(index) {
+        if (!stations.length) return;
+        const st = stations[index];
+        previewNextHalt.innerHTML = formatNameForPreview(st.nextName) || "Nächste Station";
+        previewNextZusatz.textContent = st.additionalName || "";
+        previewFolge1.innerHTML = formatNameForPreview(st.followingName) || "Folgende Station 1";
+        previewFolge1Zusatz.textContent = st.additionalName || "";
+        previewFolge2.innerHTML = formatNameForPreview(st.followingName) || "Folgende Station 2";
+        previewFolge2Zusatz.textContent = st.additionalName || "";
+        previewFolge3.innerHTML = formatNameForPreview(st.followingName) || "Folgende Endstation";
+        
+        const showRamp = (st.barrierFree === 1);
+        const showAufzug = (st.barrierFree === 2);
+        for (let key in barrierIcons) {
+            if (key.includes('Rampe')) barrierIcons[key].style.visibility = showRamp ? 'visible' : 'hidden';
+            if (key.includes('Aufzug')) barrierIcons[key].style.visibility = showAufzug ? 'visible' : 'hidden';
+        }
+        
+        const hasAdditional = st.additionalName.trim() !== "";
+        if (hasAdditional) {
+            beiHaltText.innerHTML = "";
+            beiHaltTextZusatz.innerHTML = formatNameForPreview(st.beiHaltName) || "Aktuelle Station";
+        } else {
+            beiHaltText.innerHTML = formatNameForPreview(st.beiHaltName) || "Aktuelle Station";
+            beiHaltTextZusatz.innerHTML = "";
+        }
+        beiHaltZusatz.textContent = st.additionalName || "";
+        
+        let overlayFile = "BeiHalt";
+        if (st.barrierFree === 1) overlayFile += "_Rampe";
+        else if (st.barrierFree === 2) overlayFile += "_Aufzug";
+        
+        if (!hasAdditional && !st.isDoubleLined) overlayFile += "_1Zeiler";
+        else if (!hasAdditional && st.isDoubleLined) overlayFile += "_2Zeiler";
+        else if (hasAdditional) overlayFile += "_Zusatztext";
+        
+        if (st.barrierFree === 0) overlayFile = "BeiHalt";
+        beiHaltOverlay.src = `images/LinienverlaufOverlays/${overlayFile}.png`;
+        
+        const overlay1 = st.isDoubleLined ? "BeiFahrt_2Zeiler_5Stationen.png" : "BeiFahrt_1Zeiler_5Stationen.png";
+        linienverlaufOverlay.src = `images/LinienverlaufOverlays/${overlay1}`;
+        linienverlaufOverlay2.src = `images/LinienverlaufOverlays/${overlay1}`;
+        
+        const offset = st.isDoubleLined ? 60 : 0;
+        document.querySelector('.folgeHalt1').style.top = (516+offset)+'px';
+        document.querySelector('.folgeHalt1Namenszusatz').style.top = (620+offset)+'px';
+        document.querySelector('.folgeHalt1BarrierefreiheitAufzug').style.top = (525+offset)+'px';
+        document.querySelector('.folgeHalt1BarrierefreiheitRampe').style.top = (525+offset)+'px';
+        document.querySelector('.folgeHalt2').style.top = (706+offset)+'px';
+        document.querySelector('.folgeHalt2Namenszusatz').style.top = (810+offset)+'px';
+        document.querySelector('.folgeHalt2BarrierefreiheitAufzug').style.top = (715+offset)+'px';
+        document.querySelector('.folgeHalt2BarrierefreiheitRampe').style.top = (715+offset)+'px';
+    }
+    
+    function updatePreviewBackground() {
+        let lineKey = "U" + inputLine.value;
+        if (!VALID_LINES.includes(lineKey)) lineKey = "none";
+        
+        let bgPath = `images/LinieHintergrund/${lineKey}.png`;
+        if (dualLineActive && lineKey !== "none" && inputBeginningAt.value) {
+            const startLine = "U" + inputBeginningAt.value;
+            const lineDigits = lineKey.substring(1).split('');
+            if (lineDigits.includes(inputBeginningAt.value)) {
+                bgPath = `images/LinieHintergrund/${lineKey}/${lineKey}_${startLine}.png`;
+            }
+        }
+        document.querySelector('.container').style.backgroundImage = `url('${bgPath}')`;
+        document.querySelector('.container2').style.backgroundImage = `url('${bgPath}')`;
+    }
+    
+    function updateDualLineUI() {
+        const lineLen = inputLine.value.length;
+        const enableDual = (lineLen === 2);
+        dualTrue.style.opacity = dualFalse.style.opacity = dualTitle.style.opacity = enableDual ? '1' : '0.2';
+        dualTrue.style.pointerEvents = dualFalse.style.pointerEvents = enableDual ? 'unset' : 'none';
+        
+        const enableBeginning = (enableDual && dualLineActive);
+        beginningTitle.style.opacity = beginningInput.style.opacity = enableBeginning ? '1' : '0.2';
+        beginningInput.style.pointerEvents = enableBeginning ? 'unset' : 'none';
+        
+        addBtn.style.opacity = stations.length >= 100 ? '0.2' : '1';
+        addBtn.style.pointerEvents = stations.length >= 100 ? 'none' : 'unset';
+    }
+    
+    // Update a single station's double lined toggle state (disable if additional name exists)
+    function updateStationDoubleLinedUI(idx) {
+        const entryDiv = document.querySelector(`.station-entry[data-index="${idx}"]`);
+        if (!entryDiv) return;
+        const st = stations[idx];
+        const hasAdditional = st.additionalName.trim() !== "";
+        const doubleTrue = entryDiv.querySelector('.doubleTrue');
+        const doubleFalse = entryDiv.querySelector('.doubleFalse');
+        const doubleLabel = entryDiv.querySelector('.doubleLinedLabel');
+        if (doubleTrue) {
+            doubleTrue.style.opacity = hasAdditional ? '0.2' : '1';
+            doubleTrue.style.pointerEvents = hasAdditional ? 'none' : 'unset';
+            doubleTrue.style.color = st.isDoubleLined ? GREEN : DEFAULT_TEXT;
+            doubleTrue.style.border = `4px solid ${st.isDoubleLined ? GREEN : DEFAULT_BORDER}`;
+        }
+        if (doubleFalse) {
+            doubleFalse.style.opacity = hasAdditional ? '0.2' : '1';
+            doubleFalse.style.pointerEvents = hasAdditional ? 'none' : 'unset';
+            doubleFalse.style.color = !st.isDoubleLined ? RED : DEFAULT_TEXT;
+            doubleFalse.style.border = `4px solid ${!st.isDoubleLined ? RED : DEFAULT_BORDER}`;
+        }
+        if (doubleLabel) doubleLabel.style.opacity = hasAdditional ? '0.2' : '1';
+    }
+    
+    function renderStationList() {
+        let html = '';
+        for (let i = 0; i < stations.length; i++) {
+            const st = stations[i];
+            const topPos = 200 + i * 400;
+            const isFirst = (i === 0);
+            const isLast = (i === stations.length - 1);
+            const onlyOne = stations.length === 1;
+            const barrierType = st.barrierFree;
+            
+            html += `
+                <div class="station-entry" style="top: ${topPos}px;" data-index="${i}">
+                    <label style="position: absolute; top: 0; left: 0; color: #fff; font-size: 32px; font-family: TransitPro-Bold;">Station ${i+1}</label>
+                    
+                    <button class="viewPreviewBtn" data-index="${i}" style="position: absolute; top: 0; left: 375px; width: 350px; height: 48px; background: #fff; color: #252424; font-size: 24px; font-family: TransitPro-Bold; border: 4px solid #D2D2D2; border-radius: 40px; cursor: pointer; transition: 0.1s;"
+                      onmouseover="this.style.backgroundColor='#D2D2D2'; this.style.color='#252424';"
+                      onmouseout="this.style.backgroundColor='#FFFFFF'; this.style.color='#252424';"
+                      onmousedown="this.style.backgroundColor='#252424'; this.style.color='#FFFFFF'; this.style.border='4px solid #FFFFFF';"
+                      onmouseup="this.style.backgroundColor='#D2D2D2'; this.style.color='#252424'; this.style.border='4px solid #D2D2D2';">Station in Vorschau zeigen</button>
+                    
+                    <button class="moveUpBtn" data-index="${i}" style="position: absolute; top: 0; left: 932px; width: 48px; height: 48px; background: #fff; color: #252424; font-size: 24px; font-family: TransitPro-Bold; border: 4px solid #D2D2D2; border-radius: 40px; opacity: ${isFirst ? '0.2' : '1'}; pointer-events: ${isFirst ? 'none' : 'unset'}; cursor: pointer; transition:0.1s;"
+                      onmouseover="if(this.style.pointerEvents!=='none'){this.style.backgroundColor='#D2D2D2'; this.style.color='#252424';}"
+                      onmouseout="if(this.style.pointerEvents!=='none'){this.style.backgroundColor='#FFFFFF'; this.style.color='#252424';}"
+                      onmousedown="if(this.style.pointerEvents!=='none'){this.style.backgroundColor='#252424'; this.style.color='#FFFFFF'; this.style.border='4px solid #FFFFFF';}"
+                      onmouseup="if(this.style.pointerEvents!=='none'){this.style.backgroundColor='#D2D2D2'; this.style.color='#252424'; this.style.border='4px solid #D2D2D2';">↑</button>
+                    <button class="moveDownBtn" data-index="${i}" style="position: absolute; top: 0; left: 992px; width: 48px; height: 48px; background: #fff; color: #252424; font-size: 24px; font-family: TransitPro-Bold; border: 4px solid #D2D2D2; border-radius: 40px; opacity: ${isLast ? '0.2' : '1'}; pointer-events: ${isLast ? 'none' : 'unset'}; cursor: pointer; transition:0.1s; padding-top: 0;"
+                      onmouseover="if(this.style.pointerEvents!=='none'){this.style.backgroundColor='#D2D2D2'; this.style.color='#252424';}"
+                      onmouseout="if(this.style.pointerEvents!=='none'){this.style.backgroundColor='#FFFFFF'; this.style.color='#252424';}"
+                      onmousedown="if(this.style.pointerEvents!=='none'){this.style.backgroundColor='#252424'; this.style.color='#FFFFFF'; this.style.border='4px solid #FFFFFF';}"
+                      onmouseup="if(this.style.pointerEvents!=='none'){this.style.backgroundColor='#D2D2D2'; this.style.color='#252424'; this.style.border='4px solid #D2D2D2';">↓</button>
+                    <button class="removeBtn" data-index="${i}" style="position: absolute; top: 0; left: 1052px; width: 48px; height: 48px; background: #fff; color: #252424; font-size: 32px; font-family: TransitPro-Bold; border: 4px solid #D2D2D2; border-radius: 40px; opacity: ${onlyOne ? '0.2' : '1'}; pointer-events: ${onlyOne ? 'none' : 'unset'}; cursor: pointer; transition:0.1s; font-weight:900; display: flex; align-items: center; justify-content: center; line-height: 1;"
+                      onmouseover="if(this.style.pointerEvents!=='none'){this.style.backgroundColor='#D2D2D2'; this.style.color='#252424';}"
+                      onmouseout="if(this.style.pointerEvents!=='none'){this.style.backgroundColor='#FFFFFF'; this.style.color='#252424';}"
+                      onmousedown="if(this.style.pointerEvents!=='none'){this.style.backgroundColor='#252424'; this.style.color='#FFFFFF'; this.style.border='4px solid #FFFFFF';}"
+                      onmouseup="if(this.style.pointerEvents!=='none'){this.style.backgroundColor='#D2D2D2'; this.style.color='#252424'; this.style.border='4px solid #D2D2D2';"><span style="display:inline-block; padding-top:4px;">✕</span></button>
+                    
+                    <label style="position: absolute; top: 50px; left: 0; color: #fff; font-size: 24px; font-family: TransitPro-Bold;">Stationsname</label>
+                    <label style="position: absolute; top: 80px; left: 0; color: #fff; font-size: 24px; font-family: TransitPro;">Aktuelle/Nächste Station</label>
+                    <label style="position: absolute; top: 80px; left: 375px; color: #fff; font-size: 24px; font-family: TransitPro;">Folgende/Letzte Station</label>
+                    <label style="position: absolute; top: 80px; left: 750px; color: #fff; font-size: 24px; font-family: TransitPro;">Bei Halt</label>
+                    
+                    <input class="nextNameInput" data-index="${i}" value="${escapeHtml(st.nextName)}" placeholder="Stationsnamen eingeben..." style="position: absolute; top: 110px; left: 0; width: 330px; height: 38px; background: #fff; color: #252424; font-size: 24px; font-family: TransitPro-Bold; padding-left: 10px; border: 4px solid #D2D2D2; border-radius: 40px; outline: none; transition:0.1s;"
+                      onmouseover="if(document.activeElement !== this){this.style.backgroundColor='#D2D2D2';}"
+                      onmouseout="if(document.activeElement !== this){this.style.backgroundColor='#FFFFFF';}"
+                      onmousedown="this.style.backgroundColor='#252424'; this.style.color='#FFFFFF'; this.style.border='4px solid #FFFFFF';"
+                      onmouseup="this.style.backgroundColor='#252424'; this.style.color='#FFFFFF'; this.style.border='4px solid #FFFFFF';"
+                      onfocus="this.style.backgroundColor='#252424'; this.style.color='#FFFFFF'; this.style.border='4px solid #FFFFFF';"
+                      onblur="this.style.backgroundColor='#FFFFFF'; this.style.color='#252424'; this.style.border='4px solid #D2D2D2';">
+                    <input class="followingNameInput" data-index="${i}" value="${escapeHtml(st.followingName)}" placeholder="Stationsnamen eingeben..." style="position: absolute; top: 110px; left: 375px; width: 330px; height: 38px; background: #fff; color: #252424; font-size: 24px; font-family: TransitPro-Bold; padding-left: 10px; border: 4px solid #D2D2D2; border-radius: 40px; outline: none; transition:0.1s;"
+                      onmouseover="if(document.activeElement !== this){this.style.backgroundColor='#D2D2D2';}"
+                      onmouseout="if(document.activeElement !== this){this.style.backgroundColor='#FFFFFF';}"
+                      onmousedown="this.style.backgroundColor='#252424'; this.style.color='#FFFFFF'; this.style.border='4px solid #FFFFFF';"
+                      onmouseup="this.style.backgroundColor='#252424'; this.style.color='#FFFFFF'; this.style.border='4px solid #FFFFFF';"
+                      onfocus="this.style.backgroundColor='#252424'; this.style.color='#FFFFFF'; this.style.border='4px solid #FFFFFF';"
+                      onblur="this.style.backgroundColor='#FFFFFF'; this.style.color='#252424'; this.style.border='4px solid #D2D2D2';">
+                    <input class="beiHaltNameInput" data-index="${i}" value="${escapeHtml(st.beiHaltName)}" placeholder="Stationsnamen eingeben..." style="position: absolute; top: 110px; left: 750px; width: 330px; height: 38px; background: #fff; color: #252424; font-size: 24px; font-family: TransitPro-Bold; padding-left: 10px; border: 4px solid #D2D2D2; border-radius: 40px; outline: none; transition:0.1s;"
+                      onmouseover="if(document.activeElement !== this){this.style.backgroundColor='#D2D2D2';}"
+                      onmouseout="if(document.activeElement !== this){this.style.backgroundColor='#FFFFFF';}"
+                      onmousedown="this.style.backgroundColor='#252424'; this.style.color='#FFFFFF'; this.style.border='4px solid #FFFFFF';"
+                      onmouseup="this.style.backgroundColor='#252424'; this.style.color='#FFFFFF'; this.style.border='4px solid #FFFFFF';"
+                      onfocus="this.style.backgroundColor='#252424'; this.style.color='#FFFFFF'; this.style.border='4px solid #FFFFFF';"
+                      onblur="this.style.backgroundColor='#FFFFFF'; this.style.color='#252424'; this.style.border='4px solid #D2D2D2';">
+                    
+                    <label class="doubleLinedLabel" style="position: absolute; top: 180px; left: 350px; transform: translateX(-100%); color: #fff; font-size: 24px; font-family: TransitPro; white-space: nowrap;">Ist Stationsname doppelzeilig?</label>
+                    <button class="doubleTrue toggle-btn" data-index="${i}" style="position: absolute; top: 170px; left: 375px; width: 48px; height: 48px; background: #fff; color: ${st.isDoubleLined ? GREEN : DEFAULT_TEXT}; border: 4px solid ${st.isDoubleLined ? GREEN : DEFAULT_BORDER}; border-radius: 40px; font-size: 32px; font-family: TransitPro-Bold; font-weight: 900; cursor: pointer; transition:0.1s; display: flex; align-items: center; justify-content: center;"
+                      onmouseover="if(this.style.pointerEvents!=='none'){this.style.backgroundColor='#D2D2D2';}"
+                      onmouseout="if(this.style.pointerEvents!=='none'){this.style.backgroundColor='#FFFFFF';}"
+                      onmousedown="if(this.style.pointerEvents!=='none'){this.style.backgroundColor='#252424'; this.style.color='#FFFFFF'; this.style.border='4px solid #FFFFFF';}"
+                      onmouseup="if(this.style.pointerEvents!=='none'){this.style.backgroundColor='#D2D2D2';}"><span style="display:inline-block; padding-top:4px;">✓</span></button>
+                    <button class="doubleFalse toggle-btn" data-index="${i}" style="position: absolute; top: 170px; left: 435px; width: 48px; height: 48px; background: #fff; color: ${!st.isDoubleLined ? RED : DEFAULT_TEXT}; border: 4px solid ${!st.isDoubleLined ? RED : DEFAULT_BORDER}; border-radius: 40px; font-size: 32px; font-family: TransitPro-Bold; font-weight: 900; cursor: pointer; transition:0.1s; display: flex; align-items: center; justify-content: center;"
+                      onmouseover="if(this.style.pointerEvents!=='none'){this.style.backgroundColor='#D2D2D2';}"
+                      onmouseout="if(this.style.pointerEvents!=='none'){this.style.backgroundColor='#FFFFFF';}"
+                      onmousedown="if(this.style.pointerEvents!=='none'){this.style.backgroundColor='#252424'; this.style.color='#FFFFFF'; this.style.border='4px solid #FFFFFF';}"
+                      onmouseup="if(this.style.pointerEvents!=='none'){this.style.backgroundColor='#D2D2D2';}"><span style="display:inline-block; padding-top:4px;">✕</span></button>
+                    
+                    <label style="position: absolute; top: 236px; left: 350px; transform: translateX(-100%); color: #fff; font-size: 24px; font-family: TransitPro; white-space: nowrap;">Barrierefreier Zugang:</label>
+                    <div style="position: absolute; top: 235px; left: 355px; display: flex; gap: 20px;">
+                        <div style="position: relative; left: 20px">
+                            <div class="barrierArrow" data-index="${i}" style="position: absolute; bottom: -15px; left: 0; transform: translateX(${5 + (barrierType*50)}px); width: 0; height: 0; border-left: 10px solid transparent; border-right: 10px solid transparent; border-bottom: 10px solid #fff; transition: all 0.1s ease-out;"></div>
+                        </div>
+                        <img src="images/Leer_90px.png" class="barrierNone" data-index="${i}" style="cursor: pointer; width: 30px; height: 30px;">
+                        <img src="images/Rampe_90px.png" class="barrierRamp" data-index="${i}" style="cursor: pointer; width: 30px; height: 30px;">
+                        <img src="images/Aufzug_90px.png" class="barrierLift" data-index="${i}" style="cursor: pointer; width: 30px; height: 30px;">
+                    </div>
+                    
+                    <input class="additionalNameInput" data-index="${i}" value="${escapeHtml(st.additionalName)}" placeholder="Namenszusatz eingeben..." style="position: absolute; top: 230px; left: 750px; width: 330px; height: 38px; background: #fff; color: #252424; font-size: 24px; font-family: TransitPro-Bold; padding-left: 10px; border: 4px solid #D2D2D2; border-radius: 40px; outline: none; transition: 0.1s;"
+                      onmouseover="if(document.activeElement !== this){this.style.backgroundColor='#D2D2D2';}"
+                      onmouseout="if(document.activeElement !== this){this.style.backgroundColor='#FFFFFF';}"
+                      onmousedown="this.style.backgroundColor='#252424'; this.style.color='#FFFFFF'; this.style.border='4px solid #FFFFFF';"
+                      onmouseup="this.style.backgroundColor='#252424'; this.style.color='#FFFFFF'; this.style.border='4px solid #FFFFFF';"
+                      onfocus="this.style.backgroundColor='#252424'; this.style.color='#252424'; this.style.border='4px solid #FFFFFF';"
+                      onblur="this.style.backgroundColor='#FFFFFF'; this.style.color='#252424'; this.style.border='4px solid #D2D2D2';">
+                    
+                    <label class="changeoverLabel" style="position: absolute; top: 300px; left: 350px; transform: translateX(-100%); color: #fff; font-size: 24px; font-family: TransitPro; white-space: nowrap;">Übergangsstation?</label>
+                    <button class="changeoverTrue toggle-btn" data-index="${i}" style="position: absolute; top: 290px; left: 375px; width: 48px; height: 48px; background: #fff; color: ${st.isChangeover ? GREEN : DEFAULT_TEXT}; border: 4px solid ${st.isChangeover ? GREEN : DEFAULT_BORDER}; border-radius: 40px; font-size: 32px; font-family: TransitPro-Bold; font-weight: 900; cursor: pointer; transition:0.1s; display: flex; align-items: center; justify-content: center;"
+                      onmouseover="if(this.style.pointerEvents!=='none'){this.style.backgroundColor='#D2D2D2';}"
+                      onmouseout="if(this.style.pointerEvents!=='none'){this.style.backgroundColor='#FFFFFF';}"
+                      onmousedown="if(this.style.pointerEvents!=='none'){this.style.backgroundColor='#252424'; this.style.color='#FFFFFF'; this.style.border='4px solid #FFFFFF';}"
+                      onmouseup="if(this.style.pointerEvents!=='none'){this.style.backgroundColor='#D2D2D2';}"><span style="display:inline-block; padding-top:4px;">✓</span></button>
+                    <button class="changeoverFalse toggle-btn" data-index="${i}" style="position: absolute; top: 290px; left: 435px; width: 48px; height: 48px; background: #fff; color: ${!st.isChangeover ? RED : DEFAULT_TEXT}; border: 4px solid ${!st.isChangeover ? RED : DEFAULT_BORDER}; border-radius: 40px; font-size: 32px; font-family: TransitPro-Bold; font-weight: 900; cursor: pointer; transition:0.1s; display: flex; align-items: center; justify-content: center;"
+                      onmouseover="if(this.style.pointerEvents!=='none'){this.style.backgroundColor='#D2D2D2';}"
+                      onmouseout="if(this.style.pointerEvents!=='none'){this.style.backgroundColor='#FFFFFF';}"
+                      onmousedown="if(this.style.pointerEvents!=='none'){this.style.backgroundColor='#252424'; this.style.color='#FFFFFF'; this.style.border='4px solid #FFFFFF';}"
+                      onmouseup="if(this.style.pointerEvents!=='none'){this.style.backgroundColor='#D2D2D2';}"><span style="display:inline-block; padding-top:4px;">✕</span></button>
+                    
+                    <input class="stationIdInput" data-index="${i}" value="${escapeHtml(st.stationID)}" placeholder="Stations-ID eingeben..." pattern="[0-9]*" oninput="this.value=this.value.replace(/\D/g,'')" style="position: absolute; top: 290px; left: 750px; width: 330px; height: 38px; background: #fff; color: #252424; font-size: 24px; font-family: TransitPro-Bold; padding-left: 10px; border: 4px solid #D2D2D2; border-radius: 40px; outline: none; transition: 0.1s;"
+                      onmouseover="if(document.activeElement !== this){this.style.backgroundColor='#D2D2D2';}"
+                      onmouseout="if(document.activeElement !== this){this.style.backgroundColor='#FFFFFF';}"
+                      onmousedown="this.style.backgroundColor='#252424'; this.style.color='#FFFFFF'; this.style.border='4px solid #FFFFFF';"
+                      onmouseup="this.style.backgroundColor='#252424'; this.style.color='#FFFFFF'; this.style.border='4px solid #FFFFFF';"
+                      onfocus="this.style.backgroundColor='#252424'; this.style.color='#252424'; this.style.border='4px solid #FFFFFF';"
+                      onblur="this.style.backgroundColor='#FFFFFF'; this.style.color='#252424'; this.style.border='4px solid #D2D2D2';">
+                    
+                    <img src="images/Trennstrich_Stationen.png" style="position: absolute; top: 352px; left: 0;">
+                </div>
+            `;
+        }
+        container.innerHTML = html;
+        attachStationEvents();
+        updateDualLineUI();
+        updatePreviewBackground();
+        if (stations.length > 0) updatePreviewFromStation(selectedStationIndex);
+    }
+    
+    function attachStationEvents() {
+    // Preview button
+    document.querySelectorAll('.viewPreviewBtn').forEach(btn => {
+        btn.addEventListener('click', e => {
+            const idx = parseInt(btn.dataset.index);
+            selectedStationIndex = idx;
+            updatePreviewFromStation(idx);
+        });
+    });
+    
+    // Move up/down
+    document.querySelectorAll('.moveUpBtn').forEach(btn => {
+        btn.addEventListener('click', e => {
+            const idx = parseInt(btn.dataset.index);
+            if (idx > 0) {
+                [stations[idx-1], stations[idx]] = [stations[idx], stations[idx-1]];
+                if (selectedStationIndex === idx) selectedStationIndex = idx-1;
+                else if (selectedStationIndex === idx-1) selectedStationIndex = idx;
+                renderStationList();
+            }
+        });
+    });
+    document.querySelectorAll('.moveDownBtn').forEach(btn => {
+        btn.addEventListener('click', e => {
+            const idx = parseInt(btn.dataset.index);
+            if (idx < stations.length-1) {
+                [stations[idx], stations[idx+1]] = [stations[idx+1], stations[idx]];
+                if (selectedStationIndex === idx) selectedStationIndex = idx+1;
+                else if (selectedStationIndex === idx+1) selectedStationIndex = idx;
+                renderStationList();
+            }
+        });
+    });
+    
+    // Remove station
+    document.querySelectorAll('.removeBtn').forEach(btn => {
+        btn.addEventListener('click', e => {
+            const idx = parseInt(btn.dataset.index);
+            if (stations.length > 1) {
+                stations.splice(idx, 1);
+                if (selectedStationIndex >= stations.length) selectedStationIndex = stations.length-1;
+                renderStationList();
+            }
+        });
+    });
+    
+    // Name inputs
+    document.querySelectorAll('.nextNameInput').forEach(inp => inp.addEventListener('input', function() {
+        const idx = this.dataset.index;
+        stations[idx].nextName = this.value;
+        if (idx == selectedStationIndex) updatePreviewFromStation(idx);
+    }));
+    document.querySelectorAll('.followingNameInput').forEach(inp => inp.addEventListener('input', function() {
+        const idx = this.dataset.index;
+        stations[idx].followingName = this.value;
+        if (idx == selectedStationIndex) updatePreviewFromStation(idx);
+    }));
+    document.querySelectorAll('.beiHaltNameInput').forEach(inp => inp.addEventListener('input', function() {
+        const idx = this.dataset.index;
+        stations[idx].beiHaltName = this.value;
+        if (idx == selectedStationIndex) updatePreviewFromStation(idx);
+    }));
+    
+    // Additional name
+    document.querySelectorAll('.additionalNameInput').forEach(inp => inp.addEventListener('input', function() {
+        const idx = this.dataset.index;
+        stations[idx].additionalName = this.value;
+        if (this.value.trim() !== "") {
+            stations[idx].isDoubleLined = false;
+        }
+        if (idx == selectedStationIndex) updatePreviewFromStation(idx);
+        updateStationDoubleLinedUI(idx);
+    }));
+    
+    document.querySelectorAll('.stationIdInput').forEach(inp => inp.addEventListener('input', function() {
+        const idx = this.dataset.index;
+        stations[idx].stationID = this.value;
+    }));
+    
+    // Double lined toggles
+    document.querySelectorAll('.doubleTrue').forEach(btn => btn.addEventListener('click', e => {
+        const idx = btn.dataset.index;
+        if (stations[idx].additionalName.trim() !== "") return;
+        stations[idx].isDoubleLined = true;
+        if (idx == selectedStationIndex) updatePreviewFromStation(idx);
+        updateStationDoubleLinedUI(idx);
+    }));
+    document.querySelectorAll('.doubleFalse').forEach(btn => btn.addEventListener('click', e => {
+        const idx = btn.dataset.index;
+        stations[idx].isDoubleLined = false;
+        if (idx == selectedStationIndex) updatePreviewFromStation(idx);
+        updateStationDoubleLinedUI(idx);
+    }));
+    
+    // Barrier free – ONLY ONE SET OF HANDLERS (no renderStationList)
+    document.querySelectorAll('.barrierNone').forEach(el => el.addEventListener('click', e => {
+        const idx = el.dataset.index;
+        stations[idx].barrierFree = 0;
+        updateArrowPosition(idx);
+        if (idx == selectedStationIndex) updatePreviewFromStation(idx);
+    }));
+    document.querySelectorAll('.barrierRamp').forEach(el => el.addEventListener('click', e => {
+        const idx = el.dataset.index;
+        stations[idx].barrierFree = 1;
+        updateArrowPosition(idx);
+        if (idx == selectedStationIndex) updatePreviewFromStation(idx);
+    }));
+    document.querySelectorAll('.barrierLift').forEach(el => el.addEventListener('click', e => {
+        const idx = el.dataset.index;
+        stations[idx].barrierFree = 2;
+        updateArrowPosition(idx);
+        if (idx == selectedStationIndex) updatePreviewFromStation(idx);
+    }));
+    
+    // Changeover toggles
+    document.querySelectorAll('.changeoverTrue').forEach(btn => btn.addEventListener('click', e => {
+        const idx = parseInt(btn.dataset.index);
+        if (!dualLineActive) return;
+        stations.forEach((s, i) => s.isChangeover = (i === idx));
+        renderStationList();
+    }));
+    document.querySelectorAll('.changeoverFalse').forEach(btn => btn.addEventListener('click', e => {
+        const idx = parseInt(btn.dataset.index);
+        stations[idx].isChangeover = false;
+        renderStationList();
+    }));
+    
+    // Disable changeover UI if not dual line
+    document.querySelectorAll('.changeoverLabel, .changeoverTrue, .changeoverFalse').forEach(el => {
+        if (!dualLineActive) {
+            el.style.opacity = '0.2';
+            el.style.pointerEvents = 'none';
+        } else {
+            el.style.opacity = '1';
+            el.style.pointerEvents = 'unset';
+        }
+    });
+}
+function updateArrowPosition(idx) {
+    const arrow = document.querySelector(`.barrierArrow[data-index="${idx}"]`);
+    if (arrow) {
+        const newX = 5 + (stations[idx].barrierFree * 50);
+        arrow.style.transform = `translateX(${newX}px)`;
+    }
+}
+    
+    
+    function setDualLine(active) {
+        dualLineActive = active;
+        dualTrue.style.color = active ? GREEN : DEFAULT_TEXT;
+        dualTrue.style.border = `4px solid ${active ? GREEN : DEFAULT_BORDER}`;
+        dualFalse.style.color = !active ? RED : DEFAULT_TEXT;
+        dualFalse.style.border = `4px solid ${!active ? RED : DEFAULT_BORDER}`;
+        if (!active) {
+            stations.forEach(s => s.isChangeover = false);
+        }
+        updateDualLineUI();
+        updatePreviewBackground();
+        renderStationList();
+    }
+    
+    inputLine.addEventListener('input', function() {
+        updateDualLineUI();
+        updatePreviewBackground();
+    });
+    
+    dualTrue.addEventListener('click', () => setDualLine(true));
+    dualFalse.addEventListener('click', () => setDualLine(false));
+    
+    inputBeginningAt.addEventListener('input', function() {
+        updatePreviewBackground();
+    });
+    
+    addBtn.addEventListener('click', () => {
+        if (stations.length < 100) {
+            stations.push(createDefaultStation());
+            renderStationList();
+        }
+    });
+    
+    changeDirBtn.addEventListener('click', () => {
+        stations.reverse();
+        selectedStationIndex = stations.length - 1 - selectedStationIndex;
+        renderStationList();
+    });
+    
+    function generateJSON() {
+        const line = "U" + inputLine.value;
+        const obj = { Line: line };
+        if (dualLineActive) obj.BeginningAt = "U" + inputBeginningAt.value;
+        obj.Stations = stations.map(s => ({
+            NextStationName: s.nextName,
+            FollowingStationName: s.followingName,
+            StoppedAtStationName: s.beiHaltName,
+            IsNameDoubleLined: s.isDoubleLined,
+            AdditionalName: s.additionalName,
+            BarrierFreeType: s.barrierFree,
+            StationID: s.stationID,
+            ...(s.isChangeover && { IsChangeoverStation: true })
+        }));
+        return obj;
+    }
+    
+    exportBtn.addEventListener('click', () => {
+        const json = generateJSON();
+        const firstSt = stations[0]?.followingName || "Start";
+        const lastSt = stations[stations.length-1]?.followingName || "Ziel";
+        const filename = `${json.Line}_${firstSt.replace(/ /g,'_')}_zu_${lastSt.replace(/ /g,'_')}.json`;
+        const blob = new Blob([JSON.stringify(json, null, 2)], {type: 'application/json'});
+        const a = document.createElement('a');
+        a.href = URL.createObjectURL(blob);
+        a.download = filename;
+        a.click();
+    });
+    
+    // File import (single popup)
+    skriptInput.addEventListener('change', function(e) {
+        const file = this.files[0];
+        if (!file) return;
+        skriptInputText.textContent = file.name;
+        const reader = new FileReader();
+        reader.onload = (ev) => {
+            try {
+                const data = JSON.parse(ev.target.result);
+                const lineNum = data.Line.replace('U','');
+                inputLine.value = lineNum;
+                const isDual = data.hasOwnProperty('BeginningAt');
+                setDualLine(isDual);
+                if (isDual) {
+                    inputBeginningAt.value = data.BeginningAt.replace('U','');
+                }
+                stations = data.Stations.map(s => ({
+                    nextName: s.NextStationName || "",
+                    followingName: s.FollowingStationName || "",
+                    beiHaltName: s.StoppedAtStationName || "",
+                    isDoubleLined: s.IsNameDoubleLined || false,
+                    additionalName: s.AdditionalName || "",
+                    barrierFree: s.BarrierFreeType || 0,
+                    stationID: s.StationID || "",
+                    isChangeover: s.IsChangeoverStation || false
+                }));
+                selectedStationIndex = 0;
+                renderStationList();
+                updatePreviewBackground();
+            } catch(ex) { alert("Ungültiges JSON"); }
+        };
+        reader.readAsText(file);
+    });
+    
+    document.getElementById('skriptInputButton').addEventListener('click', (e) => {
+        e.preventDefault();
+        skriptInput.click();
+    });
+    
+    // Confirm modals
+    const confirmBg = document.getElementById("confirmOverlayBackground");
+    const confirmBox = document.getElementById("confirmOverlayBox");
+    const confirmMsg = document.getElementById("confirmMessage");
+    const confirmPos = document.getElementById("confirmPositive");
+    const confirmNeg = document.getElementById("confirmNegative");
+    
+    const homeBg = document.getElementById("homeConfirmOverlayBackground");
+    const homeBox = document.getElementById("homeConfirmOverlayBox");
+    const homePos = document.getElementById("homeConfirmPositive");
+    const homeNeg = document.getElementById("homeConfirmNegative");
+    
+    function showConfirm(type, callback) {
+        if (type === 'reset') {
+            confirmMsg.innerHTML = "Bist du dir sicher, dass du den Linienverlauf zurücksetzen möchtest?<br>Nicht gespeicherte Änderungen gehen verloren!";
+            confirmPos.textContent = "ja, zurücksetzen";
+            confirmNeg.textContent = "nein, beibehalten";
+        }
+        confirmBg.style.display = "flex";
+        confirmBox.style.display = "flex";
+        const onConfirm = () => {
+            confirmBg.style.display = "none";
+            confirmBox.style.display = "none";
+            callback();
+            confirmPos.removeEventListener('click', onConfirm);
+            confirmNeg.removeEventListener('click', onCancel);
+        };
+        const onCancel = () => {
+            confirmBg.style.display = "none";
+            confirmBox.style.display = "none";
+            confirmPos.removeEventListener('click', onConfirm);
+            confirmNeg.removeEventListener('click', onCancel);
+        };
+        confirmPos.addEventListener('click', onConfirm);
+        confirmNeg.addEventListener('click', onCancel);
+    }
+    
+    removeScriptBtn.onclick = () => {
+        showConfirm('reset', () => {
+            inputLine.value = '';
+            inputBeginningAt.value = '';
+            setDualLine(false);
+            stations = [createDefaultStation()];
+            selectedStationIndex = 0;
+            renderStationList();
+            updatePreviewBackground();
+            skriptInput.value = '';
+            skriptInputText.textContent = '.json zum Bearbeiten wählen...';
+        });
+    };
+    
+    document.getElementById('homeButton').addEventListener('click', () => {
+        homeBg.style.display = "flex";
+        homeBox.style.display = "flex";
+        const goHome = () => { window.location.href = 'index.html'; };
+        homePos.addEventListener('click', goHome);
+        homeNeg.addEventListener('click', () => {
+            homeBg.style.display = "none";
+            homeBox.style.display = "none";
+            homePos.removeEventListener('click', goHome);
+        });
+    });
+    
+    confirmBg.addEventListener('click', () => { confirmBg.style.display = 'none'; confirmBox.style.display = 'none'; });
+    homeBg.addEventListener('click', () => { homeBg.style.display = 'none'; homeBox.style.display = 'none'; });
+    
+    renderStationList();
+    setDualLine(false);
+  })();
+</script>
+</body>
+</html>

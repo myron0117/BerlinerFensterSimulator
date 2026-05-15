@@ -1,0 +1,95 @@
+{
+  "Line": "U55",
+  "Stations": [
+    {
+      "NextStationName": "Turmstr.",
+      "FollowingStationName": "Turmstraße",
+      "StoppedAtStationName": "Turmstr.",
+      "IsNameDoubleLined": false,
+      "AdditionalName": "",
+      "BarrierFreeType": 2,
+      "StationID": "900003104"
+    },
+    {
+      "NextStationName": "Waldstr.",
+      "FollowingStationName": "Waldstr.",
+      "StoppedAtStationName": "Waldstr.",
+      "IsNameDoubleLined": false,
+      "AdditionalName": "",
+      "BarrierFreeType": 2,
+      "StationID": "900002101"
+    },
+    {
+      "NextStationName": "Wiebestr.",
+      "FollowingStationName": "Wiebestr.",
+      "StoppedAtStationName": "Wiebestr.",
+      "IsNameDoubleLined": false,
+      "AdditionalName": "",
+      "BarrierFreeType": 2,
+      "StationID": "900001103"
+    },
+    {
+      "NextStationName": "Jungfernheide",
+      "FollowingStationName": "Jungfernheide",
+      "StoppedAtStationName": "Jungfernheide",
+      "IsNameDoubleLined": false,
+      "AdditionalName": "",
+      "BarrierFreeType": 2,
+      "StationID": "900020201"
+    },
+    {
+      "NextStationName": "Heckerdamm",
+      "FollowingStationName": "Heckerdamm",
+      "StoppedAtStationName": "Heckerdamm",
+      "IsNameDoubleLined": false,
+      "AdditionalName": "",
+      "BarrierFreeType": 0,
+      "StationID": "900019203"
+    },
+    {
+      "NextStationName": "Urban Tech<br>Republic",
+      "FollowingStationName": "Urban Tech Republic",
+      "StoppedAtStationName": "Urban Tech<br>Republic",
+      "IsNameDoubleLined": true,
+      "AdditionalName": "",
+      "BarrierFreeType": 2,
+      "StationID": "900087172"
+    },
+    {
+      "NextStationName": "Mäckeritzwiesen",
+      "FollowingStationName": "Mäckeritzwiesen",
+      "StoppedAtStationName": "Mäckeritzwiesen",
+      "IsNameDoubleLined": false,
+      "AdditionalName": "",
+      "BarrierFreeType": 0,
+      "StationID": "900089601"
+    },
+    {
+      "NextStationName": "Maienwerderweg",
+      "FollowingStationName": "Maienwerderweg",
+      "StoppedAtStationName": "Maienwerderweg",
+      "IsNameDoubleLined": false,
+      "AdditionalName": "",
+      "BarrierFreeType": 0,
+      "StationID": "900089652"
+    },
+    {
+      "NextStationName": "Insel<br>Scharfenberg",
+      "FollowingStationName": "Insel Scharfenberg",
+      "StoppedAtStationName": "Insel<br>Scharfenberg",
+      "IsNameDoubleLined": true,
+      "AdditionalName": "",
+      "BarrierFreeType": 0,
+      "StationID": ""
+    },
+    {
+      "NextStationName": "Tegelort",
+      "FollowingStationName": "Tegelort",
+      "StoppedAtStationName": "Tegelort",
+      "IsNameDoubleLined": false,
+      "AdditionalName": "",
+      "BarrierFreeType": 2,
+      "StationID": "900090102"
+    }
+  ]
+}

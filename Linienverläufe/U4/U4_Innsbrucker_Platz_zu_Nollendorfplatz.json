@@ -1,0 +1,50 @@
+{
+  "Line": "U4",
+  "Stations": [
+    {
+      "NextStationName": "Innsbrucker Platz",
+      "FollowingStationName": "Innsbrucker Platz",
+      "StoppedAtStationName": "Innsbrucker Platz",
+      "IsNameDoubleLined": false,
+      "AdditionalName": "",
+      "BarrierFreeType": 2,
+      "StationID": "900054105"
+    },
+    {
+      "NextStationName": "Rathaus<br>Schöneberg",
+      "FollowingStationName": "Rathaus Schöneberg",
+      "StoppedAtStationName": "Rathaus<br>Schöneberg",
+      "IsNameDoubleLined": true,
+      "AdditionalName": "",
+      "BarrierFreeType": 2,
+      "StationID": ""
+    },
+    {
+      "NextStationName": "Bayerischer Platz",
+      "FollowingStationName": "Bayerischer Platz",
+      "StoppedAtStationName": "Bayerischer Platz",
+      "IsNameDoubleLined": false,
+      "AdditionalName": "",
+      "BarrierFreeType": 2,
+      "StationID": "900055102"
+    },
+    {
+      "NextStationName": "Viktoria-Luise-<br>Platz",
+      "FollowingStationName": "Viktoria-Luise-Platz",
+      "StoppedAtStationName": "Viktoria-Luise-<br>Platz",
+      "IsNameDoubleLined": true,
+      "AdditionalName": "",
+      "BarrierFreeType": 2,
+      "StationID": ""
+    },
+    {
+      "NextStationName": "Nollendorfplatz",
+      "FollowingStationName": "Nollendorfplatz",
+      "StoppedAtStationName": "Nollendorfplatz",
+      "IsNameDoubleLined": false,
+      "AdditionalName": "",
+      "BarrierFreeType": 2,
+      "StationID": "900056102"
+    }
+  ]
+}

@@ -1,0 +1,221 @@
+{
+  "Line": "U8",
+  "Stations": [
+    {
+      "NextStationName": "Hermannstr.",
+      "FollowingStationName": "Hermannstraße",
+      "StoppedAtStationName": "Hermannstr.",
+      "IsNameDoubleLined": false,
+      "AdditionalName": "",
+      "BarrierFreeType": 2,
+      "StationID": "900079221"
+    },
+    {
+      "NextStationName": "Leinestr.",
+      "FollowingStationName": "Leinestr.",
+      "StoppedAtStationName": "Leinestr.",
+      "IsNameDoubleLined": false,
+      "AdditionalName": "",
+      "BarrierFreeType": 2,
+      "StationID": "900079201"
+    },
+    {
+      "NextStationName": "Boddinstr.",
+      "FollowingStationName": "Boddinstr.",
+      "StoppedAtStationName": "Boddinstr.",
+      "IsNameDoubleLined": false,
+      "AdditionalName": "",
+      "BarrierFreeType": 2,
+      "StationID": "900079202"
+    },
+    {
+      "NextStationName": "Hermannplatz",
+      "FollowingStationName": "Hermannplatz",
+      "StoppedAtStationName": "Hermannplatz",
+      "IsNameDoubleLined": false,
+      "AdditionalName": "",
+      "BarrierFreeType": 2,
+      "StationID": "900078101"
+    },
+    {
+      "NextStationName": "Schönleinstr.",
+      "FollowingStationName": "Schönleinstr.",
+      "StoppedAtStationName": "Schönleinstr.",
+      "IsNameDoubleLined": false,
+      "AdditionalName": "",
+      "BarrierFreeType": 0,
+      "StationID": "900016201"
+    },
+    {
+      "NextStationName": "Kottbusser Tor",
+      "FollowingStationName": "Kottbusser Tor",
+      "StoppedAtStationName": "Kottbusser Tor",
+      "IsNameDoubleLined": false,
+      "AdditionalName": "",
+      "BarrierFreeType": 2,
+      "StationID": "900013102"
+    },
+    {
+      "NextStationName": "Moritzplatz",
+      "FollowingStationName": "Moritzplatz",
+      "StoppedAtStationName": "Moritzplatz",
+      "IsNameDoubleLined": false,
+      "AdditionalName": "",
+      "BarrierFreeType": 0,
+      "StationID": "900013101"
+    },
+    {
+      "NextStationName": "Heinrich-Heine-<br>Str.",
+      "FollowingStationName": "Heinrich-Heine-Str.",
+      "StoppedAtStationName": "Heinrich-Heine-<br>Str.",
+      "IsNameDoubleLined": true,
+      "AdditionalName": "",
+      "BarrierFreeType": 0,
+      "StationID": "900100008"
+    },
+    {
+      "NextStationName": "Jannowitzbrücke",
+      "FollowingStationName": "Jannowitzbrücke",
+      "StoppedAtStationName": "Jannowitzbrücke",
+      "IsNameDoubleLined": false,
+      "AdditionalName": "",
+      "BarrierFreeType": 2,
+      "StationID": "900100004"
+    },
+    {
+      "NextStationName": "Alexanderplatz",
+      "FollowingStationName": "Alexanderplatz",
+      "StoppedAtStationName": "Alexanderplatz",
+      "IsNameDoubleLined": false,
+      "AdditionalName": "",
+      "BarrierFreeType": 2,
+      "StationID": "900100003"
+    },
+    {
+      "NextStationName": "Weinmeisterstr.",
+      "FollowingStationName": "Weinmeisterstr.",
+      "StoppedAtStationName": "Weinmeisterstr.",
+      "IsNameDoubleLined": false,
+      "AdditionalName": "",
+      "BarrierFreeType": 2,
+      "StationID": "900100051"
+    },
+    {
+      "NextStationName": "Rosenthaler Platz",
+      "FollowingStationName": "Rosenthaler Platz",
+      "StoppedAtStationName": "Rosenthaler Platz",
+      "IsNameDoubleLined": false,
+      "AdditionalName": "",
+      "BarrierFreeType": 2,
+      "StationID": "900100023"
+    },
+    {
+      "NextStationName": "Bernauer Str.",
+      "FollowingStationName": "Bernauer Str.",
+      "StoppedAtStationName": "Bernauer Str.",
+      "IsNameDoubleLined": false,
+      "AdditionalName": "",
+      "BarrierFreeType": 2,
+      "StationID": "900007110"
+    },
+    {
+      "NextStationName": "Voltastr.",
+      "FollowingStationName": "Voltastr.",
+      "StoppedAtStationName": "Voltastr.",
+      "IsNameDoubleLined": false,
+      "AdditionalName": "",
+      "BarrierFreeType": 2,
+      "StationID": "900007103"
+    },
+    {
+      "NextStationName": "Gesundbrunnen",
+      "FollowingStationName": "Gesundbrunnen",
+      "StoppedAtStationName": "Gesundbrunnen",
+      "IsNameDoubleLined": false,
+      "AdditionalName": "",
+      "BarrierFreeType": 2,
+      "StationID": "900007102"
+    },
+    {
+      "NextStationName": "Pankstr.",
+      "FollowingStationName": "Pankstr.",
+      "StoppedAtStationName": "Pankstr.",
+      "IsNameDoubleLined": false,
+      "AdditionalName": "",
+      "BarrierFreeType": 2,
+      "StationID": "900009203"
+    },
+    {
+      "NextStationName": "Osloer Str.",
+      "FollowingStationName": "Osloer Str.",
+      "StoppedAtStationName": "Osloer Str.",
+      "IsNameDoubleLined": false,
+      "AdditionalName": "",
+      "BarrierFreeType": 2,
+      "StationID": "900009202"
+    },
+    {
+      "NextStationName": "<span style=\"font-size: 136px;\">Franz-Neumann-Platz</span>",
+      "FollowingStationName": "Franz-Neumann-Platz",
+      "StoppedAtStationName": "<span style=\"font-size: 162px;\">Franz-Neumann-Platz</span>",
+      "IsNameDoubleLined": false,
+      "AdditionalName": "Am Schäfersee",
+      "BarrierFreeType": 0,
+      "StationID": "900085202"
+    },
+    {
+      "NextStationName": "Residenzstr.",
+      "FollowingStationName": "Residenzstr.",
+      "StoppedAtStationName": "Residenzstr.",
+      "IsNameDoubleLined": false,
+      "AdditionalName": "",
+      "BarrierFreeType": 0,
+      "StationID": "900085203"
+    },
+    {
+      "NextStationName": "Paracelsus-Bad",
+      "FollowingStationName": "Paracelsus-Bad",
+      "StoppedAtStationName": "Paracelsus-Bad",
+      "IsNameDoubleLined": false,
+      "AdditionalName": "",
+      "BarrierFreeType": 2,
+      "StationID": "900085104"
+    },
+    {
+      "NextStationName": "Lindauer Allee",
+      "FollowingStationName": "Lindauer Allee",
+      "StoppedAtStationName": "Lindauer Allee",
+      "IsNameDoubleLined": false,
+      "AdditionalName": "",
+      "BarrierFreeType": 2,
+      "StationID": "900086160"
+    },
+    {
+      "NextStationName": "Karl-Bonhoeffer-<br>Nervenklinik",
+      "FollowingStationName": "Karl-Bonhoeffer-Nervenklinik",
+      "StoppedAtStationName": "Karl-Bonhoeffer-<br>Nervenklinik",
+      "IsNameDoubleLined": true,
+      "AdditionalName": "",
+      "BarrierFreeType": 0,
+      "StationID": "900096458"
+    },
+    {
+      "NextStationName": "Rathaus<br>Reinickendorf",
+      "FollowingStationName": "Rathaus Reinickendorf",
+      "StoppedAtStationName": "Rathaus<br>Reinickendorf",
+      "IsNameDoubleLined": true,
+      "AdditionalName": "",
+      "BarrierFreeType": 2,
+      "StationID": "900096410"
+    },
+    {
+      "NextStationName": "Wittenau",
+      "FollowingStationName": "Wittenau",
+      "StoppedAtStationName": "Wittenau",
+      "IsNameDoubleLined": false,
+      "AdditionalName": "",
+      "BarrierFreeType": 2,
+      "StationID": "900096101"
+    }
+  ]
+}
